@@ -1,0 +1,57 @@
+---------- GENERAL ----------
+VARIABLE -> Variable to replace
+
+
+---------- HTML ----------
+2 Types:
+  <TAG_NAME> CHILDREN </TAG_NAME>
+  <TAG_NAME/>
+
+Tags:
+  <div></div> -> Container
+  <span></span> -> Text
+  <button></button> -> Button
+  <img/> -> Image
+
+Attributes:
+  <div ATTRIBUTE_NAME=ATTRIBUTE_VALUE></div>
+  <div className="CLASS"></div>
+  <div id="ID"></div>
+  <img src="IMAGE_PATH"></div>
+  <input placeholder="TEXT" />
+  <input type="TYPE" />
+  <label htmlFor="ID"></label>
+
+Tailwind CSS:
+  <div className="CLASS_1 CLASS_2"></div>
+
+  Tailwind CSS classes:
+    bg-COLOR-INTENSITY -> Background color
+    text-COLOR-INTENSITY -> Text color
+
+    flex -> Makes the container flexible and places children in a row
+      justify-center -> Horizontally align children to center
+      item-center -> Vertically align children to center
+      flex-col -> Places children in a column
+      gap-SPACE -> Adds a gap between its children
+
+    h-HEIGHT
+    w-WIDTH
+
+    p-PADDING -> Padding
+    m-MARGIN -> Margin
+
+    border-THICKNESS -> Border around the element
+    border-COLOR-INTENSITY -> Color of the border
+
+    rounded-MEASURE -> How rounded is the element
+    shadow-MEASURE -> Shadow
+
+    text-MEASURE -> Size of the text
+    font-WEIGHT -> How bold is the font
+    
+
+  Tailwind CSS units:
+    NUMBER/NUMBER -> A fraction of its parent size
+    full -> 100% of its parent size
+    screen -> Size of the screen
