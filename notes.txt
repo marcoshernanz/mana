@@ -1,0 +1,10 @@
+---------- HTML ----------
+2 Types:
+  <{TAG_NAME}> {CHILDREN} </{TAG_NAME}>
+  <{TAG_NAME}/>
+
+Tags:
+  <div></div> -> Container
+  <span></span> -> Text
+  <button></button> -> Button
+  <img/> -> Image
