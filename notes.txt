@@ -55,3 +55,15 @@ Tailwind CSS:
     NUMBER/NUMBER -> A fraction of its parent size
     full -> 100% of its parent size
     screen -> Size of the screen
+
+timeline: https://ant.design/components/timeline
+progress: https://ant.design/components/progress
+tabs: https://ant.design/components/tabs
+carousel: https://ant.design/components/carousel
+clendar: https://ant.design/components/calendar
+time picker: https://ant.design/components/time-picker
+rate: https://ant.design/components/rate
+tae:picker: https://ant.design/components/date-picker`
+progress: https://ant.design/components/steps
+pagination: https://ant.design/components/pagination
+icons: https://ant.design/components/icon
