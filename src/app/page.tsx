@@ -8,6 +8,7 @@
 //import { Rate } from "antd";
 //<Rate disabled defaultValue={4} /> (by Ant Design)
 //tracking-normal (by Tailwind)
+// list-disc (by Tailwind)
 
 export default function Home() {
   return (
@@ -75,50 +76,100 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <div className="flex flex-row gap-60">
-            <div className="flex flex-col gap-4">
-              <div>
-                <span className="flex text-8xl font-extrabold text-zinc-200">
-                  01
-                </span>
-                <span className="flex text-zinc-400">
-                  Initial Setup and Planning
-                </span>
-                <span className="flex text-3xl font-bold text-zinc-700">
-                  Tell us what you want to do
-                </span>
+          <div className="flex flex-col gap-28">
+            <div className="flex flex-row gap-60">
+              <div className="flex flex-col gap-4">
+                <div>
+                  <span className="flex text-8xl font-extrabold text-zinc-200">
+                    01
+                  </span>
+                  <span className="flex text-zinc-400">
+                    Initial Setup and Planning
+                  </span>
+                  <span className="flex text-3xl font-bold text-zinc-700">
+                    Tell us what you want to do
+                  </span>
+                </div>
+                <div className="flex h-20 w-96 text-base text-zinc-700">
+                  <span>
+                    Never again waste time thinking about when to do something.
+                    MANA IA will help you plan your day, week, month, and year.
+                  </span>
+                </div>
               </div>
-              <div className="flex h-20 w-96 text-base text-zinc-700">
-                <span>
-                  Never again waste time thinking about when to do something.
-                  MANA IA will help you plan your day, week, month, and year.
-                </span>
+              <div>
+                <img src="phone3.png" height="385" width="385"></img>
               </div>
             </div>
-            <div>
-              <img src="phone3.png" height="385" width="385"></img>
+            <div className="flex flex-row gap-60">
+              <div>
+                <img src="phone3.png" height="385" width="385"></img>
+              </div>
+              <div className="flex flex-col gap-4">
+                <div>
+                  <span className="flex text-8xl font-extrabold text-zinc-200">
+                    02
+                  </span>
+                  <span className="flex text-zinc-400">
+                    Setting Up Notion for Centralized Planning
+                  </span>
+                  <span className="flex text-3xl font-bold text-zinc-700">
+                    Tell us your commitment
+                  </span>
+                </div>
+                <div className="flex h-20 w-96 flex-col gap-1 text-base text-zinc-700">
+                  <span>MANA will:</span>
+                  <ul className="ml-5 list-disc">
+                    <li>Set up a new Notion workspace for you</li>
+                    <li>
+                      Design a central dashboard with links to different areas
+                      you added before
+                    </li>
+                    <li>Create Pages and Databases</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row gap-60">
+              <div className="flex flex-col gap-4">
+                <div>
+                  <span className="flex text-8xl font-extrabold text-zinc-200">
+                    03
+                  </span>
+                  <span className="flex text-zinc-400">
+                    Initial Setup and Planning
+                  </span>
+                  <span className="flex text-3xl font-bold text-zinc-700">
+                    Tell us what you want to do
+                  </span>
+                </div>
+                <div className="flex h-20 w-96 text-base text-zinc-700">
+                  <span>
+                    Never again waste time thinking about when to do something.
+                    MANA IA will help you plan your day, week, month, and year.
+                  </span>
+                </div>
+              </div>
+              <div>
+                <img src="phone3.png" height="385" width="385"></img>
+              </div>
             </div>
           </div>
-          <div className="flex flex-row gap-60">
-            <div>
-              <img src="phone3.png" height="385" width="385"></img>
+          <div className="flex items-center justify-center text-base font-semibold tracking-wide text-orange-600">
+            <span>SET UP YOUR PLAN</span>
+          </div>
+          <div className="flex flex-row items-center justify-center gap-16">
+            <div className="flex h-96 w-96 flex-col rounded-xl border-2 border-orange-100 p-14">
+              <span className="flex items-center justify-center text-5xl font-bold text-zinc-800">
+                800$
+              </span>
             </div>
-            <div className="flex flex-col gap-4">
-              <div>
-                <span className="flex text-8xl font-extrabold text-zinc-200">
-                  02
-                </span>
-                <span className="flex text-zinc-400">
-                  Mark importanttasks and events
-                </span>
-                <span className="flex text-3xl font-bold text-zinc-700">
-                  Tell us your commitment
-                </span>
-              </div>
-              <div className="flex h-20 w-96 text-base text-zinc-700">
-                <span>Never again waste time thinking about</span>
-              </div>
+            <div className="flex h-96 w-96 flex-col rounded-xl border-2 border-orange-100 bg-orange-100 p-14">
+              <span className="flex items-center justify-center text-5xl font-bold text-zinc-800">
+                800$
+              </span>
             </div>
+            <div></div>
           </div>
         </div>
       </div>
