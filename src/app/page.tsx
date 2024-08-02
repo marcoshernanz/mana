@@ -1,14 +1,13 @@
 /* NEW THINGS: */
-// justify-center(by chatGPT)
 //style={{ backgroundColor: "#f7f7f7" }} (by chatGPT)
 //leading-x (by Tailwind)
 //w-5/12 (by Tailwind)
+//w-{lo que quiera} (marquitos)
 //high, width image (by HTML)
+//import React from "react";
+//import { Rate } from "antd";
 //<Rate disabled defaultValue={4} /> (by Ant Design)
 //tracking-normal (by Tailwind)
-
-import React from "react";
-import { Rate } from "antd";
 
 export default function Home() {
   return (
@@ -19,11 +18,15 @@ export default function Home() {
       >
         <div className="flex h-44 w-5/12 flex-col gap-12">
           {/* h-44 w-5/12 */}
-          <div className="flex h-full w-full flex-col gap-1 text-5xl font-extrabold text-zinc-800">
-            <span>
-              Let us help you turn your dreams into plans and your plans into a
-              beautiful future
-            </span>
+          <div className="flex h-full w-full gap-1 text-5xl font-extrabold text-zinc-800">
+            <div>
+              <span>
+                {/* Let us help you turn your dreams into plans and your plans into a
+              beautiful future */}
+                The platform that helps to achieve your goals
+              </span>
+              <span className="text-orange-700"> each day</span>
+            </div>
           </div>
           {/* w-5/12 */}
           <div className="flex gap-1 text-lg font-medium leading-8 text-zinc-600">
@@ -50,7 +53,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center">
-            <Rate disabled defaultValue={4} />
+            <img src="StarRating.png" height="150" width="150"></img>
           </div>
         </div>
         <div className="item-center flex flex-col justify-center gap-10">
@@ -72,12 +75,18 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <div className="flex flex-row gap-8">
+          <div className="flex flex-col">
             <span className="flex text-8xl font-extrabold text-zinc-200">
               01
             </span>
-            <div className="flex py-14 text-zinc-400">
+            <div className="flex text-zinc-400">
               <span>Initial Setup and Planning</span>
+            </div>
+            <div className="flex text-3xl font-bold text-zinc-700">
+              <span>Tell us what you want to do</span>
+              {/* //Assess Needs: Identify the areas of life that need organization
+              (e.g., work, personal projects, hobbies, health, finances).Assess
+              Needs */}
             </div>
           </div>
         </div>
