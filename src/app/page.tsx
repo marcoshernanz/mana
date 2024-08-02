@@ -75,18 +75,49 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <div className="flex flex-col">
-            <span className="flex text-8xl font-extrabold text-zinc-200">
-              01
-            </span>
-            <div className="flex text-zinc-400">
-              <span>Initial Setup and Planning</span>
+          <div className="flex flex-row gap-60">
+            <div className="flex flex-col gap-4">
+              <div>
+                <span className="flex text-8xl font-extrabold text-zinc-200">
+                  01
+                </span>
+                <span className="flex text-zinc-400">
+                  Initial Setup and Planning
+                </span>
+                <span className="flex text-3xl font-bold text-zinc-700">
+                  Tell us what you want to do
+                </span>
+              </div>
+              <div className="flex h-20 w-96 text-base text-zinc-700">
+                <span>
+                  Never again waste time thinking about when to do something.
+                  MANA IA will help you plan your day, week, month, and year.
+                </span>
+              </div>
             </div>
-            <div className="flex text-3xl font-bold text-zinc-700">
-              <span>Tell us what you want to do</span>
-              {/* //Assess Needs: Identify the areas of life that need organization
-              (e.g., work, personal projects, hobbies, health, finances).Assess
-              Needs */}
+            <div>
+              <img src="phone3.png" height="385" width="385"></img>
+            </div>
+          </div>
+          <div className="flex flex-row gap-60">
+            <div>
+              <img src="phone3.png" height="385" width="385"></img>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div>
+                <span className="flex text-8xl font-extrabold text-zinc-200">
+                  02
+                </span>
+                <span className="flex text-zinc-400">
+                  Mark importanttasks and events
+                </span>
+                <span className="flex text-3xl font-bold text-zinc-700">
+                  Tell us your commitment
+                </span>
+              </div>
+              <div className="flex h-20 w-96 text-base text-zinc-700">
+                <span>Never again waste time thinking about</span>
+              </div>
             </div>
           </div>
         </div>
