@@ -49,6 +49,29 @@ Tailwind CSS:
 
     text-MEASURE -> Size of the text
     font-WEIGHT -> How bold is the font
+
+    fixed -> Fixed position in the page
+    absolute -> Position relative to the nearest parent with a position set
+    relative -> Position relative the position where the element would be placed
+
+    left-NUMBER -> Where the left of the container is placed
+    right-NUMBER -> Where the right of the container is placed
+    top-NUMBER -> Where the top of the container is placed
+    bottom-NUMBER -> Where the bottom of the container is placed
+
+    translate-x-NUMBER -> Translate the element in the x axis
+    translate-y-NUMBER -> Translate the element in the x axis
+
+    z-NUMBER -> Z position in the page
+  
+    STATE:CLASS
+      dark -> Applies when the theme is set to dark
+      hover -> Applies when the element is hovered
+      active -> Applies when the element is active
+      focus -> Applies when the element is focused
+
+    transition -> Transition when entering or leaving a state
+    duration-NUMBER -> The duration of the transition
     
 
   Tailwind CSS units:
@@ -56,14 +79,13 @@ Tailwind CSS:
     full -> 100% of its parent size
     screen -> Size of the screen
 
-timeline: https://ant.design/components/timeline
-progress: https://ant.design/components/progress
-tabs: https://ant.design/components/tabs
-carousel: https://ant.design/components/carousel
-clendar: https://ant.design/components/calendar
-time picker: https://ant.design/components/time-picker
-rate: https://ant.design/components/rate
-tae:picker: https://ant.design/components/date-picker`
-progress: https://ant.design/components/steps
-pagination: https://ant.design/components/pagination
-icons: https://ant.design/components/icon
+JavaScript
+  function NAME(ARG1, ARG2) {FUNCTION}
+
+Next.js
+  <Image />
+  <Link></Link>
+
+
+
+Ctrl + Shift + I  ->  Ctrl + Shift + P  ->  Show Rendering  ->  prefers-color-scheme

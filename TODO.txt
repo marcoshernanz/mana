@@ -1,0 +1,5 @@
+Replace img with Image
+Redesign to fit in max-w-7xl - Don't use static height
+Create 3 more pages like Pricing
+Use links
+Dark mode
