@@ -62,7 +62,7 @@ export default function Home() {
           <img src="Apps.png" height="100" width="100"></img>
         </div>
       </div>
-      <div className="flex h-screen w-screen flex-row gap-40 bg-white px-36 py-24">
+      <div className="flex h-screen w-screen flex-col gap-40 bg-white px-36 py-24">
         <div className="flex flex-col gap-16">
           <div className="flex flex-col gap-2">
             <div className="flex text-base font-semibold tracking-wide text-orange-600">
@@ -155,21 +155,30 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center text-base font-semibold tracking-wide text-orange-600">
-            <span>SET UP YOUR PLAN</span>
+        </div>
+        <div className="flex h-full w-full flex-col items-center justify-center gap-20 rounded-xl border-2 border-orange-100 py-36">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-4">
+            <span className="text-base font-semibold tracking-wide text-orange-600">
+              MEET OUR TEEM
+            </span>
+            <span className="text-center text-base text-zinc-700">
+              We are a passionate and dedicated group committed to enhancing
+              peoples lives.
+            </span>
           </div>
-          <div className="flex flex-row items-center justify-center gap-16">
-            <div className="flex h-96 w-96 flex-col rounded-xl border-2 border-orange-100 p-14">
-              <span className="flex items-center justify-center text-5xl font-bold text-zinc-800">
-                800$
-              </span>
+          <div className="flex h-full w-full flex-col items-center justify-center gap-14">
+            <div className="flex h-full w-full flex-row justify-center gap-20">
+              <img src="people\natasha.png" className="h-48 w-48"></img>
+              <img src="people\marcos.png" className="h-48 w-48"></img>
+              <img src="people\noah.png" className="h-48 w-48"></img>
+              <img src="people\xingi.png" className="h-48 w-48"></img>
             </div>
-            <div className="flex h-96 w-96 flex-col rounded-xl border-2 border-orange-100 bg-orange-100 p-14">
-              <span className="flex items-center justify-center text-5xl font-bold text-zinc-800">
-                800$
-              </span>
+            <div className="flex h-full w-full flex-row justify-center gap-20">
+              <img src="people\aiden.png" className="h-48 w-48"></img>
+              <img src="people\ethan.png" className="h-48 w-48"></img>
+              <img src="people\sara.png" className="h-48 w-48"></img>
+              <img src="people\roberto.png" className="h-48 w-48"></img>
             </div>
-            <div></div>
           </div>
         </div>
       </div>
