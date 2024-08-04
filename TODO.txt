@@ -1,5 +1,6 @@
-Replace img with Image
-Redesign to fit in max-w-7xl - Don't use static height
-Create 3 more pages like Pricing
+Replace img with Image                                  --> DONE
+Redesign to fit in max-w-7xl - Don't use static height  --> DONE
+Create 3 more pages like Pricing                        --> faq, pricing, sing in + 3: Company (about us, mission, vision, values, News, ), Products (physic calendar, extension of software), Contact us            --> DONE
 Use links
+1. Put pages in the head of page
 Dark mode

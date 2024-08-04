@@ -43,27 +43,37 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <img src="People.png" width="200" height="200"></img>
+              <Image
+                src="/People.png"
+                height={200}
+                width={200}
+                alt="People"
+              ></Image>
               <span className="flex font-semibold text-slate-500">
                 Trusted by 100,000+ people
               </span>
             </div>
             <div className="flex items-center">
-              <img src="StarRating.png" height="150" width="150"></img>
+              <Image
+                src="/StarRating.png"
+                height={150}
+                width={150}
+                alt="StarRating"
+              ></Image>
             </div>
           </div>
           <div className="item-center flex flex-col justify-center gap-10">
             <Image src="/Graph.png" height={500} width={500} alt="Graph" />
-            <img src="Apps.png" height="100" width="100"></img>
+            <Image src="/Apps.png" height={100} width={100} alt="Apps" />
           </div>
         </div>
-        <div className="flex flex-col gap-40 px-36 py-24">
+        <div className="flex flex-col gap-40 py-24">
           <div className="flex flex-col gap-16">
             <div className="flex flex-col gap-2">
               <div className="flex text-base font-semibold tracking-wide text-orange-600">
                 <span>HOW IT WORKS</span>
               </div>
-              <div className="flex w-96 text-base text-zinc-700">
+              <div className="flex max-w-96 text-base text-zinc-700">
                 <span>
                   Organizing life effectively often requires a combination of
                   tools that cater to different aspects of planning and
@@ -85,7 +95,7 @@ export default function LandingPage() {
                       Tell us what you want to do
                     </span>
                   </div>
-                  <div className="flex h-20 w-96 text-base text-zinc-700">
+                  <div className="flex max-h-20 max-w-96 text-base text-zinc-700">
                     <span>
                       Never again waste time thinking about when to do
                       something. MANA IA will help you plan your day, week,
@@ -94,12 +104,22 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div>
-                  <img src="phone3.png" height="385" width="385"></img>
+                  <Image
+                    src="/phone3.png"
+                    height={385}
+                    width={385}
+                    alt="phone3"
+                  />
                 </div>
               </div>
               <div className="flex flex-row gap-60">
                 <div>
-                  <img src="phone3.png" height="385" width="385"></img>
+                  <Image
+                    src="/phone3.png"
+                    height={385}
+                    width={385}
+                    alt="phone3"
+                  ></Image>
                 </div>
                 <div className="flex flex-col gap-4">
                   <div>
@@ -139,7 +159,7 @@ export default function LandingPage() {
                       Tell us what you want to do
                     </span>
                   </div>
-                  <div className="flex h-20 w-96 text-base text-zinc-700">
+                  <div className="flex max-h-20 max-w-96 text-base text-zinc-700">
                     <span>
                       Never again waste time thinking about when to do
                       something. MANA IA will help you plan your day, week,
@@ -148,7 +168,12 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div>
-                  <img src="phone3.png" height="385" width="385"></img>
+                  <Image
+                    src="/phone3.png"
+                    height={385}
+                    width={385}
+                    alt="phone3"
+                  ></Image>
                 </div>
               </div>
             </div>
@@ -165,16 +190,64 @@ export default function LandingPage() {
             </div>
             <div className="flex flex-col items-center justify-center gap-14">
               <div className="flex flex-row justify-center gap-20">
-                <img src="people\natasha.png" className="h-48 w-48"></img>
-                <img src="people\marcos.png" className="h-48 w-48"></img>
-                <img src="people\noah.png" className="h-48 w-48"></img>
-                <img src="people\xingi.png" className="h-48 w-48"></img>
+                <Image
+                  src="/people/natasha.png"
+                  height={170}
+                  width={170}
+                  alt="people"
+                  className="rounded-full"
+                ></Image>
+                <Image
+                  src="/people/marcos.png"
+                  height={170}
+                  width={170}
+                  alt="marcos"
+                  className="rounded-full"
+                ></Image>
+                <Image
+                  src="/people/noah.png"
+                  height={170}
+                  width={170}
+                  alt="noah"
+                  className="rounded-full"
+                ></Image>
+                <Image
+                  src="/people/xingi.png"
+                  height={170}
+                  width={170}
+                  alt="xingi"
+                  className="rounded-full"
+                ></Image>
               </div>
               <div className="flex flex-row justify-center gap-20">
-                <img src="people\aiden.png" className="h-48 w-48"></img>
-                <img src="people\ethan.png" className="h-48 w-48"></img>
-                <img src="people\sara.png" className="h-48 w-48"></img>
-                <img src="people\roberto.png" className="h-48 w-48"></img>
+                <Image
+                  src="/people/aiden.png"
+                  height={170}
+                  width={170}
+                  alt="aiden"
+                  className="rounded-full"
+                ></Image>
+                <Image
+                  src="/people/ethan.png"
+                  height={170}
+                  width={170}
+                  alt="ethan"
+                  className="rounded-full"
+                ></Image>
+                <Image
+                  src="/people/sara.png"
+                  height={170}
+                  width={170}
+                  alt="sara"
+                  className="rounded-full"
+                ></Image>
+                <Image
+                  src="/people/roberto.png"
+                  height={170}
+                  width={170}
+                  alt="roberto"
+                  className="rounded-full"
+                ></Image>
               </div>
             </div>
           </div>
