@@ -16,7 +16,7 @@ export default function LandingPage() {
   return (
     <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
       <div className="max-w-7xl px-10">
-        <div className="flex flex-row gap-40 pt-32">
+        <div className="flex flex-row gap-40 pt-36">
           <div className="flex max-w-xl flex-col">
             <div className="pb-6 text-5xl font-extrabold text-slate-800 dark:text-slate-200">
               <div>
@@ -57,7 +57,7 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center">
               <Image
-                src="/StarRating.png"
+                src="/icons1/StarRating.png"
                 height={150}
                 width={150}
                 alt="StarRating"
@@ -66,7 +66,7 @@ export default function LandingPage() {
           </div>
           <div className="item-center flex flex-col justify-center gap-10">
             <Image src="/Graph.png" height={500} width={500} alt="Graph" />
-            <Image src="/Apps.png" height={100} width={100} alt="Apps" />
+            <Image src="/icons1/Apps.png" height={100} width={100} alt="Apps" />
           </div>
         </div>
         <div className="flex flex-col gap-40 py-24">
@@ -190,66 +190,82 @@ export default function LandingPage() {
                 peoples lives.
               </span>
             </div>
-            <div className="flex flex-col items-center justify-center gap-14">
-              <div className="flex flex-row justify-center gap-20">
-                <Image
-                  src="/people/natasha.png"
-                  height={170}
-                  width={170}
-                  alt="people"
-                  className="rounded-full"
-                ></Image>
-                <Image
-                  src="/people/marcos.png"
-                  height={170}
-                  width={170}
-                  alt="marcos"
-                  className="rounded-full"
-                ></Image>
-                <Image
-                  src="/people/noah.png"
-                  height={170}
-                  width={170}
-                  alt="noah"
-                  className="rounded-full"
-                ></Image>
-                <Image
-                  src="/people/xingi.png"
-                  height={170}
-                  width={170}
-                  alt="xingi"
-                  className="rounded-full"
-                ></Image>
+            <div className="flex flex-col items-center justify-center gap-20">
+              <div className="flex flex-col items-center justify-center gap-8">
+                <div className="flex flex-row items-center justify-center gap-20">
+                  <Image
+                    src="/people/natasha.png"
+                    height={170}
+                    width={170}
+                    alt="people"
+                    className="rounded-full"
+                  ></Image>
+                  <Image
+                    src="/people/marcos.png"
+                    height={170}
+                    width={170}
+                    alt="marcos"
+                    className="rounded-full"
+                  ></Image>
+                  <Image
+                    src="/people/noah.png"
+                    height={170}
+                    width={170}
+                    alt="noah"
+                    className="rounded-full"
+                  ></Image>
+                  <Image
+                    src="/people/xingi.png"
+                    height={170}
+                    width={170}
+                    alt="xingi"
+                    className="rounded-full"
+                  ></Image>
+                </div>
+                <div className="flex flex-row items-center justify-center gap-48 pr-5 text-lg text-zinc-800 dark:text-slate-200">
+                  <span>Natasha</span>
+                  <span>Marcos</span>
+                  <span>Noah</span>
+                  <span className="flex pl-6">Xingi</span>
+                </div>
               </div>
-              <div className="flex flex-row justify-center gap-20">
-                <Image
-                  src="/people/aiden.png"
-                  height={170}
-                  width={170}
-                  alt="aiden"
-                  className="rounded-full"
-                ></Image>
-                <Image
-                  src="/people/ethan.png"
-                  height={170}
-                  width={170}
-                  alt="ethan"
-                  className="rounded-full"
-                ></Image>
-                <Image
-                  src="/people/sara.png"
-                  height={170}
-                  width={170}
-                  alt="sara"
-                  className="rounded-full"
-                ></Image>
-                <Image
-                  src="/people/roberto.png"
-                  height={170}
-                  width={170}
-                  alt="roberto"
-                  className="rounded-full"
-                ></Image>
+              <div className="flex flex-col items-center justify-center gap-8">
+                <div className="flex flex-row justify-center gap-20">
+                  <Image
+                    src="/people/aiden.png"
+                    height={170}
+                    width={170}
+                    alt="aiden"
+                    className="rounded-full"
+                  ></Image>
+                  <Image
+                    src="/people/ethan.png"
+                    height={170}
+                    width={170}
+                    alt="ethan"
+                    className="rounded-full"
+                  ></Image>
+                  <Image
+                    src="/people/sara.png"
+                    height={170}
+                    width={170}
+                    alt="sara"
+                    className="rounded-full"
+                  ></Image>
+                  <Image
+                    src="/people/roberto.png"
+                    height={170}
+                    width={170}
+                    alt="roberto"
+                    className="rounded-full"
+                  ></Image>
+                </div>
+                <div className="flex flex-row items-center justify-center gap-52 pl-3 text-lg text-zinc-800 dark:text-slate-200">
+                  <span>Aiden</span>
+                  <span>Ethan</span>
+                  <span>Sara</span>
+                  <span>Roberto</span>
+                </div>
               </div>
             </div>
           </div>

@@ -22,14 +22,14 @@ export default function LandingPageLayout({
         <Link href="/pricing" className="transition hover:text-orange-500">
           Pricing
         </Link>
-        <Link href="/fag" className="transition hover:text-orange-500">
+        <Link href="/faq" className="transition hover:text-orange-500">
           FAQ
         </Link>
         <Link href="/sign-in" className="transition hover:text-orange-500">
-          Sing-in
+          Sing in
         </Link>
         <Link href="/contact-us" className="transition hover:text-orange-500">
-          Contact Us
+          Contact us
         </Link>
       </div>
       {children}
