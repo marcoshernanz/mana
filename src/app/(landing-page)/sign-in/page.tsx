@@ -1,9 +1,11 @@
 export default function SignInPage() {
   return (
     <div className="bg-orange-50-50 flex h-screen w-screen items-center justify-center dark:bg-slate-950">
-      <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-orange-200/90 bg-white px-7 py-8 text-slate-950 shadow-sm dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-50">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-orange-200/90 bg-white px-7 py-8 text-slate-950 shadow-sm dark:border-orange-600 dark:bg-slate-900/30 dark:text-orange-50">
         <div className="mb-2.5 flex w-full flex-col gap-1">
-          <span className="text-2xl font-semibold">Sign in</span>
+          <span className="text-2xl font-semibold dark:text-orange-500">
+            Sign in
+          </span>
           <span className="text-sm text-slate-600 dark:text-slate-400">
             Enter your email below to login to your account
           </span>
