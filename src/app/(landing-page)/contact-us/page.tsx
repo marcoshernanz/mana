@@ -1,6 +1,9 @@
 //NEW
 //text-center (by Tailwind CSS)
 //rotate-12 (by me)
+//href (by me)
+// a (by html in W)
+//underline (by me)
 
 //NECESITO SABER
 //1. Como hacer que el haya texto en el centro de la imagen
@@ -16,7 +19,7 @@ export default function ContactUs() {
       <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-12">
         <div className="flex flex-col items-center justify-center gap-10">
           <Image
-            src="/openart-image_NqVlUuRw_1722865684350_raw.png"
+            src="/backround/lab.png"
             height={1400}
             width={1400}
             alt="lab"
@@ -151,8 +154,39 @@ export default function ContactUs() {
               </div>
               <div className="max-w-56 text-center">
                 <span className="text-orange-700 dark:text-orange-200">
-                  You can also contact us throught Facebook, X, YouTube,
-                  Instagram and LinkedIn.
+                  You can also contact us throught{" "}
+                  <a
+                    className="underline"
+                    href="https://www.facebook.com/profile.php?id=61563843962924"
+                  >
+                    Facebook
+                  </a>
+                  ,{" "}
+                  <a className="underline" href="https://x.com/HernanNata67563">
+                    X
+                  </a>
+                  ,{" "}
+                  <a
+                    className="underline"
+                    href="https://www.youtube.com/@natashahernan4458/featured"
+                  >
+                    YouTube
+                  </a>
+                  ,{" "}
+                  <a
+                    className="underline"
+                    href="https://www.instagram.com/natashahernan/"
+                  >
+                    Instagram
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    className="underline"
+                    href="https://www.linkedin.com/in/natasha-hernan-a02781224/"
+                  >
+                    LinkedIn
+                  </a>
+                  .
                 </span>
               </div>
             </div>

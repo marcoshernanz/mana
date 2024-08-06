@@ -46,7 +46,7 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center gap-4">
               <Image
-                src="/People.png"
+                src="/more/People.png"
                 height={200}
                 width={200}
                 alt="People"
@@ -65,7 +65,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="item-center flex flex-col justify-center gap-10">
-            <Image src="/Graph.png" height={500} width={500} alt="Graph" />
+            <Image src="/more/Graph.png" height={500} width={500} alt="Graph" />
             <Image src="/icons1/Apps.png" height={100} width={100} alt="Apps" />
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function LandingPage() {
                 </div>
                 <div>
                   <Image
-                    src="/phone3.png"
+                    src="/more/phone3.png"
                     height={450}
                     width={450}
                     alt="phone3"
@@ -117,7 +117,7 @@ export default function LandingPage() {
               <div className="flex flex-row gap-60">
                 <div>
                   <Image
-                    src="/phone3.png"
+                    src="/more/phone3.png"
                     height={385}
                     width={385}
                     alt="phone3"
@@ -171,7 +171,7 @@ export default function LandingPage() {
                 </div>
                 <div>
                   <Image
-                    src="/phone3.png"
+                    src="/more/phone3.png"
                     height={385}
                     width={385}
                     alt="phone3"
