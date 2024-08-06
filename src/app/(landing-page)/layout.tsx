@@ -1,3 +1,5 @@
+//Added z-50 to header due to a probelm with relatives and absolutes
+
 import Link from "next/link";
 
 interface LandingPageLayoutProps {
@@ -9,7 +11,7 @@ export default function LandingPageLayout({
 }: LandingPageLayoutProps) {
   return (
     <div className="bg-orange-50 pt-16 dark:bg-slate-950">
-      <div className="fixed left-0 top-0 flex h-20 w-full items-center justify-center gap-24 bg-orange-100 font-semibold shadow-md dark:bg-slate-800 dark:text-slate-100">
+      <div className="fixed left-0 top-0 z-50 flex h-20 w-full items-center justify-center gap-24 bg-orange-100 font-semibold shadow-md dark:bg-slate-800 dark:text-slate-100">
         <Link href="/" className="transition hover:text-orange-500">
           MANA
         </Link>
