@@ -4,3 +4,24 @@ Create 3 more pages like Pricing                        --> faq, pricing, sing i
 Use links
 1. Put pages in the head of page
 Dark mode                                               --> DONE
+
+---------------------------------------------------------------------
+
+Move every section in landing page to its own component
+  Do the same with the rest of pages
+
+Finish Button component
+Add a new property to button - color
+Replace all buttons with custom Button
+
+Create new reusable components
+- Alert Dialog (You don't need to click the button for it to appear, it's just there) (https://ui.shadcn.com/docs/components/alert-dialog)
+- Avatar (https://ui.shadcn.com/docs/components/avatar)
+- Badge (https://ui.shadcn.com/docs/components/badge)
+- Input (https://ui.shadcn.com/docs/components/input)
+- Label (https://ui.shadcn.com/docs/components/label)
+- Progress (https://ui.shadcn.com/docs/components/progress)
+- Table (https://ui.shadcn.com/docs/components/table)
+  data: {invoice: string; status: string; method: string; amount: number}[]
+
+Create a new component for each navigation item <NavItem text="Company" href="/company" />

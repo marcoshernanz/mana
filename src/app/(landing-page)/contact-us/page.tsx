@@ -81,7 +81,7 @@ export default function ContactUs() {
               </div>
               <div className="max-w-56 pt-5 text-center">
                 <span className="text-orange-700 dark:text-orange-200">
-                  Hi I'm Xingi, your WhatsApp virtual assistant! In what can I
+                  Hi Im Xingi, your WhatsApp virtual assistant! In what can I
                   help you?
                 </span>
               </div>
