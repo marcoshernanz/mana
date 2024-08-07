@@ -34,7 +34,7 @@ export default function Company() {
                   alt="localization"
                   className="pb-8"
                 ></Image>
-                <span className="flex gap-1 text-5xl font-bold text-black dark:text-orange-500">
+                <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
                   {" "}
                   2,000{" "}
                   <span className="text-3xl font-bold text-black dark:text-orange-600">
@@ -54,7 +54,7 @@ export default function Company() {
                   alt="store"
                   className="pb-8"
                 ></Image>
-                <span className="flex gap-1 text-5xl font-bold text-black dark:text-orange-500">
+                <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
                   {" "}
                   100{" "}
                   <span className="text-3xl font-bold text-black dark:text-orange-600">
@@ -74,7 +74,7 @@ export default function Company() {
                   alt="patented"
                   className="pb-8"
                 ></Image>
-                <span className="flex gap-1 text-5xl font-bold text-black dark:text-orange-500">
+                <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
                   {" "}
                   1,000{" "}
                   <span className="text-3xl font-bold text-black dark:text-orange-600">
@@ -98,7 +98,7 @@ export default function Company() {
               </span>
             </span>
           </div>
-          <div className="flex max-w-3xl flex-col font-light text-slate-950 dark:text-slate-100">
+          <div className="flex max-w-3xl flex-col font-light text-slate-950 dark:text-orange-50">
             <span className="flex flex-col text-sm">
               MANA is a cutting-edge life management platform designed to
               streamline and enhance the lives of individuals by helping them
@@ -107,7 +107,9 @@ export default function Company() {
               to each user's unique interests and aspirations. Our platform
               ensures a more productive and fulfilling future by integrating and
               managing various productivity tools seamlessly.{" "}
-              <span className="pb-4 pt-10 text-lg">Key Features</span>
+              <span className="pb-4 pt-10 text-lg font-normal text-orange-600 dark:text-orange-400">
+                Key Features
+              </span>
               <ol className="flex list-decimal flex-col gap-2 pl-6">
                 <li>
                   {" "}
@@ -156,7 +158,9 @@ export default function Company() {
                   <span className="font-semibold">Innovative Technology: </span>{" "}
                 </li>
               </ol>
-              <span className="pb-4 pt-10 text-lg">Our Mission</span>
+              <span className="pb-4 pt-10 text-lg font-normal text-orange-600 dark:text-orange-400">
+                Our Mission
+              </span>
               At MANA, we believe that effective life management is key to
               unlocking a person's full potential. Our mission is to empower
               individuals to organize their lives efficiently, allowing them to
@@ -164,7 +168,9 @@ export default function Company() {
               platform, we help users achieve a balance between their personal
               and professional lives, paving the way for a more fulfilling
               future.
-              <span className="pb-4 pt-10 text-lg">Why Choose MANA?</span>
+              <span className="pb-4 pt-10 text-lg font-normal text-orange-600 dark:text-orange-400">
+                Why Choose MANA?
+              </span>
               <ul className="flex list-disc flex-col gap-1 pl-6">
                 <li>
                   <span className="font-semibold">Personalization:</span> MANA's
@@ -185,7 +191,7 @@ export default function Company() {
                   us apart from the competition.
                 </li>
               </ul>
-              <span className="pb-4 pt-10 text-lg">
+              <span className="pb-4 pt-10 text-lg font-normal text-orange-600 dark:text-orange-400">
                 Join the MANA Community
               </span>
               Discover the future of life management with MANA. Join millions of
@@ -197,7 +203,8 @@ export default function Company() {
             <div className="pt-6">
               <hr className="mt-4 h-0.5 w-full bg-zinc-400 dark:bg-orange-900"></hr>
               <span className="flex pt-6 text-lg">
-                MANA: Your Partner in Achieving Life's Goals
+                <span className="font-semibold text-orange-500">MANA</span>:
+                Your Partner in Achieving Life's Goals
               </span>
             </div>
           </div>

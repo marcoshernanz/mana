@@ -15,15 +15,15 @@ import Image from "next/image";
 
 export default function ContactUs() {
   return (
-    <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
+    <div className="flex flex-col items-center justify-center gap-10 bg-orange-50 dark:bg-slate-950">
+      <Image
+        src="/backround/lab3_2.png"
+        height={1600}
+        width={1600}
+        alt="lab"
+      ></Image>
       <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-12">
         <div className="flex flex-col items-center justify-center gap-10">
-          <Image
-            src="/backround/lab.png"
-            height={1400}
-            width={1400}
-            alt="lab"
-          ></Image>
           <div className="flex flex-col gap-20">
             <span className="text-5xl font-bold text-orange-500 dark:text-orange-500">
               Service Support Center
