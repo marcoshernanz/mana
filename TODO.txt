@@ -16,7 +16,7 @@ Replace all buttons with custom Button  --> DONE
 
 Create new reusable components
 - Alert Dialog (You don't need to click the button for it to appear, it's just there) (https://ui.shadcn.com/docs/components/alert-dialog)       --> DONE
-- Avatar (https://ui.shadcn.com/docs/components/avatar)
+- Avatar (https://ui.shadcn.com/docs/components/avatar)           --> DONE
 - Badge (https://ui.shadcn.com/docs/components/badge)
 - Input (https://ui.shadcn.com/docs/components/input)
 - Label (https://ui.shadcn.com/docs/components/label)
