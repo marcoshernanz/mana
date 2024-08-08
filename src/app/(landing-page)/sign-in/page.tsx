@@ -1,6 +1,15 @@
+import AlertDialog from "@/components/ui/AlertDialog";
+import Button from "@/components/ui/Button";
+
 export default function SignInPage() {
   return (
     <div className="bg-orange-50-50 flex h-screen w-screen items-center justify-center dark:bg-slate-950">
+      {/* <AlertDialog
+        title="ERROR"
+        Message="You haven't sign-in"
+        type="error"
+        size="dwarf"
+      /> */}
       <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-orange-200/90 bg-white px-7 py-8 text-slate-950 shadow-sm dark:border-orange-600 dark:bg-slate-900/30 dark:text-orange-50">
         <div className="mb-2.5 flex w-full flex-col gap-1">
           <span className="text-2xl font-semibold dark:text-orange-500">
@@ -38,12 +47,18 @@ export default function SignInPage() {
           />
         </div>
         <div className="mt-4 flex w-full flex-col gap-2.5">
-          <button className="rounded-md border border-orange-900 bg-orange-500 py-2.5 font-semibold text-slate-50 transition hover:border-orange-800 hover:bg-orange-600 active:shadow-lg dark:border-slate-100 dark:bg-slate-50 dark:text-slate-950 dark:hover:border-slate-400 dark:hover:bg-slate-300">
-            Sign in
-          </button>
-          <button className="rounded-md border border-orange-200/75 py-2.5 font-medium transition hover:border-orange-200/70 hover:bg-orange-100/75 active:shadow dark:border-slate-700 dark:hover:border-slate-700 dark:hover:bg-slate-800">
-            Sign in with Google
-          </button>
+          <Button
+            text="Sign in"
+            type="filled"
+            size="medium"
+            className="text-base font-semibold"
+          />
+          <Button
+            text="Sign in with Google"
+            type="outlined"
+            size="medium"
+            className="text-base font-semibold"
+          />
         </div>
       </div>
     </div>

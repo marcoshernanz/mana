@@ -8,14 +8,14 @@ Dark mode                                               --> DONE
 ---------------------------------------------------------------------
 
 Move every section in landing page to its own component
-  Do the same with the rest of pages
+  Do the same with the rest of pages (Landing Page, Company, faq, contact-us)                    --> DONE                                      
 
-Finish Button component
-Add a new property to button - color
-Replace all buttons with custom Button
+Finish Button component          --> DONE
+Add a new property to button - color --> DONE
+Replace all buttons with custom Button  --> DONE
 
 Create new reusable components
-- Alert Dialog (You don't need to click the button for it to appear, it's just there) (https://ui.shadcn.com/docs/components/alert-dialog)
+- Alert Dialog (You don't need to click the button for it to appear, it's just there) (https://ui.shadcn.com/docs/components/alert-dialog)       --> DONE
 - Avatar (https://ui.shadcn.com/docs/components/avatar)
 - Badge (https://ui.shadcn.com/docs/components/badge)
 - Input (https://ui.shadcn.com/docs/components/input)

@@ -24,14 +24,8 @@ export default function LandingPageHero() {
           </span>
         </div>
         <div className="flex gap-6 pb-16">
-          {/* <button className="rounded-lg bg-orange-500 px-6 py-3 text-lg font-bold text-white dark:bg-orange-500">
-            Start organizing
-          </button> */}
           <Button text="Start organizing" type="filled" size="large" />
           <Button text="Start organizing" type="outlined" size="large" />
-          {/* <div className="flex items-center justify-center rounded-lg border-2 border-orange-400 px-6 py-3 text-lg font-bold text-slate-600 dark:border-orange-600 dark:text-slate-400">
-            <button>Learn More</button>
-          </div> */}
         </div>
         <div className="flex items-center gap-4">
           <Image
