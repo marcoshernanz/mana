@@ -18,8 +18,8 @@ Create new reusable components
 - Alert Dialog (You don't need to click the button for it to appear, it's just there) (https://ui.shadcn.com/docs/components/alert-dialog)       --> DONE
 - Avatar (https://ui.shadcn.com/docs/components/avatar)           --> DONE
 - Badge (https://ui.shadcn.com/docs/components/badge)             --> DONE
-- Input (https://ui.shadcn.com/docs/components/input)
-- Label (https://ui.shadcn.com/docs/components/label)
+- Input (https://ui.shadcn.com/docs/components/input)             --> DONE
+- Label (https://ui.shadcn.com/docs/components/label)             --> DONE
 - Progress (https://ui.shadcn.com/docs/components/progress)
 - Table (https://ui.shadcn.com/docs/components/table)
   data: {invoice: string; status: string; method: string; amount: number}[]

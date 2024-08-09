@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Input from "../ui/Input";
 
 export default function ContactUs2() {
   return (
@@ -8,6 +9,7 @@ export default function ContactUs2() {
           Contact Us
         </span>
         <hr className="mt-4 size-10/12 h-1 w-full bg-red-900 dark:bg-red-100"></hr>
+        {/* <Input placeholder="Enter your name" size="small" /> */}
       </div>
       <div className="flex gap-8">
         <div className="max-h-5/6 flex w-72 flex-col items-center gap-24 rounded-lg bg-orange-200/20 pb-14 pt-14 dark:bg-slate-900/30">
