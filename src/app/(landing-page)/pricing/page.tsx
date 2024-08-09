@@ -1,4 +1,5 @@
 import AlertDialog from "@/components/ui/AlertDialog";
+import Progress from "@/components/ui/Progress";
 
 export default function PricingPage() {
   return (
@@ -11,6 +12,7 @@ export default function PricingPage() {
           size="huge"
         />
       </div> */}
+      <Progress size="large" progress={100} />
     </div>
   );
 }

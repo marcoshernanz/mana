@@ -24,7 +24,6 @@ export default function Input({
   className,
 }: InputPorps) {
   return (
-    // "flex w-full flex-col gap-1.5"
     <div
       className={twMerge(
         "flex w-full flex-col gap-1.5",

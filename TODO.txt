@@ -20,7 +20,7 @@ Create new reusable components
 - Badge (https://ui.shadcn.com/docs/components/badge)             --> DONE
 - Input (https://ui.shadcn.com/docs/components/input)             --> DONE
 - Label (https://ui.shadcn.com/docs/components/label)             --> DONE
-- Progress (https://ui.shadcn.com/docs/components/progress)
+- Progress (https://ui.shadcn.com/docs/components/progress)       --> DONE
 - Table (https://ui.shadcn.com/docs/components/table)
   data: {invoice: string; status: string; method: string; amount: number}[]
 
