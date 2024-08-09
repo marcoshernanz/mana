@@ -21,7 +21,7 @@ Create new reusable components
 - Input (https://ui.shadcn.com/docs/components/input)             --> DONE
 - Label (https://ui.shadcn.com/docs/components/label)             --> DONE
 - Progress (https://ui.shadcn.com/docs/components/progress)       --> DONE
-- Table (https://ui.shadcn.com/docs/components/table)
+- Table (https://ui.shadcn.com/docs/components/table)             --> DONE
   data: {invoice: string; status: string; method: string; amount: number}[]
 
-Create a new component for each navigation item <NavItem text="Company" href="/company" />
+Create a new component for each navigation item <NavItem text="Company" href="/company" />                                                       --> DONE
