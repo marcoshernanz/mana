@@ -25,3 +25,13 @@ Create new reusable components
   data: {invoice: string; status: string; method: string; amount: number}[]
 
 Create a new component for each navigation item <NavItem text="Company" href="/company" />                                                       --> DONE
+
+
+
+change all w and h by p: tengo solo:                --> DONE
+- al inicio de la página: h-screen w-screen     
+- altura de hr (0.5) o 1
+- tamaño del div de un texto de landing page
+
+create remaining pages      
+fix table component 

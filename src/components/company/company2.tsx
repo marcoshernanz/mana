@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Company2() {
   return (
-    <div className="relative z-0 flex h-96 w-full items-center justify-center bg-orange-100/40 dark:bg-slate-900/15">
+    <div className="relative z-0 flex w-full items-center justify-center bg-orange-100/40 dark:bg-slate-900/15">
       <div className="flex max-w-7xl flex-col items-center justify-center gap-32 px-10 pb-12">
         <div className="flex gap-64 pb-10 pt-16">
           <div className="flex flex-col items-center justify-center">

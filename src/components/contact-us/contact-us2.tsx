@@ -12,8 +12,9 @@ export default function ContactUs2() {
         {/* <Input placeholder="Enter your name" size="small" /> */}
       </div>
       <div className="flex gap-8">
-        <div className="max-h-5/6 flex w-72 flex-col items-center gap-24 rounded-lg bg-orange-200/20 pb-14 pt-14 dark:bg-slate-900/30">
-          <div className="max-h-5/6 flex flex-col items-center gap-24">
+        {/* w-72 */}
+        <div className="flex flex-col items-center gap-24 rounded-lg bg-orange-200/20 px-16 pb-14 pt-14 dark:bg-slate-900/30">
+          <div className="flex flex-col items-center gap-24">
             <span className="text-xl font-medium text-orange-950 dark:text-orange-50">
               Phone Support
             </span>
@@ -24,14 +25,16 @@ export default function ContactUs2() {
               alt="phone"
             ></Image>
           </div>
-          <div className="max-w-56 pt-1.5 text-center">
+          {/* max-w-56 */}
+          <div className="pt-1.5 text-center">
             <span className="text-orange-700 dark:text-orange-200">
               We serve you 24/7. Call us at +34 600 960 824
             </span>
           </div>
         </div>
-        <div className="max-h-5/6 flex w-72 flex-col items-center gap-24 rounded-lg bg-orange-200/20 pb-14 pt-14 dark:bg-slate-900/30">
-          <div className="max-h-5/6 flex flex-col items-center gap-24">
+        {/* w-72 */}
+        <div className="flex flex-col items-center gap-24 rounded-lg bg-orange-200/20 px-8 pb-14 pt-14 dark:bg-slate-900/30">
+          <div className="flex flex-col items-center gap-24">
             <span className="text-xl font-medium text-orange-950 dark:text-orange-50">
               Whatsapp assistant
             </span>
@@ -42,16 +45,16 @@ export default function ContactUs2() {
               alt="Whatsapp"
             ></Image>
           </div>
-          <div className="max-w-56 pt-5 text-center">
+          <div className="pt-5 text-center">
             <span className="text-orange-700 dark:text-orange-200">
               Hi Im Xingi, your WhatsApp virtual assistant! In what can I help
               you?
             </span>
           </div>
         </div>
-        <div className="max-h-5/6 flex w-72 flex-col items-center gap-20 rounded-lg bg-orange-200/20 pb-14 pt-14 dark:bg-slate-900/30">
+        <div className="flex flex-col items-center gap-20 rounded-lg bg-orange-200/20 px-8 pb-14 pt-14 dark:bg-slate-900/30">
           {" "}
-          <div className="max-h-5/6 flex flex-col items-center gap-24">
+          <div className="flex flex-col items-center gap-24">
             <span className="text-xl font-medium text-orange-950 dark:text-orange-50">
               Email Support
             </span>
@@ -62,13 +65,13 @@ export default function ContactUs2() {
               alt="email white"
             ></Image>
           </div>
-          <div className="max-w-56 pt-3 text-center">
+          <div className="px-8 pt-3 text-center">
             <span className="text-orange-700 dark:text-orange-200">
               MANA@gmail.com
             </span>
           </div>
         </div>
-        <div className="max-h-5/6 flex w-72 flex-col items-center gap-16 rounded-lg bg-orange-200/20 pb-14 pt-14 dark:bg-slate-900/30">
+        <div className="flex flex-col items-center gap-16 rounded-lg bg-orange-200/20 px-2 pb-14 pt-14 dark:bg-slate-900/30">
           <span className="text-xl font-medium text-orange-950 dark:text-orange-50">
             Media Contact
           </span>
@@ -115,7 +118,7 @@ export default function ContactUs2() {
               ></Image>
             </div>
           </div>
-          <div className="max-w-56 text-center">
+          <div className="px-2 text-center">
             <span className="text-orange-700 dark:text-orange-200">
               You can also contact us throught{" "}
               <a

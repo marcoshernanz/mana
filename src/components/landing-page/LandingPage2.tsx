@@ -29,7 +29,7 @@ export default function LandingPage2() {
                 Tell us what you want to do
               </span>
             </div>
-            <div className="flex max-h-20 max-w-96 text-base text-zinc-700 dark:text-zinc-300">
+            <div className="flex max-w-96 text-base text-zinc-700 dark:text-zinc-300">
               <span>
                 Never again waste time thinking about when to do something. MANA
                 IA will help you plan your day, week, month, and year.
@@ -66,7 +66,7 @@ export default function LandingPage2() {
                 Tell us your commitment
               </span>
             </div>
-            <div className="flex h-20 w-96 flex-col gap-1 text-base text-zinc-700 dark:text-zinc-300">
+            <div className="flex w-96 flex-col gap-1 text-base text-zinc-700 dark:text-zinc-300">
               <span>MANA will:</span>
               <ul className="ml-5 list-disc">
                 <li>Set up a new Notion workspace for you</li>
@@ -92,7 +92,7 @@ export default function LandingPage2() {
                 Tell us what you want to do
               </span>
             </div>
-            <div className="flex max-h-20 max-w-96 text-base text-zinc-700 dark:text-zinc-300">
+            <div className="flex max-w-96 text-base text-zinc-700 dark:text-zinc-300">
               <span>
                 Never again waste time thinking about when to do something. MANA
                 IA will help you plan your day, week, month, and year.
