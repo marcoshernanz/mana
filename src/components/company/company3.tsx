@@ -11,13 +11,9 @@ export default function Company3() {
       </div>
       <div className="flex max-w-3xl flex-col font-light text-slate-950 dark:text-orange-50">
         <span className="flex flex-col text-sm">
-          MANA is a cutting-edge life management platform designed to streamline
-          and enhance the lives of individuals by helping them achieve their
-          goals. Utilizing advanced artificial intelligence, MANA offers a
-          personalized approach to life organization, tailored to each user's
-          unique interests and aspirations. Our platform ensures a more
-          productive and fulfilling future by integrating and managing various
-          productivity tools seamlessly.{" "}
+          {
+            "MANA is a cutting-edge life management platform designed to streamline and enhance the lives of individuals by helping them achieve their goals. Utilizing advanced artificial intelligence, MANA offers a personalized approach to life organization, tailored to each user's unique interests and aspirations. Our platform ensures a more productive and fulfilling future by integrating and managing various productivity tools seamlessly."
+          }{" "}
           <span className="pb-4 pt-10 text-lg font-normal text-orange-600 dark:text-orange-400">
             Key Features
           </span>
@@ -42,9 +38,9 @@ export default function Company3() {
               <span className="font-semibold">
                 Comprehensive Tool Integration:
               </span>{" "}
-              Whether it's managing your daily schedule, tracking your long-term
-              goals, or organizing your personal projects, MANA provides a
-              comprehensive solution that covers all aspects of life management.
+              {
+                "Whether it's managing your daily schedule, tracking your long-term goals, or organizing your personal projects, MANA provides a comprehensive solution that covers all aspects of life management."
+              }
             </li>
             <li>
               <span className="font-semibold">Holistic Life Management:</span>{" "}
@@ -66,27 +62,28 @@ export default function Company3() {
           <span className="pb-4 pt-10 text-lg font-normal text-orange-600 dark:text-orange-400">
             Our Mission
           </span>
-          At MANA, we believe that effective life management is key to unlocking
-          a person's full potential. Our mission is to empower individuals to
-          organize their lives efficiently, allowing them to focus on what truly
-          matters. By offering a tailored and integrated platform, we help users
-          achieve a balance between their personal and professional lives,
-          paving the way for a more fulfilling future.
+          {
+            "At MANA, we believe that effective life management is key to unlocking a person's full potential. Our mission is to empower individuals to organize their lives efficiently, allowing them to focus on what truly matters. By offering a tailored and integrated platform, we help users achieve a balance between their personal and professional lives, paving the way for a more fulfilling future."
+          }
           <span className="pb-4 pt-10 text-lg font-normal text-orange-600 dark:text-orange-400">
             Why Choose MANA?
           </span>
           <ul className="flex list-disc flex-col gap-1 pl-6">
             <li>
-              <span className="font-semibold">Personalization:</span> MANA's AI
-              customizes your experience based on your specific needs and goals.
+              <span className="font-semibold">Personalization:</span>{" "}
+              {
+                "MANA's AI customizes your experience based on your specific needs and goals."
+              }
             </li>
             <li>
               <span className="font-semibold">Integration:</span> Seamlessly
               manage all your favorite productivity tools in one place.
             </li>
             <li>
-              <span className="font-semibold">Global Support:</span> Access
-              MANA's resources and support from anywhere in the world.
+              <span className="font-semibold">Global Support:</span>{" "}
+              {
+                "Access MANA's resources and support from anywhere in the world."
+              }
             </li>
             <li>
               <span className="font-semibold">Innovation:</span> Benefit from
@@ -106,7 +103,7 @@ export default function Company3() {
           <hr className="mt-4 h-0.5 w-full bg-zinc-400 dark:bg-orange-900"></hr>
           <span className="flex pt-6 text-lg">
             <span className="font-semibold text-orange-500">MANA</span>: Your
-            Partner in Achieving Life's Goals
+            {"Partner in Achieving Life's Goals"}
           </span>
         </div>
       </div>
