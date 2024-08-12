@@ -87,5 +87,13 @@ Next.js
   <Link></Link>
 
 
-
 Ctrl + Shift + I  ->  Ctrl + Shift + P  ->  Show Rendering  ->  prefers-color-scheme
+
+onClick={FUNCTION}
+const [value, setValue] = useState(initialValue)
+
+value -> Read the value
+setValue -> Change the value
+
+setValue(VALUE) -> When new VALUE doesn't depend on old value
+setValue(FUNCTION(value) {}) -> When new VALUE depends on old value
