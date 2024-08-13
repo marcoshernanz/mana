@@ -1,81 +1,76 @@
+//NEW THING
+//Underline: by tailwind
+//flex-wrap: by someone's mistake in stackoverflow
+
 import Avatar from "@/components/ui/Avatar";
 import Table from "@/components/ui/Table";
 import Progress from "@/components/ui/Progress";
 import AlertDialog from "@/components/ui/AlertDialog";
 import Image from "next/image";
+import Product from "@/components/ui/product";
 
 export default function Products() {
-  const tableData = [
+  const ProductData = [
     {
-      Invoice: "INV-001",
-      Client: "John Doe",
-      Amount: "$200",
-      Date: "12-02-2021",
-      Status: "Paid",
+      name: "MANA Planner",
+      image: { src: "/product1.png" },
     },
     {
-      Invoice: "INV-002",
-      Client: "Jane Doe",
-      Amount: "$300",
-      Date: "12-02-2021",
-      Status: "Paid",
+      name: "MANA Habit Tracker",
+      image: { src: "/product2.png" },
     },
     {
-      Invoice: "INV-003",
-      Client: "John Doe",
-      Amount: "$200",
-      Date: "12-02-2021",
-      Status: "Paid",
+      name: "MANA Goal Setter",
+      image: { src: "/product3.png" },
     },
     {
-      Invoice: "INV-004",
-      Client: "Jane Doe",
-      Amount: "$300",
-      Date: "12-02-2021",
-      Status: "Paid",
+      name: "MANA Time Manager",
+      image: { src: "/product4.png" },
     },
     {
-      Invoice: "INV-005",
-      Client: "John Doe",
-      Amount: "$200",
-      Date: "12-02-2021",
-      Status: "Paid",
+      name: "MANA Finance Tracker",
+      image: { src: "/product5.png" },
     },
     {
-      Invoice: "INV-006",
-      Client: "Jane Doe",
-      Amount: "$300",
-      Date: "12-02-2021",
-      Status: "Paid",
+      name: "MANA Project Manager",
+      image: { src: "/product6.png" },
+    },
+    {
+      name: "MANA Health & Wellness",
+      image: { src: "/product7.png" },
+    },
+    {
+      name: "MANA Learning Hub",
+      image: { src: "/product8.png" },
+    },
+    {
+      name: "MANA Communication Suite",
+      image: { src: "/product9.png" },
     },
   ];
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-orange-50 dark:bg-slate-950">
-      {/* <div className="relative h-full w-full items-center justify-center">
-        <AlertDialog
-          title="ERROR"
-          Message="You haven't sign-in"
-          type="error"
-          size="huge"
-        />
-      </div> */}
-      {/* <Progress size="large" progress={100} /> */}
-      {/* <Avatar src="/Avatar.png" alt="avatar" size="dwarf" /> */}
-      {/* <Table caption="Invoices" data={tableData} /> */}
-      <div className="max-w-7xl items-center justify-center px-10">
-        <div className="flex h-full w-full items-center justify-center gap-20">
-          <div className="flex flex-col gap-4 p-3">
-            <span>MANA 01 series</span>
-            <span>Planner</span>
-            <Image
-              src="/product1.png"
-              alt="MANA Planner"
-              height={100}
-              width={100}
-            ></Image>
+    <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
+      <div className="max-w-7xl items-center justify-center px-10 pb-20 pt-28">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-16">
+          <div className="pb-10 text-4xl font-semibold text-orange-500 dark:text-orange-500">
+            <span>Our Products</span>
           </div>
-          <div></div>
-          <div></div>
+          <div className="gap flex flex-wrap items-center justify-center">
+            {ProductData.map(function (product, i) {
+              return (
+                <div key={i}>
+                  <div className="rounded-md px-10 py-10 transition hover:bg-orange-100/60 dark:hover:bg-slate-900/60">
+                    <Product
+                      name={product.name}
+                      series={i}
+                      image={product.image}
+                    ></Product>
+                  </div>
+                  <div className="h-10"></div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
