@@ -8,6 +8,7 @@ import Progress from "@/components/ui/Progress";
 import AlertDialog from "@/components/ui/AlertDialog";
 import Image from "next/image";
 import Product from "@/components/ui/product";
+import Label from "@/components/ui/label";
 
 export default function Products() {
   const ProductData = [
