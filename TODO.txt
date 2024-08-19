@@ -35,3 +35,62 @@ change all w and h by p: tengo solo:                --> DONE
 
 create remaining pages      
 fix table component 
+
+
+
+
+
+
+
+
+Understand the Todo app
+Understand useState and rerenders
+Understand useEffect and use cases
+Understand Array.map() and Array.filter()
+Understand spread operator
+
+
+
+Blog
+Inputs
+  Title
+  Text
+  Tags
+    Create tags
+    The app starts with no tags. The user creates tags and then has the ability to select them
+  IsRead
+  Add
+  
+Pages
+  Something like this but the pages should be the size of the screen https://ui.shadcn.com/docs/components/carousel
+  First page is to add new blog posts
+  Next pages are the blogs that aren't read
+  The user should have the ability to navigate through the unread blog posts by clicking arrow buttons.
+  
+  const [pageNumber, setPageNumber] = useState<number>(0)
+  Button with onClick to set page number to one less
+  Button with onClick to set page number to one more
+  Conditionally render the page you're in
+  {
+    pageNumber === 0 ? <WriteBlogPost />
+    : <BlogPost blogPost={blogPosts[pageNumber - 1]} />
+  }
+  
+   BlogPost {
+    title
+    text
+    selectedTags: string[]
+    isRead
+  }
+
+  (to insert in local storage)
+  data  {
+    pageNumber
+    allTags
+    blogPosts: BlogPost[]
+    
+    (save the inputs in case of reload while writing)
+    title
+    text
+    selectedTags
+  }
