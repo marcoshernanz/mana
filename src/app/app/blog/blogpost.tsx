@@ -12,6 +12,8 @@ interface BlogPostProps {
 
   initialIsRead: boolean;
   editBlogIsRead: (index: number, isRead: boolean) => void;
+
+  pageNumber: number;
 }
 
 export default function BlogPost({
@@ -23,6 +25,7 @@ export default function BlogPost({
   deleteBlog,
   initialIsRead,
   editBlogIsRead,
+  pageNumber,
 }: BlogPostProps) {
   const [isRead, setIsRead] = useState<boolean>(initialIsRead);
   return (
@@ -55,12 +58,17 @@ export default function BlogPost({
           </div>
         </div>
       </div>
-      <button
-        className="flex items-end justify-end pb-5 pr-5"
-        onClick={() => deleteBlog(index)}
-      >
-        Delete
-      </button>
+      <div className="flex w-full justify-around gap-96">
+        <span className="flex items-end justify-start pb-5 pr-5">
+          Page {pageNumber}
+        </span>
+        <button
+          className="flex items-end justify-end pb-5 pr-5"
+          onClick={() => deleteBlog(index)}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 }

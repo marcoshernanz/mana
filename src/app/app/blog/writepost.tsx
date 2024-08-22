@@ -30,6 +30,7 @@ type Blog = {
   content: string;
   tags: Tags;
   isRead: boolean;
+  pageNumber: number;
 };
 
 export default function WritePost() {
@@ -63,9 +64,17 @@ export default function WritePost() {
   };
 
   const addBlog = () => {
-    const newBlog = { title, content, tags: selectedTags, isRead: false };
+    const newPage = { pageNumber };
+    const newBlog = {
+      title,
+      content,
+      tags: selectedTags,
+      isRead: false,
+      pageNumber,
+    };
     console.log("Adding new blog:", newBlog);
     setBlog((prevBlogs) => [...prevBlogs, newBlog]);
+    setPageNumber((prevPageNumber) => prevPageNumber + 1);
 
     setTitle("");
     setContent("");
@@ -102,6 +111,7 @@ export default function WritePost() {
         index={index}
         initialIsRead={blog.isRead}
         editBlogIsRead={editBlogIsRead}
+        pageNumber={index + 1}
       />
     ));
   }
@@ -158,12 +168,17 @@ export default function WritePost() {
           </div>
         </div>
       </div>
-      <button
-        className="flex items-end justify-end pb-5 pr-5"
-        onClick={addBlog}
-      >
-        Submit
-      </button>
+      <div className="flex w-full justify-around gap-96">
+        <span className="flex items-start justify-start pb-5 pl-5">
+          Page {pageNumber}
+        </span>
+        <button
+          className="flex items-end justify-end pb-5 pr-5"
+          onClick={addBlog}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 }
