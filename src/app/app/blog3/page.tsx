@@ -38,7 +38,8 @@ export default function PageControll() {
 
   const addBlog = (newBlog: Blog) => {
     setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
-    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+    // setPageNumber((prevPageNumber) => prevPageNumber + 1);
+    setPageNumber(0);
   };
 
   const editBlogIsRead = (index: number, isRead: boolean) => {
@@ -51,10 +52,12 @@ export default function PageControll() {
   };
 
   const deleteBlog = (blogIndex: number) => {
-    setBlogs((blogs) => {
-      const newBlogs = blogs.filter((_, index) => index !== blogIndex);
-      return newBlogs;
-    });
+    setBlogs((prevBlogs) =>
+      prevBlogs.filter((_, index) => index !== blogIndex),
+    );
+    if (pageNumber >= blogs.length - 1) {
+      setPageNumber((prevPageNumber) => Math.max(prevPageNumber - 1, 0));
+    }
   };
 
   // function SpanPage() {
@@ -64,40 +67,38 @@ export default function PageControll() {
   //   }
   // }
 
-  // function Click(direction: string) {
-  //   direction === "left"
-  //     ? () => setPageNumber((prevPageNumber) => prevPageNumber - 1)
-  //     : setPageNumber((prevPageNumber) => prevPageNumber + 1);
-
-  //   SpanPage;
-  // }
+  function Click(direction: string) {
+    if (direction === "left" && pageNumber > 0) {
+      setPageNumber((prevPageNumber) => prevPageNumber - 1);
+    } else if (direction === "right" && pageNumber < blogs.length) {
+      setPageNumber((prevPageNumber) => prevPageNumber + 1);
+    }
+  }
 
   return (
     <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
       <div className="h-full w-full max-w-7xl px-10 py-28">
         <div className="flex h-full w-full justify-around text-white">
-          <button onClick={() => setPageNumber(pageNumber - 1)}>{"<"}</button>
+          <button onClick={() => Click("left")}>{"<"}</button>
           {pageNumber === 0 ? (
-            <WritePost addBlog={addBlog} />
+            <WritePost addBlog={addBlog} pageNumber={pageNumber} />
           ) : (
-            blogs.map((blog, index) => (
+            blogs.length > 0 && (
               <BlogPost
-                key={index}
-                title={blog.title}
-                content={blog.content}
-                tags={blog.tags}
-                availableTags={blog.tags}
-                index={index}
-                initialIsRead={blog.isRead}
+                key={pageNumber - 1}
+                title={blogs[pageNumber - 1].title}
+                content={blogs[pageNumber - 1].content}
+                tags={blogs[pageNumber - 1].tags}
+                availableTags={blogs[pageNumber - 1].tags}
+                index={pageNumber - 1}
+                initialIsRead={blogs[pageNumber - 1].isRead}
                 editBlogIsRead={editBlogIsRead}
-                pageNumber={blog.pageNumber}
+                pageNumber={blogs[pageNumber - 1].pageNumber}
                 deleteBlog={deleteBlog}
               />
-            ))
+            )
           )}
-          <button onClick={() => () => setPageNumber(pageNumber + 1)}>
-            {">"}
-          </button>
+          <button onClick={() => Click("right")}>{">"}</button>
         </div>
       </div>
     </div>

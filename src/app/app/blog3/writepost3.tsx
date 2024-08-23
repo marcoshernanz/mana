@@ -6,10 +6,10 @@ import { availableTags, type Blog as BlogType, type Tags } from "./page";
 
 interface WritePostProps {
   addBlog: (blog: BlogType) => void;
+  pageNumber: number;
 }
 
-export default function WritePost({ addBlog }: WritePostProps) {
-  const [pageNumber, setPageNumber] = useState<number>(0);
+export default function WritePost({ addBlog, pageNumber }: WritePostProps) {
   //initial state of tags: false
   const [selectedTags, setSelectedTags] = useState<Tags>({});
   // Handle available tags that user added
@@ -40,8 +40,8 @@ export default function WritePost({ addBlog }: WritePostProps) {
       title,
       content,
       tags: selectedTags,
-      isRead: false,
-      pageNumber,
+      isRead: true,
+      pageNumber: 0,
     };
     console.log("Adding new blog:", newBlog);
     addBlog(newBlog);
@@ -51,6 +51,7 @@ export default function WritePost({ addBlog }: WritePostProps) {
     setTitle("");
     setContent("");
     setSelectedTags({});
+    setUserTags("");
   };
 
   return (
@@ -106,9 +107,7 @@ export default function WritePost({ addBlog }: WritePostProps) {
         </div>
       </div>
       <div className="flex w-full justify-around gap-96">
-        <span className="flex items-start justify-start pb-5 pl-5">
-          {pageNumber}
-        </span>
+        <span className="flex items-start justify-start pb-5 pl-5">0</span>
         <button
           className="flex items-end justify-end pb-5 pr-5"
           onClick={HanddleaddBlog}

@@ -45,8 +45,8 @@ export default function BlogPost({
       <div className="flex gap-10">
         <div className="w-sm flex items-start gap-3 pl-5 pt-28"></div>
         <div className="flex flex-col gap-8 pb-28 pr-40">
-          <div className="dark:text-slate-800">{title}</div>
-          <div className="dark:text-slate-800">{content}</div>
+          <div className="dark:text-slate-50">{title}</div>
+          <div className="dark:text-slate-50">{content}</div>
           <div className="flex gap-5">
             {Object.entries(availableTags).map(
               ([tag, value], index) =>
@@ -60,7 +60,7 @@ export default function BlogPost({
         </div>
       </div>
       <div className="flex w-full justify-around gap-96">
-        <span className="flex items-end justify-start pb-5 pr-5">
+        <span className="flex items-end justify-start pb-5 pl-5">
           {pageNumber}
         </span>
         <button
