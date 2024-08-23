@@ -91,12 +91,6 @@ export default function TodoPage() {
           {availableTags.map((tag, index) => (
             <button
               onClick={() =>
-                // setSelectedTags((tags) => ({
-                //   university: tag === "university" ? true : tags.university,
-                //   house: tag === "house" ? true : tags.house,
-                //   urgent: tag === "urgent" ? true : tags.urgent,
-                //   work: tag === "work" ? true : tags.work,
-                // }))
                 setSelectedTags((tags) => ({
                   ...tags,
                   [tag]: !tags[tag],

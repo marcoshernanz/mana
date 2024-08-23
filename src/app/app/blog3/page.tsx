@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WritePost from "./writepost3";
 import BlogPost from "./blogpost3";
 
@@ -32,14 +32,14 @@ export type Blog = {
 };
 
 export default function PageControll() {
-  //change page in which you're in
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [blogs, setBlogs] = useState<Blog[]>([]);
 
   const addBlog = (newBlog: Blog) => {
     setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
-    // setPageNumber((prevPageNumber) => prevPageNumber + 1);
+    // localStorage.setItem("blogs", JSON.stringify(newBlog));
     setPageNumber(0);
+    // return newBlog;
   };
 
   const editBlogIsRead = (index: number, isRead: boolean) => {
@@ -47,25 +47,21 @@ export default function PageControll() {
       const newBlogs = blog.map((blog, i) =>
         i === index ? { ...blog, isRead } : blog,
       );
+      localStorage.setItem("blogs", JSON.stringify(newBlogs));
       return newBlogs;
     });
   };
 
   const deleteBlog = (blogIndex: number) => {
-    setBlogs((prevBlogs) =>
-      prevBlogs.filter((_, index) => index !== blogIndex),
-    );
+    setBlogs((prevBlogs) => {
+      const newBlogs = prevBlogs.filter((_, index) => index !== blogIndex);
+      localStorage.setItem("blogs", JSON.stringify(newBlogs));
+      return newBlogs;
+    });
     if (pageNumber >= blogs.length - 1) {
       setPageNumber((prevPageNumber) => Math.max(prevPageNumber - 1, 0));
     }
   };
-
-  // function SpanPage() {
-  //   {
-  //     // pageNumber === 0 ? <WritePost /> : <BlogPost  {
-  //     // }/>;
-  //   }
-  // }
 
   function Click(direction: string) {
     if (direction === "left" && pageNumber > 0) {
@@ -74,6 +70,11 @@ export default function PageControll() {
       setPageNumber((prevPageNumber) => prevPageNumber + 1);
     }
   }
+
+  // useEffect(() => {
+  //   const blogs = JSON.parse(localStorage.getItem("blogs") ?? "[]");
+  //   setBlogs(blogs);
+  // }, []);
 
   return (
     <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">

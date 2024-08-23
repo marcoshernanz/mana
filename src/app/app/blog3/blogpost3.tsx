@@ -34,12 +34,13 @@ export default function BlogPost({
       <div className="flex justify-end pr-5 pt-5">
         <input
           type="checkbox"
-          checked={isRead}
-          onChange={(e) => {
-            const isRead = e.target.checked;
-            setIsRead(isRead);
-            editBlogIsRead(index, isRead);
-          }}
+          // checked={isRead}
+          checked={initialIsRead}
+          // onChange={(e) => {
+          //   const isRead = e.target.checked;
+          //   setIsRead(isRead);
+          //   editBlogIsRead(index, isRead);
+          // }}
         ></input>
       </div>
       <div className="flex gap-10">

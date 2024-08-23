@@ -18,6 +18,7 @@ export default function WritePost({ addBlog, pageNumber }: WritePostProps) {
   const [title, setTitle] = useState<string>("");
   //Handle user tags
   const [userTags, setUserTags] = useState<string>("");
+  const [isRead, setIsRead] = useState<boolean>(false);
 
   //need to be  here, creation of blogs
   function checkRepetition(tag: string) {
@@ -34,30 +35,40 @@ export default function WritePost({ addBlog, pageNumber }: WritePostProps) {
     setUserTags("");
   };
 
-  // can be here, creation of blogs, when submit
   const HanddleaddBlog = () => {
     const newBlog = {
       title,
       content,
       tags: selectedTags,
-      isRead: true,
+      isRead,
       pageNumber: 0,
     };
     console.log("Adding new blog:", newBlog);
     addBlog(newBlog);
-    // setBlog((prevBlogs) => [...prevBlogs, newBlog]);
-    // setPageNumber((prevPageNumber) => prevPageNumber + 1);
 
     setTitle("");
     setContent("");
-    setSelectedTags({});
+    setIsRead(false);
+
+    setSelectedTags((prevTags) => {
+      const resetTags = Object.keys(prevTags).reduce((key, i) => {
+        key[i] = false;
+        return key;
+      }, {} as Tags);
+      return resetTags;
+    });
+
     setUserTags("");
   };
 
   return (
     <div className="relative z-0 flex flex-col gap-8 border border-orange-100">
       <div className="flex justify-end pr-5 pt-5">
-        <input type="checkbox"></input>
+        <input
+          type="checkbox"
+          checked={isRead}
+          onChange={() => setIsRead(!isRead)}
+        />
       </div>
       <div className="flex gap-10">
         <div className="w-sm flex items-start gap-3 pl-5 pt-28">
