@@ -82,6 +82,7 @@ export default function BlogPage() {
                     blogPost={unreadBlogPosts[pageNumber - 1]}
                     editBlogPostIsRead={editBlogPostIsRead}
                     setPageNumber={setPageNumber}
+                    pageNumber={pageNumber}
                   />
                 )
               )}

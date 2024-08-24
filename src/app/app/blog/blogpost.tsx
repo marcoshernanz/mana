@@ -5,12 +5,14 @@ interface BlogPostProps {
   blogPost: BlogPostType;
   editBlogPostIsRead: (index: number, isRead: boolean) => void;
   setPageNumber: Dispatch<SetStateAction<number>>;
+  pageNumber: number;
 }
 
 export default function BlogPost({
   blogPost,
   editBlogPostIsRead,
   setPageNumber,
+  pageNumber,
 }: BlogPostProps) {
   return (
     <div className="flex flex-col gap-8 border border-orange-100">
@@ -39,6 +41,7 @@ export default function BlogPost({
           </div>
         </div>
       </div>
+      <span>{pageNumber}</span>
     </div>
   );
 }

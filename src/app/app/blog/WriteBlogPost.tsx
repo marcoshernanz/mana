@@ -130,7 +130,6 @@ export default function WriteBlogPost({ addBlogPost }: WriteBlogPost) {
         </div>
       </div>
       <div className="flex w-full justify-around gap-96">
-        <span className="flex items-start justify-start pb-5 pl-5">0</span>
         <button
           className="flex items-end justify-end pb-5 pr-5"
           onClick={handleAddBlogPost}

@@ -1,73 +1,128 @@
 "use client";
 
-import MoreItems from "@/components/ui/moreitems";
-import NewTask from "@/components/ui/newtask";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
+import TodoTask from "./TodoTask";
+
+export const availableTags: ["university", "house", "urgent", "work"] = [
+  "university",
+  "house",
+  "urgent",
+  "work",
+];
+
+export type Tags = {
+  university: boolean;
+  house: boolean;
+  urgent: boolean;
+  work: boolean;
+};
+
+export type Task = {
+  text: string;
+  tags: Tags;
+  isCompleted: boolean;
+};
 
 export default function TodoPage() {
-  const [tasks, setTasks] = useState<string[]>([
-    "Gess how to put single quote in react",
-    "Finish TodoPage",
-    "Create moreitems component",
-    "Finish label component",
-  ]);
-  const TasksNames = [
-    "Improve NewTask component",
-    "Create moreitems component",
-  ];
-  const [nextTaskIndex, setNextTaskIndex] = useState<number>(0);
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const [text, setText] = useState<string>("");
+  const [selectedTags, setSelectedTags] = useState<Tags>({
+    university: false,
+    house: false,
+    urgent: false,
+    work: false,
+  });
+
+  const addTask = () => {
+    const newTask = { text, tags: selectedTags, isCompleted: false };
+    setTasks((tasks) => {
+      const newTasks = [...tasks, newTask];
+      localStorage.setItem("tasks", JSON.stringify(newTasks));
+      return newTasks;
+    });
+
+    setText("");
+    setSelectedTags({
+      university: false,
+      house: false,
+      urgent: false,
+      work: false,
+    });
+  };
+
+  const deleteTask = (taskIndex: number) => {
+    setTasks((tasks) => {
+      const newTasks = tasks.filter((_, index) => index !== taskIndex);
+      localStorage.setItem("tasks", JSON.stringify(newTasks));
+      return newTasks;
+    });
+  };
+
+  const editTaskIsCompleted = (index: number, isCompleted: boolean) => {
+    setTasks((tasks) => {
+      const newTasks = tasks.map((task, i) =>
+        i === index ? { ...task, isCompleted } : task,
+      );
+      localStorage.setItem("tasks", JSON.stringify(newTasks));
+      return newTasks;
+    });
+  };
+
+  useEffect(() => {
+    const tasks = JSON.parse(localStorage.getItem("tasks") ?? "[]");
+    setTasks(tasks);
+  }, []);
 
   return (
-    <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
-      <div className="flex w-full max-w-7xl flex-col gap-20 px-10 pb-10">
-        <div className="mx-auto flex w-full flex-col items-center justify-center gap-3 py-10">
-          <button
-            onClick={() => {
-              // tasks
-              // setTasks((prevTasks) =>
-              //   // tasks.push("new task") -> NO - modifies tasks
-              //   // return tasks.concat("new task"); // Concat creates a new array
-              //   //Another use of concat:
-              //   //let arr1 = [0, 1, 2];
-              //   //const arr2 = [3, 4, 5];
-              //   //arr1 = [...arr1, ...arr2];
-              //   {
-              //     const nextTaskIndex = prevTasks.length - tasks.length;
-              //     const nextTask = TasksNames[nextTaskIndex] ?? null;
-              //     return nextTask ? [...prevTasks, nextTask] : prevTasks;
-              //   },
-              // );
-
-              if (nextTaskIndex < TasksNames.length) {
-                setTasks((prevTasks) => [
-                  ...prevTasks,
-                  TasksNames[nextTaskIndex],
-                ]);
-                setNextTaskIndex((prevIndex) => prevIndex + 1);
+    <div className="w-full">
+      <div className="flex w-full flex-col items-center justify-center">
+        <div className="flex gap-2">
+          <input
+            placeholder="Enter your task"
+            className="border"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <button onClick={addTask}>Add</button>
+        </div>
+        <div className="flex gap-2 text-sm">
+          {availableTags.map((tag, index) => (
+            <button
+              onClick={() =>
+                setSelectedTags((tags) => ({
+                  ...tags,
+                  [tag]: !tags[tag],
+                }))
               }
-            }}
-            className="py-3 text-xl font-medium text-orange-500 dark:text-orange-500"
-          >
-            Add new task
-          </button>
-          {tasks.map(function (task, i) {
-            return (
-              <div key={i} className="h-full w-full">
-                <NewTask title={`Task ${i}`} message={task} checkbox></NewTask>
-              </div>
-            );
-          })}
+              key={index}
+              className={twMerge(
+                "rounded-full border px-2 transition duration-300",
+                selectedTags[tag] && "bg-black text-white",
+              )}
+            >
+              <span>{selectedTags[tag] ? "-" : "+"}</span>
+              {tag}
+            </button>
+          ))}
         </div>
-        <div className="flex w-full flex-col gap-10">
-          <span className="text-xl text-orange-500 dark:text-slate-50">
-            New things
-          </span>
-          <div className="flex gap-10">
-            <span className="pt-4">Product button:</span>
-            <MoreItems></MoreItems>
-          </div>
-        </div>
+      </div>
+      <div className="flex flex-col gap-3">
+        {tasks.map((task, index) => (
+          <TodoTask
+            key={index}
+            text={task.text}
+            tags={task.tags}
+            deleteTask={deleteTask}
+            index={index}
+            initialIsCompleted={task.isCompleted}
+            editTaskIsCompleted={editTaskIsCompleted}
+          />
+        ))}
       </div>
     </div>
   );
 }
+
+// x = addTask()
