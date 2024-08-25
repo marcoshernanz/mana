@@ -1,8 +1,8 @@
-export type TweetReply = {
-  id: number;
-  author: string;
-  text: string;
-};
+// export type TweetReply = {
+//   id: number;
+//   author: string;
+//   text: string;
+// };
 
 interface TweetReplyProps {
   TweetReply: string;

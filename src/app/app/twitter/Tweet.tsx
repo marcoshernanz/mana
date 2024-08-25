@@ -20,25 +20,23 @@ export type TweetType = {
 interface TweetProps {
   index: number;
   tweet: TweetType;
-  isExpanded: boolean;
+  // isExpanded: boolean;
   addTweets?: (newTweet: TweetType) => void;
   deleteTweet: (TweetIndex: number) => void;
 }
 
 export default function Tweet({
   index,
-  isExpanded,
+  // isExpanded,
   tweet,
   addTweets,
   deleteTweet,
 }: TweetProps) {
-  // const replyTweet = () => {
-  //   <TweetReply></TweetReply>;
-  // };
   const [isReplying, setIsReplying] = useState(false);
   const [author, setAuthor] = useState("");
   const [replyText, setReplyText] = useState("");
   const [replies, setReplies] = useState<TweetType[]>([]);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleReplyClick = () => {
     setIsReplying(true);
@@ -51,8 +49,6 @@ export default function Tweet({
     setAuthor(e.target.value);
   };
 
-  // const AddTweetReply = (newTweet: TweetType) => {};
-
   const handleAddWriteTweet = () => {
     const newTweetReply: TweetType = {
       id: Math.random(),
@@ -62,7 +58,9 @@ export default function Tweet({
     setReplies([...replies, newTweetReply]);
 
     setReplyText("");
+    setAuthor("");
     setIsReplying(false);
+    setIsExpanded(false);
   };
 
   return (
@@ -70,66 +68,70 @@ export default function Tweet({
       <div className="flex flex-col gap-1 bg-orange-100 dark:bg-slate-900">
         <span>{tweet.text}</span>
         <span>{tweet.author}</span>
-        {/* <button
+        <button
           //handle is expanded with expandedTweetId
           onClick={() => {
-            isExpanded = !isExpanded;
+            setIsExpanded(true);
           }}
         >
           <ChevronDownIcon />
-        </button> */}
-        <div className="flex">
-          {/* <button onClick={replyTweet}>Reply</button> */}
-          {isReplying ? (
-            <>
-              <input
-                type="text"
-                value={replyText}
-                onChange={handleTextInputChange}
-                autoFocus
-              />
-              <input
-                type="text"
-                value={author}
-                onChange={handleAuthorInputChange}
-                autoFocus
-              />
-              <button
-                className="mr-3 bg-orange-200 dark:bg-slate-50"
-                onClick={handleAddWriteTweet}
-              >
-                Add
-              </button>
-            </>
-          ) : (
-            <>
-              <button onClick={handleReplyClick} className="mr-3">
-                Reply
-              </button>
-              <button onClick={() => deleteTweet(index)}>Delete</button>
-            </>
-          )}
-          <div>
-            {replies.map((reply, index) => (
-              <Tweet
-                key={index}
-                index={index}
-                tweet={reply}
-                isExpanded={false}
-                addTweets={addTweets}
-                deleteTweet={deleteTweet}
-              ></Tweet>
-            ))}
+        </button>
+        <div className="flex flex-col">
+          <div className="flex flex-col gap-1">
+            {
+              // isExpanded?
+              replies.map((reply, index) => (
+                <TweetReply
+                  key={index}
+                  TweetReply={reply.text}
+                  author={reply.author}
+                ></TweetReply>
+              ))
+              // : null
+            }
+          </div>
+          <div className="flex pt-2">
+            {isReplying ? (
+              <>
+                <input
+                  type="text"
+                  value={replyText}
+                  onChange={handleTextInputChange}
+                  autoFocus
+                />
+                <input
+                  type="text"
+                  value={author}
+                  onChange={handleAuthorInputChange}
+                  autoFocus
+                />
+                <button
+                  className="mr-3 bg-orange-200 dark:bg-slate-50"
+                  onClick={handleAddWriteTweet}
+                >
+                  Add
+                </button>
+              </>
+            ) : (
+              <div>
+                <button onClick={handleReplyClick} className="mr-3">
+                  Reply
+                </button>
+                <button onClick={() => deleteTweet(index)}>Delete</button>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {isExpanded && (
-        // Tweet replies with map
-        // Create new component <TweetReply />
-        <div></div>
-
-        // WriteTweet (with parentTweetId = tweet.id)
-      )}
+      <div>
+        {
+          // isExpanded
+          //   ? // Tweet replies with map
+          // Create new component <TweetReply />
+          // : null
+          // WriteTweet (with parentTweetId = tweet.id)
+        }
+      </div>
     </div>
   );
 }

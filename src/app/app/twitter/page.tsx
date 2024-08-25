@@ -30,6 +30,7 @@ export default function TwitterPage() {
 
   // To add tweets two functions - addTweet and addTweetReply
   const addTweets = (newTweet: TweetType) => {
+    console.log(newTweet);
     addTweet(newTweet);
     // addTweetReply();
   };
@@ -51,7 +52,7 @@ export default function TwitterPage() {
             key={index}
             index={index}
             tweet={tweet}
-            isExpanded={expandedTweetId === tweet.id}
+            // isExpanded={expandedTweetId === tweet.id}
             addTweets={addTweets}
             deleteTweet={deleteTweet}
           ></Tweet>
