@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import WriteBlogPost from "./WriteBlogPost";
-import BlogPost from "./BlogPost";
+import BlogPost from "./blogpost";
 
 //Tags that user already add
 export type AvailableTags = {

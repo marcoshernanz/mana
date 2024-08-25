@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TweetType } from "./Tweet";
+import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
 
 /*
@@ -15,9 +15,48 @@ export default function TwitterPage() {
   const [expandedTweetId, setExpandedTweetId] = useState<number | null>(null);
   const [tweets, setTweets] = useState<TweetType[]>([]);
 
-  // To add tweets two functions - addTweet and addTweetReply
   // addTweet: tweets + newTweet
-  // addTweetReply: tweets.map and if parentTweetId = tweet.id -> add tweet to replies
+  function addTweet(newTweet: TweetType) {
+    setTweets([...tweets, newTweet]);
+  }
 
-  return <div>{/* {tweets.map...} */}</div>;
+  // function addTweetReply(
+  //   newTweet: TweetType,
+  //   id: number,
+  //   parentTweetId: number,
+  // ) {
+  //   // addTweetReply: tweets.map and if parentTweetId = tweet.id -> add tweet to replies
+  // }
+
+  // To add tweets two functions - addTweet and addTweetReply
+  const addTweets = (newTweet: TweetType) => {
+    addTweet(newTweet);
+    // addTweetReply();
+  };
+
+  const deleteTweet = (TweetIndex: number) => {
+    setTweets((tweet) => {
+      const newTweet = tweet.filter((_, index) => index !== TweetIndex);
+      return newTweet;
+    });
+  };
+
+  return (
+    <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
+      <div className="flex max-w-7xl flex-col gap-5 px-10 pb-20 pt-36">
+        {/* {tweets.map...} */}
+        <WriteTweet AddTweets={addTweets} />
+        {tweets.map((tweet, index) => (
+          <Tweet
+            key={index}
+            index={index}
+            tweet={tweet}
+            isExpanded={expandedTweetId === tweet.id}
+            addTweets={addTweets}
+            deleteTweet={deleteTweet}
+          ></Tweet>
+        ))}
+      </div>
+    </div>
+  );
 }
