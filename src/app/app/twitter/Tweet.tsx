@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import WriteTweet from "./WriteTweet";
 import TweetReply from "./TweetReply";
 import { useState } from "react";
@@ -20,14 +20,16 @@ export type TweetType = {
 interface TweetProps {
   index: number;
   tweet: TweetType;
-  // isExpanded: boolean;
+  isExpanded: boolean;
+  toggleExpand: (tweetId: number) => void;
   addTweets?: (newTweet: TweetType) => void;
   deleteTweet: (TweetIndex: number) => void;
 }
 
 export default function Tweet({
   index,
-  // isExpanded,
+  isExpanded,
+  toggleExpand,
   tweet,
   addTweets,
   deleteTweet,
@@ -36,7 +38,7 @@ export default function Tweet({
   const [author, setAuthor] = useState("");
   const [replyText, setReplyText] = useState("");
   const [replies, setReplies] = useState<TweetType[]>([]);
-  const [isExpanded, setIsExpanded] = useState(false);
+  // const [isExpanded, setIsExpanded] = useState(false);
 
   const handleReplyClick = () => {
     setIsReplying(true);
@@ -60,7 +62,6 @@ export default function Tweet({
     setReplyText("");
     setAuthor("");
     setIsReplying(false);
-    setIsExpanded(false);
   };
 
   return (
@@ -68,28 +69,21 @@ export default function Tweet({
       <div className="flex flex-col gap-1 bg-orange-100 dark:bg-slate-900">
         <span>{tweet.text}</span>
         <span>{tweet.author}</span>
-        <button
-          //handle is expanded with expandedTweetId
-          onClick={() => {
-            setIsExpanded(true);
-          }}
-        >
-          <ChevronDownIcon />
+        <button onClick={() => toggleExpand(tweet.id)}>
+          {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </button>
         <div className="flex flex-col">
-          <div className="flex flex-col gap-1">
-            {
-              // isExpanded?
-              replies.map((reply, index) => (
+          {isExpanded && (
+            <div className="flex flex-col gap-1">
+              {replies.map((reply, index) => (
                 <TweetReply
                   key={index}
                   TweetReply={reply.text}
                   author={reply.author}
                 ></TweetReply>
-              ))
-              // : null
-            }
-          </div>
+              ))}
+            </div>
+          )}
           <div className="flex pt-2">
             {isReplying ? (
               <>
