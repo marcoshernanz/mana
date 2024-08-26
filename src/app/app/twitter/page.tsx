@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
+import { TweetReplyType } from "./TweetReply";
 
 /*
 Things to store in local storage:
@@ -11,29 +12,25 @@ Things to store in local storage:
 */
 
 export default function TwitterPage() {
-  // Null means no tweet is selected
   const [expandedTweetId, setExpandedTweetId] = useState<number | null>(null);
-  const [tweets, setTweets] = useState<TweetType[]>([]);
+  const [likedTweetId, setLikedTweetId] = useState<number | null>(null);
 
-  // addTweet: tweets + newTweet
+  const [tweets, setTweets] = useState<TweetType[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
   function addTweet(newTweet: TweetType) {
     setTweets([...tweets, newTweet]);
   }
 
-  // function addTweetReply(
-  //   newTweet: TweetType,
-  //   id: number,
-  //   parentTweetId: number,
-  // ) {
-  //   // addTweetReply: tweets.map and if parentTweetId = tweet.id -> add tweet to replies
-  // }
-
-  // To add tweets two functions - addTweet and addTweetReply
-  const addTweets = (newTweet: TweetType) => {
-    console.log(newTweet);
-    addTweet(newTweet);
-    // addTweetReply();
-  };
+  function addTweetReply(newReply: TweetReplyType, parentTweetId: number) {
+    setTweets(
+      tweets.map((tweet) =>
+        tweet.id === parentTweetId
+          ? { ...tweet, replies: [...(tweet.replies || []), newReply] }
+          : tweet,
+      ),
+    );
+  }
 
   const deleteTweet = (TweetIndex: number) => {
     setTweets((tweet) => {
@@ -46,10 +43,37 @@ export default function TwitterPage() {
     setExpandedTweetId(expandedTweetId === tweetId ? null : tweetId);
   };
 
+  const toggleLiked = (tweetId: number) => {
+    setLikedTweetId(likedTweetId === tweetId ? null : tweetId);
+  };
+
+  useEffect(() => {
+    if (isLoadingData) return;
+    window.localStorage.setItem("Tweets", JSON.stringify(tweets));
+    window.localStorage.setItem(
+      "expanded-tweet-id",
+      JSON.stringify(expandedTweetId),
+    );
+  }, [tweets, isLoadingData, expandedTweetId]);
+
+  useEffect(() => {
+    const TweetsData: TweetType[] = JSON.parse(
+      window.localStorage.getItem("Tweets") ?? "",
+    );
+    setTweets(TweetsData);
+
+    const expandedTweetIdData: number = JSON.parse(
+      window.localStorage.getItem("expanded-tweet-id") ?? "0",
+    );
+    setExpandedTweetId(expandedTweetIdData);
+
+    setIsLoadingData(false);
+  }, []);
+
   return (
     <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
       <div className="flex max-w-7xl flex-col gap-5 px-10 pb-20 pt-36">
-        <WriteTweet AddTweets={addTweets} />
+        <WriteTweet AddTweets={addTweet} />
         {tweets.map((tweet, index) => (
           <Tweet
             key={index}
@@ -57,8 +81,8 @@ export default function TwitterPage() {
             tweet={tweet}
             isExpanded={expandedTweetId === tweet.id}
             toggleExpand={toggleExpand}
-            addTweets={addTweets}
             deleteTweet={deleteTweet}
+            addTweetReply={addTweetReply}
           ></Tweet>
         ))}
       </div>

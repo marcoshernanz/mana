@@ -1,20 +1,15 @@
 "use client";
 
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
 import WriteTweet from "./WriteTweet";
-import TweetReply from "./TweetReply";
-import { useState } from "react";
+import TweetReply, { TweetReplyType } from "./TweetReply";
+import { useEffect, useState } from "react";
 
 export type TweetType = {
   id: number;
   author: string;
   text: string;
-  // isLiked: boolean;
-  // replies: {
-  //   author: string;
-  //   text: string;
-  //   isLiked: boolean;
-  // }[];
+  replies: TweetReplyType[];
 };
 
 interface TweetProps {
@@ -22,8 +17,8 @@ interface TweetProps {
   tweet: TweetType;
   isExpanded: boolean;
   toggleExpand: (tweetId: number) => void;
-  addTweets?: (newTweet: TweetType) => void;
   deleteTweet: (TweetIndex: number) => void;
+  addTweetReply: (newReply: TweetReplyType, parentTweetId: number) => void;
 }
 
 export default function Tweet({
@@ -31,14 +26,14 @@ export default function Tweet({
   isExpanded,
   toggleExpand,
   tweet,
-  addTweets,
   deleteTweet,
+  addTweetReply,
 }: TweetProps) {
   const [isReplying, setIsReplying] = useState(false);
   const [author, setAuthor] = useState("");
   const [replyText, setReplyText] = useState("");
-  const [replies, setReplies] = useState<TweetType[]>([]);
-  // const [isExpanded, setIsExpanded] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   const handleReplyClick = () => {
     setIsReplying(true);
@@ -51,22 +46,70 @@ export default function Tweet({
     setAuthor(e.target.value);
   };
 
-  const handleAddWriteTweet = () => {
-    const newTweetReply: TweetType = {
+  const handleAddReplyTweet = () => {
+    const newTweetReply: TweetReplyType = {
       id: Math.random(),
       author,
       text: replyText,
+      Liked: isLiked,
     };
-    setReplies([...replies, newTweetReply]);
+    addTweetReply(newTweetReply, tweet.id);
 
     setReplyText("");
     setAuthor("");
     setIsReplying(false);
   };
 
+  const handleLikeToggle = (id: number) => {
+    if (tweet.id === id) {
+      setIsLiked(!isLiked);
+    }
+  };
+
+  useEffect(() => {
+    if (isLoadingData) return;
+    window.localStorage.setItem("IsReplying", JSON.stringify(isReplying));
+    window.localStorage.setItem("ReplyAuthor", JSON.stringify(author));
+    window.localStorage.setItem("ReplyText", JSON.stringify(replyText));
+    window.localStorage.setItem("IsLiked", JSON.stringify(isLiked));
+  }, [isReplying, author, replyText, isLiked, isLoadingData]);
+
+  useEffect(() => {
+    const IsReplying: boolean = JSON.parse(
+      window.localStorage.getItem("IsReplying") ?? "false",
+    );
+    setIsReplying(IsReplying);
+
+    const ReplyAuthor: string = JSON.parse(
+      window.localStorage.getItem("ReplyAuthor") ?? "",
+    );
+    setAuthor(ReplyAuthor);
+
+    const ReplyText: string = JSON.parse(
+      window.localStorage.getItem("ReplyText") ?? "",
+    );
+    setReplyText(ReplyText);
+
+    const IsLiked: boolean = JSON.parse(
+      window.localStorage.getItem("IsLiked") ?? "false",
+    );
+    setIsLiked(IsLiked);
+
+    setIsLoadingData(false);
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col gap-1 bg-orange-100 dark:bg-slate-900">
+        <div className="flex justify-end">
+          <button onClick={() => handleLikeToggle(tweet.id)}>
+            {isLiked ? (
+              <Heart size="20px" color="#ff0000" strokeWidth="3px" />
+            ) : (
+              <Heart size="20px" />
+            )}
+          </button>
+        </div>
         <span>{tweet.text}</span>
         <span>{tweet.author}</span>
         <button onClick={() => toggleExpand(tweet.id)}>
@@ -75,7 +118,7 @@ export default function Tweet({
         <div className="flex flex-col">
           {isExpanded && (
             <div className="flex flex-col gap-1">
-              {replies.map((reply, index) => (
+              {tweet.replies.map((reply, index) => (
                 <TweetReply
                   key={index}
                   TweetReply={reply.text}
@@ -101,7 +144,7 @@ export default function Tweet({
                 />
                 <button
                   className="mr-3 bg-orange-200 dark:bg-slate-50"
-                  onClick={handleAddWriteTweet}
+                  onClick={handleAddReplyTweet}
                 >
                   Add
                 </button>
@@ -116,15 +159,6 @@ export default function Tweet({
             )}
           </div>
         </div>
-      </div>
-      <div>
-        {
-          // isExpanded
-          //   ? // Tweet replies with map
-          // Create new component <TweetReply />
-          // : null
-          // WriteTweet (with parentTweetId = tweet.id)
-        }
       </div>
     </div>
   );
