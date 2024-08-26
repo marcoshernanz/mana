@@ -2,49 +2,79 @@
 
 import { useEffect, useState } from "react";
 import { TweetType } from "./Tweet";
+import { TweetReplyType } from "./TweetReply";
 
 interface WriteTweetProps {
-  AddTweets: (newTweet: TweetType) => void;
+  AddTweets: (
+    newTweet: TweetType | TweetReplyType,
+    parentTweetId?: number | null,
+  ) => void;
+  parentTweetId?: number | null;
+  onSubmit: () => void | null;
+  tweetId?: number;
 }
 
-export default function WriteTweet({ AddTweets }: WriteTweetProps) {
+export default function WriteTweet({
+  AddTweets,
+  parentTweetId,
+  onSubmit,
+  tweetId,
+}: WriteTweetProps) {
   const [text, setText] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [isLoadingData, setIsLoadingData] = useState(true);
 
-  const handleAddWriteTweet = () => {
-    const newTweet: TweetType = {
-      id: Math.random(),
-      author,
-      text,
-      replies: [],
-    };
-    AddTweets(newTweet);
+  const storageKeyPrefix = parentTweetId
+    ? `reply-${parentTweetId}`
+    : "new-tweet";
 
-    setText("");
-    setAuthor("");
-  };
+  useEffect(() => {
+    const savedAuthor = localStorage.getItem(`${storageKeyPrefix}-author`);
+    const savedText = localStorage.getItem(`${storageKeyPrefix}-text`);
+
+    if (savedAuthor) setAuthor(JSON.parse(savedAuthor));
+    if (savedText) setText(JSON.parse(savedText));
+
+    setIsLoadingData(false);
+  }, [storageKeyPrefix]);
 
   useEffect(() => {
     if (isLoadingData) return;
-    window.localStorage.setItem("Author", JSON.stringify(author));
-    window.localStorage.setItem("Text", JSON.stringify(text));
-  }, [author, text, isLoadingData]);
+    localStorage.setItem(`${storageKeyPrefix}-author`, JSON.stringify(author));
+    localStorage.setItem(`${storageKeyPrefix}-text`, JSON.stringify(text));
+  }, [author, text, isLoadingData, storageKeyPrefix]);
 
-  useEffect(() => {
-    const Author: string = JSON.parse(
-      window.localStorage.getItem("Author") ?? "",
-    );
-    setAuthor(Author);
+  const handleAddWriteTweet = () => {
+    if (author.trim() === "" || text.trim() === "") return;
 
-    const Text: string = JSON.parse(window.localStorage.getItem("Text") ?? "");
-    setText(Text);
-    setIsLoadingData(false);
-  }, []);
+    if (parentTweetId !== null && parentTweetId !== undefined) {
+      const newReply: TweetReplyType = {
+        id: Math.random(),
+        author,
+        text,
+        Liked: false,
+      };
+      AddTweets(newReply, parentTweetId);
+    } else {
+      const newTweet: TweetType = {
+        id: Math.random(),
+        author,
+        text,
+        replies: [],
+      };
+      AddTweets(newTweet);
+    }
+
+    localStorage.removeItem(`${storageKeyPrefix}-author`);
+    localStorage.removeItem(`${storageKeyPrefix}-text`);
+    setText("");
+    setAuthor("");
+    onSubmit();
+  };
 
   return (
-    <div className="flex max-w-xs items-center justify-center gap-3 rounded-lg border border-orange-500 p-3 text-slate-900 dark:text-white">
-      <div className="flex flex-col gap-3">
+    <div className="flex items-center justify-center gap-3 rounded-lg bg-slate-800 p-3 text-slate-900 dark:text-white">
+      <div className="flex w-full flex-col items-stretch gap-3">
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}

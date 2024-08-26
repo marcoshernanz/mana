@@ -43,6 +43,12 @@ export default function TwitterPage() {
     );
   };
 
+  //I WANTED TO CREATE A NEW STATE FOR REPLIES BUT GPT SAYS THAT WILL BE MORE COMPLEX, SO I WILL TRY TO FIX THIS
+  // const toggleReplyLiked = (tweetId: number) => {
+  //   setTweets((prevTweets) =>
+  //     prevTweets.map((tweet) =>
+  //       tweet.id === tweetId ? { ...tweet, replies: tweet.replies.map((reply) =>{ ...reply, Liked: !reply.Liked })} : tweet,),);};
+
   const toggleReplyLiked = (tweetId: number, replyId: number) => {
     setTweets((prevTweets) =>
       prevTweets.map((tweet) =>
@@ -58,17 +64,6 @@ export default function TwitterPage() {
           : tweet,
       ),
     );
-  };
-
-  const handleAddTweet = (
-    newTweet: TweetType | TweetReplyType,
-    parentTweetId?: number | null,
-  ) => {
-    if (parentTweetId) {
-      addTweetReply(newTweet as TweetReplyType, parentTweetId);
-    } else {
-      addTweet(newTweet as TweetType);
-    }
   };
 
   useEffect(() => {
@@ -96,19 +91,10 @@ export default function TwitterPage() {
 
   return (
     <div className="flex justify-center bg-orange-50 dark:bg-slate-950">
-      <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-20 pt-36">
-        <span className="text-4xl font-semibold dark:text-slate-50">
-          Twitter
-        </span>
-        <div className="pb-20 pt-16">
-          <span className="flex items-center justify-center pb-1 text-sm underline dark:text-slate-100">
-            Add Twitt
-          </span>
-          <div className="rounded-md bg-slate-900 px-10 py-6">
-            <WriteTweet AddTweets={handleAddTweet} onSubmit={() => null} />
-          </div>
+      <div className="flex max-w-7xl flex-col items-center justify-center gap-20 px-10 pb-20 pt-36">
+        <div>
+          <WriteTweet AddTweets={addTweet} />
         </div>
-
         <div className="flex flex-col gap-5">
           {tweets.map((tweet, index) => (
             <Tweet
@@ -121,7 +107,7 @@ export default function TwitterPage() {
               toggleLiked={toggleLiked}
               toggleReplyLiked={toggleReplyLiked}
               deleteTweet={deleteTweet}
-              addTweetReply={handleAddTweet}
+              addTweetReply={addTweetReply}
             ></Tweet>
           ))}
         </div>

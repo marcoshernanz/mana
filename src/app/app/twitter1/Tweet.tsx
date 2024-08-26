@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDownIcon, ChevronUpIcon, Heart, Reply } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
 import TweetReply, { TweetReplyType } from "./TweetReply";
 import { useEffect, useState } from "react";
 import WriteTweet from "./WriteTweet";
@@ -36,30 +36,60 @@ export default function Tweet({
   deleteTweet,
   addTweetReply,
 }: TweetProps) {
-  const [isReplying, setIsReplying] = useState(() => {
-    const savedState = localStorage.getItem(`tweet-${tweet.id}-isReplying`);
-    return savedState ? JSON.parse(savedState) : false;
-  });
+  const [isReplying, setIsReplying] = useState(false);
+  const [author, setAuthor] = useState("");
+  const [replyText, setReplyText] = useState("");
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   const handleReplyClick = () => {
     setIsReplying(true);
   };
 
-  const handleReplySubmit = () => {
+  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setReplyText(e.target.value);
+  };
+  const handleAuthorInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAuthor(e.target.value);
+  };
+
+  const handleAddReplyTweet = () => {
+    const newTweetReply: TweetReplyType = {
+      id: Math.random(),
+      author,
+      text: replyText,
+      Liked: false,
+    };
+    addTweetReply(newTweetReply, tweet.id);
+
+    setReplyText("");
+    setAuthor("");
     setIsReplying(false);
-    console.log(isReplying);
   };
 
   useEffect(() => {
-    localStorage.setItem(
-      `tweet-${tweet.id}-isReplying`,
-      JSON.stringify(isReplying),
-    );
-  }, [isReplying, tweet.id]);
+    if (isLoadingData) return;
+    window.localStorage.setItem("IsReplying", JSON.stringify(isReplying));
+    window.localStorage.setItem("ReplyAuthor", JSON.stringify(author));
+    window.localStorage.setItem("ReplyText", JSON.stringify(replyText));
+  }, [isReplying, author, replyText, isLoadingData]);
+
   useEffect(() => {
-    const Reply = localStorage.getItem(`tweet-${tweet.id}-isReplying`);
-    setIsReplying(Reply ? JSON.parse(Reply) : false);
-  }, [isReplying, tweet.id]);
+    const IsReplying: boolean = JSON.parse(
+      window.localStorage.getItem("IsReplying") ?? "false",
+    );
+    setIsReplying(IsReplying);
+
+    const ReplyAuthor: string = JSON.parse(
+      window.localStorage.getItem("ReplyAuthor") ?? "",
+    );
+    setAuthor(ReplyAuthor);
+
+    const ReplyText: string = JSON.parse(
+      window.localStorage.getItem("ReplyText") ?? "",
+    );
+    setReplyText(ReplyText);
+    setIsLoadingData(false);
+  }, []);
 
   return (
     <div>
@@ -92,7 +122,7 @@ export default function Tweet({
         <div className="flex flex-col">
           {isExpanded && (
             <div className="flex flex-col gap-1.5 pb-2 pl-6">
-              {tweet.replies.map((reply) => (
+              {tweet.replies.map((reply, index) => (
                 <TweetReply
                   key={reply.id}
                   TweetReply={reply.text}
@@ -105,16 +135,26 @@ export default function Tweet({
           )}
           <div className="flex gap-1 pt-2">
             {isReplying ? (
-              <div className="w-full items-stretch">
-                <WriteTweet
-                  AddTweets={(newReply: TweetReplyType) =>
-                    addTweetReply(newReply, tweet.id)
-                  }
-                  parentTweetId={tweet.id}
-                  onSubmit={handleReplySubmit}
-                  tweetId={tweet.id}
+              <>
+                {/* <WriteTweet AddTweets={addTweetReply} /> */}
+                <input
+                  placeholder="Write reply"
+                  type="text"
+                  value={replyText}
+                  onChange={handleTextInputChange}
+                  autoFocus
                 />
-              </div>
+                <input
+                  placeholder="Author"
+                  type="text"
+                  value={author}
+                  onChange={handleAuthorInputChange}
+                  autoFocus
+                />
+                <button className="mx-3" onClick={handleAddReplyTweet}>
+                  Add
+                </button>
+              </>
             ) : (
               <div className="flex w-full justify-around gap-96 p-2 text-lg text-slate-900 dark:text-slate-50">
                 <button
