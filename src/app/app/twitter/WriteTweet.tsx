@@ -3,12 +3,6 @@
 import { useEffect, useState } from "react";
 import { TweetType } from "./Tweet";
 
-type WriteTweetType = {
-  parentTweetId: number | null; // Null means it isn't a reply
-  author: string;
-  text: string;
-};
-
 interface WriteTweetProps {
   AddTweets: (newTweet: TweetType) => void;
 }
@@ -33,7 +27,6 @@ export default function WriteTweet({ AddTweets }: WriteTweetProps) {
 
   useEffect(() => {
     if (isLoadingData) return;
-    // window.localStorage.setItem("ParentTweetId", JSON.stringify(null));
     window.localStorage.setItem("Author", JSON.stringify(author));
     window.localStorage.setItem("Text", JSON.stringify(text));
   }, [author, text, isLoadingData]);
@@ -50,7 +43,7 @@ export default function WriteTweet({ AddTweets }: WriteTweetProps) {
   }, []);
 
   return (
-    <div className="flex items-center justify-center gap-3 rounded-lg border border-orange-500 p-3 text-slate-900 dark:text-white">
+    <div className="flex max-w-xs items-center justify-center gap-3 rounded-lg border border-orange-500 p-3 text-slate-900 dark:text-white">
       <div className="flex flex-col gap-3">
         <input
           value={text}

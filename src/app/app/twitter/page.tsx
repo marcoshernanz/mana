@@ -5,16 +5,8 @@ import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
 import { TweetReplyType } from "./TweetReply";
 
-/*
-Things to store in local storage:
-- Current expanded tweet
-- Tweets
-*/
-
 export default function TwitterPage() {
   const [expandedTweetId, setExpandedTweetId] = useState<number | null>(null);
-  const [likedTweetId, setLikedTweetId] = useState<number | null>(null);
-
   const [tweets, setTweets] = useState<TweetType[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
@@ -44,7 +36,34 @@ export default function TwitterPage() {
   };
 
   const toggleLiked = (tweetId: number) => {
-    setLikedTweetId(likedTweetId === tweetId ? null : tweetId);
+    setTweets((prevTweets) =>
+      prevTweets.map((tweet) =>
+        tweet.id === tweetId ? { ...tweet, isLiked: !tweet.isLiked } : tweet,
+      ),
+    );
+  };
+
+  //I WANTED TO CREATE A NEW STATE FOR REPLIES BUT GPT SAYS THAT WILL BE MORE COMPLEX, SO I WILL TRY TO FIX THIS
+  // const toggleReplyLiked = (tweetId: number) => {
+  //   setTweets((prevTweets) =>
+  //     prevTweets.map((tweet) =>
+  //       tweet.id === tweetId ? { ...tweet, replies: tweet.replies.map((reply) =>{ ...reply, Liked: !reply.Liked })} : tweet,),);};
+
+  const toggleReplyLiked = (tweetId: number, replyId: number) => {
+    setTweets((prevTweets) =>
+      prevTweets.map((tweet) =>
+        tweet.id === tweetId
+          ? {
+              ...tweet,
+              replies: tweet.replies.map((reply) =>
+                reply.id === replyId
+                  ? { ...reply, Liked: !reply.Liked }
+                  : reply,
+              ),
+            }
+          : tweet,
+      ),
+    );
   };
 
   useEffect(() => {
@@ -71,20 +90,27 @@ export default function TwitterPage() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
-      <div className="flex max-w-7xl flex-col gap-5 px-10 pb-20 pt-36">
-        <WriteTweet AddTweets={addTweet} />
-        {tweets.map((tweet, index) => (
-          <Tweet
-            key={index}
-            index={index}
-            tweet={tweet}
-            isExpanded={expandedTweetId === tweet.id}
-            toggleExpand={toggleExpand}
-            deleteTweet={deleteTweet}
-            addTweetReply={addTweetReply}
-          ></Tweet>
-        ))}
+    <div className="flex justify-center bg-orange-50 dark:bg-slate-950">
+      <div className="flex max-w-7xl flex-col items-center justify-center gap-20 px-10 pb-20 pt-36">
+        <div>
+          <WriteTweet AddTweets={addTweet} />
+        </div>
+        <div className="flex flex-col gap-5">
+          {tweets.map((tweet, index) => (
+            <Tweet
+              key={index}
+              index={index}
+              tweet={tweet}
+              isExpanded={expandedTweetId === tweet.id}
+              isLiked={tweet.isLiked ?? false}
+              toggleExpand={toggleExpand}
+              toggleLiked={toggleLiked}
+              toggleReplyLiked={toggleReplyLiked}
+              deleteTweet={deleteTweet}
+              addTweetReply={addTweetReply}
+            ></Tweet>
+          ))}
+        </div>
       </div>
     </div>
   );
