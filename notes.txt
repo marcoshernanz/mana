@@ -98,3 +98,6 @@ setValue -> Change the value
 setValue(VALUE) -> When new VALUE doesn't depend on old value
 setValue(FUNCTION(value) {}) -> When new VALUE depends on old value
 setValue((value) => newValue)
+
+npm run db:generate
+npm run db:migrate

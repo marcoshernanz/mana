@@ -5,17 +5,17 @@ import { TweetType } from "./Tweet";
 import { TweetReplyType } from "./TweetReply";
 
 interface WriteTweetProps {
-  AddTweets: (
-    newTweet: TweetType | TweetReplyType,
-    parentTweetId?: number | null,
-  ) => void;
+  addTweet?: (newTweet: TweetType) => void;
+  addTweetReply?: (newReply: TweetReplyType, parentTweetId: number) => void;
+
   parentTweetId?: number | null;
   onSubmit: () => void | null;
   tweetId?: number;
 }
 
 export default function WriteTweet({
-  AddTweets,
+  addTweet,
+  addTweetReply,
   parentTweetId,
   onSubmit,
   tweetId,

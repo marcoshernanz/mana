@@ -32,7 +32,9 @@ export default function TwitterPage() {
   };
 
   const toggleExpand = (tweetId: number) => {
-    setExpandedTweetId(expandedTweetId === tweetId ? null : tweetId);
+    setExpandedTweetId((expandedTweetId) =>
+      expandedTweetId === tweetId ? null : tweetId,
+    );
   };
 
   const toggleLiked = (tweetId: number) => {
@@ -60,17 +62,6 @@ export default function TwitterPage() {
     );
   };
 
-  const handleAddTweet = (
-    newTweet: TweetType | TweetReplyType,
-    parentTweetId?: number | null,
-  ) => {
-    if (parentTweetId) {
-      addTweetReply(newTweet as TweetReplyType, parentTweetId);
-    } else {
-      addTweet(newTweet as TweetType);
-    }
-  };
-
   useEffect(() => {
     if (isLoadingData) return;
     window.localStorage.setItem("Tweets", JSON.stringify(tweets));
@@ -82,7 +73,7 @@ export default function TwitterPage() {
 
   useEffect(() => {
     const TweetsData: TweetType[] = JSON.parse(
-      window.localStorage.getItem("Tweets") ?? "",
+      window.localStorage.getItem("Tweets") ?? "[]",
     );
     setTweets(TweetsData);
 
@@ -105,7 +96,7 @@ export default function TwitterPage() {
             Add Twitt
           </span>
           <div className="rounded-md bg-slate-900 px-10 py-6">
-            <WriteTweet AddTweets={handleAddTweet} onSubmit={() => null} />
+            <WriteTweet addTweet={addTweet} onSubmit={() => null} />
           </div>
         </div>
 
@@ -121,7 +112,7 @@ export default function TwitterPage() {
               toggleLiked={toggleLiked}
               toggleReplyLiked={toggleReplyLiked}
               deleteTweet={deleteTweet}
-              addTweetReply={handleAddTweet}
+              addTweetReply={addTweetReply}
             ></Tweet>
           ))}
         </div>

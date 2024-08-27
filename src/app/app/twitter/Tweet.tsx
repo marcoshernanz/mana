@@ -11,6 +11,9 @@ export type TweetType = {
   text: string;
   replies: TweetReplyType[];
   isLiked?: boolean;
+
+  // isExpanded?: boolean;
+  // isReplying?: boolean;
 };
 
 interface TweetProps {
@@ -107,9 +110,7 @@ export default function Tweet({
             {isReplying ? (
               <div className="w-full items-stretch">
                 <WriteTweet
-                  AddTweets={(newReply: TweetReplyType) =>
-                    addTweetReply(newReply, tweet.id)
-                  }
+                  addTweetReply={addTweetReply}
                   parentTweetId={tweet.id}
                   onSubmit={handleReplySubmit}
                   tweetId={tweet.id}
