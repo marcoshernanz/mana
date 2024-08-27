@@ -151,3 +151,21 @@ No uppercase variable. Only uppercase components and types
 Extensions
   Prettify TypeScript: Better Type Previews
   Pretty TypeScript Errors
+
+
+Schema
+Server actions to insert, delete, update and select
+Replace localStorage with the server actions created before
+Don't use useState to insert, update or delete - use server actions, then use server action again to select, and setState with the selected data
+
+Twitter schema:
+  id: string
+  author: string
+  text: string
+  parentTweetId: string;
+  isLiked: bool
+
+If parentTweetId -> tweet is a reply
+
+Selecting tweet replies
+db.select().from(tweetsTable).where(eq(parentTweetId), <ID>); -> Gets the replies for the tweet with id = <ID>
