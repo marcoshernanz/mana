@@ -1,5 +1,5 @@
-import { type Dispatch, type SetStateAction, useState } from "react";
-import { BlogPostType } from "./page";
+import { type Dispatch, type SetStateAction } from "react";
+import { type BlogPostType } from "./page";
 
 interface BlogPostProps {
   blogPost: BlogPostType;

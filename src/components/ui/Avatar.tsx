@@ -32,7 +32,7 @@ export default function Avatar({
         sizes[size],
       )}
     >
-      <img src={src} className="rounded-full"></img>
+      <Image src={src} className="rounded-full" alt="Avatar image"></Image>
     </div>
   );
 }
