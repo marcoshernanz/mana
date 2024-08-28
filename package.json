@@ -7,10 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.9.4",
+    "@next/env": "^14.2.6",
     "antd": "^5.19.4",
+    "drizzle-orm": "^0.33.0",
     "flowbite-react": "^0.10.1",
     "lucide-react": "^0.435.0",
     "next": "14.2.5",
@@ -22,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "drizzle-kit": "^0.24.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
