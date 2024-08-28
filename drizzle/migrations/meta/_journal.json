@@ -29,6 +29,20 @@
       "when": 1724782803221,
       "tag": "0003_vengeful_prima",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1724854136366,
+      "tag": "0004_harsh_the_stranger",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1724859378873,
+      "tag": "0005_typical_the_liberteens",
+      "breakpoints": true
     }
   ]
 }
