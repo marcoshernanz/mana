@@ -21,7 +21,6 @@ interface WriteTweetProps {
   fetchTweets?: () => void;
   expandedTweetId?: string | null;
   isReplying?: boolean;
-  StoreOpenTweets?: (parentId: string | null | undefined) => void;
 }
 
 export default function WriteTweet({
@@ -31,7 +30,6 @@ export default function WriteTweet({
   fetchTweets,
   expandedTweetId,
   isReplying,
-  StoreOpenTweets,
 }: WriteTweetProps) {
   const [text, setText] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
@@ -47,19 +45,13 @@ export default function WriteTweet({
       (tweet) => tweet.parentTweetId === parentTweetId,
     );
 
-    // if (currentDraft) {
-    //   setText(currentDraft.text || "");
-    //   setAuthor(currentDraft.author || "");
-    // }
-
     if (currentDraft) {
       setText(currentDraft.text || "");
       setAuthor(currentDraft.author || "");
-      StoreOpenTweets?.(parentTweetId);
     }
 
     setHasLoadedData(true);
-  }, [parentTweetId]);
+  }, [parentTweetId, uniqueKey]);
 
   useEffect(() => {
     if (!hasLoadedData) return;
@@ -86,7 +78,7 @@ export default function WriteTweet({
     }
 
     window.localStorage.setItem(uniqueKey, JSON.stringify(storedTweets));
-  }, [text, author, parentTweetId, isReplying, hasLoadedData]);
+  }, [text, author, parentTweetId, isReplying, hasLoadedData, uniqueKey]);
 
   const handleAddWriteTweet = async () => {
     if (!author || !text) return;

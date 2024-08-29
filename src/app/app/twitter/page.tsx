@@ -11,17 +11,6 @@ export default function TwitterPage() {
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
   const [tweets, setTweets] = useState<TweetType[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
-  const [openedTweetIds, setOpenedTweetIds] = useState<
-    (string | null | undefined)[]
-  >([]);
-
-  const StoreOpenTweets = (parentId: string | null | undefined) => {
-    setOpenedTweetIds((prevParentId) =>
-      prevParentId.includes(parentId)
-        ? prevParentId
-        : [...prevParentId, parentId],
-    );
-  };
 
   const ParentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
 
@@ -89,11 +78,7 @@ export default function TwitterPage() {
             Add Twitt
           </span>
           <div className="rounded-md bg-slate-900 px-10 py-6">
-            <WriteTweet
-              onSubmit={() => null}
-              fetchTweets={fetchTweets}
-              StoreOpenTweets={StoreOpenTweets}
-            />
+            <WriteTweet onSubmit={() => null} fetchTweets={fetchTweets} />
           </div>
         </div>
 
@@ -111,7 +96,6 @@ export default function TwitterPage() {
               deleteTweet={deleteTweet}
               fetchTweets={fetchTweets}
               expandedTweetId={expandedTweetId}
-              StoredOpenTweets={openedTweetIds}
             ></Tweet>
           ))}
         </div>
