@@ -9,19 +9,19 @@ export type CurrentTweetType = Omit<
   "id" | "parentTweetId" | "isLiked"
 > & {
   id?: string;
-  parentTweetId?: string;
+  parentTweetId?: string | null;
   isLiked?: boolean;
   isReplying?: boolean;
 };
 
 interface WriteTweetProps {
   parentTweetId?: string | undefined | null;
-  // onSubmit: () => void | null;
   onSubmit: () => void;
   tweetId?: string;
   fetchTweets?: () => void;
   expandedTweetId?: string | null;
   isReplying?: boolean;
+  StoreOpenTweets?: (parentId: string | null | undefined) => void;
 }
 
 export default function WriteTweet({
@@ -31,70 +31,91 @@ export default function WriteTweet({
   fetchTweets,
   expandedTweetId,
   isReplying,
+  StoreOpenTweets,
 }: WriteTweetProps) {
   const [text, setText] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
-  const [isLoadingData, setIsLoadingData] = useState(true);
   const [hasLoadedData, setHasLoadedData] = useState(false);
-  const uniqueKey = `current-tweet-${parentTweetId || "new"}`;
+  const uniqueKey = `current-tweets`;
+
+  useEffect(() => {
+    const storedTweets: CurrentTweetType[] = JSON.parse(
+      window.localStorage.getItem(uniqueKey) || "[]",
+    );
+
+    const currentDraft = storedTweets.find(
+      (tweet) => tweet.parentTweetId === parentTweetId,
+    );
+
+    // if (currentDraft) {
+    //   setText(currentDraft.text || "");
+    //   setAuthor(currentDraft.author || "");
+    // }
+
+    if (currentDraft) {
+      setText(currentDraft.text || "");
+      setAuthor(currentDraft.author || "");
+      StoreOpenTweets?.(parentTweetId);
+    }
+
+    setHasLoadedData(true);
+  }, [parentTweetId]);
+
+  useEffect(() => {
+    if (!hasLoadedData) return;
+
+    const storedTweets: CurrentTweetType[] = JSON.parse(
+      window.localStorage.getItem(uniqueKey) || "[]",
+    );
+
+    const existingDraftIndex = storedTweets.findIndex(
+      (tweet) => tweet.parentTweetId === parentTweetId,
+    );
+
+    const currentTweetInfo: CurrentTweetType = {
+      text,
+      author,
+      parentTweetId: parentTweetId || undefined,
+      isReplying,
+    };
+
+    if (existingDraftIndex >= 0) {
+      storedTweets[existingDraftIndex] = currentTweetInfo;
+    } else {
+      storedTweets.push(currentTweetInfo);
+    }
+
+    window.localStorage.setItem(uniqueKey, JSON.stringify(storedTweets));
+  }, [text, author, parentTweetId, isReplying, hasLoadedData]);
 
   const handleAddWriteTweet = async () => {
     if (!author || !text) return;
 
-    const newTweet = {
+    const newTweet: CurrentTweetType = {
       author,
       text,
-      parentTweetId,
+      parentTweetId: parentTweetId || undefined,
     };
+
+    const storedTweets: CurrentTweetType[] = JSON.parse(
+      localStorage.getItem(uniqueKey) || "[]",
+    );
+
+    storedTweets.push(newTweet);
+
+    localStorage.setItem(uniqueKey, JSON.stringify(storedTweets));
 
     setText("");
     setAuthor("");
 
     localStorage.removeItem(uniqueKey);
 
-    // setIsLoadingData(true);
     await insertTwitter(newTweet);
     if (fetchTweets) {
       await fetchTweets?.();
     }
     onSubmit();
-    // setIsLoadingData(false);
   };
-
-  useEffect(() => {
-    if (!hasLoadedData) return;
-
-    const currentTweetInfo: CurrentTweetType = {
-      text,
-      author,
-      isReplying,
-    };
-    // window.localStorage.setItem(
-    //   "current-tweet",
-    //   JSON.stringify(currentTweetInfo),
-    // );
-    window.localStorage.setItem(uniqueKey, JSON.stringify(currentTweetInfo));
-  }, [text, author, hasLoadedData, isReplying, uniqueKey]);
-
-  // useEffect(() => {
-  //   const initialTweetData: CurrentTweetType = JSON.parse(
-  //     window.localStorage.getItem("current-tweet") ?? "{}",
-  //   );
-
-  //   setText(initialTweetData.text || "");
-  //   setAuthor(initialTweetData.author || "");
-  //   setHasLoadedData(true);
-  // }, []);
-
-  useEffect(() => {
-    const initialTweetData: CurrentTweetType = JSON.parse(
-      window.localStorage.getItem(uniqueKey) ?? "{}",
-    );
-
-    setText(initialTweetData.text || "");
-    setAuthor(initialTweetData.author || "");
-    setHasLoadedData(true);
-  }, [uniqueKey]);
 
   return (
     <div className="flex items-center justify-center gap-3 rounded-lg bg-slate-800 p-3 text-slate-900 dark:text-white">

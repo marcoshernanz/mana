@@ -25,6 +25,7 @@ interface TweetProps {
   tweetReplies: TweetType[];
   fetchTweets: () => void;
   expandedTweetId: string | null;
+  StoredOpenTweets: (string | null | undefined)[];
 }
 
 export default function Tweet({
@@ -38,6 +39,7 @@ export default function Tweet({
   tweetReplies,
   fetchTweets,
   expandedTweetId,
+  StoredOpenTweets,
 }: TweetProps) {
   const [isLiked, setIsLiked] = useState<boolean>(initialIsLiked);
   const [isLoadingData, setIsLoadingData] = useState(true);
@@ -46,6 +48,9 @@ export default function Tweet({
   //   const savedState = localStorage.getItem(`tweet-${tweet.id}-isReplying`);
   //   return savedState ? JSON.parse(savedState) : false;
   // });
+
+  //iterate over the stored tweets and set the state of isReplying
+
   const [isReplying, setIsReplying] = useState(false);
 
   const handleReplyClick = () => {
@@ -59,27 +64,25 @@ export default function Tweet({
     }
   };
 
-  useEffect(() => {
-    if (isLoadingData) return;
+  // useEffect(() => {
+  //   if (isLoadingData) return;
 
-    if (isReplying) {
-      window.localStorage.setItem(
-        `tweet-${tweet.id}-isReplying`,
-        JSON.stringify(isReplying),
-      );
-    } else {
-      window.localStorage.removeItem(`tweet-${tweet.id}-isReplying`);
-    }
-  }, [isReplying, tweet.id, isLoadingData]);
+  //   if (isReplying) {
+  //     window.localStorage.setItem(
+  //       `tweet-${tweet.id}-isReplying`,
+  //       JSON.stringify(isReplying),
+  //     );
+  //   } else {
+  //     window.localStorage.removeItem(`tweet-${tweet.id}-isReplying`);
+  //   }
+  // }, [isReplying, tweet.id, isLoadingData]);
 
-  useEffect(() => {
-    const savedState = window.localStorage.getItem(
-      `tweet-${tweet.id}-isReplying`,
-    );
-    setIsReplying(savedState ? JSON.parse(savedState) : false);
+  // useEffect(() => {
+  //   const savedState = window.localStorage.getItem(`${tweet.id}`);
+  //   setIsReplying(savedState ? JSON.parse(savedState) : false);
 
-    setIsLoadingData(false);
-  }, [tweet.id]);
+  //   setIsLoadingData(false);
+  // }, [tweet.id]);
 
   return (
     <div>
