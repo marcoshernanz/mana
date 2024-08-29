@@ -48,10 +48,6 @@ export default function Tweet({
     setIsReplying(true);
   };
 
-  // const handleReplySubmit = () => {
-  //   setIsReplying(false);
-  // };
-
   const handleReplySubmit = async () => {
     setIsReplying(false);
     if (fetchTweets) {
@@ -66,7 +62,7 @@ export default function Tweet({
           <button
             onClick={() => {
               setIsLiked(!isLiked);
-              editTweetIsLiked(tweet.id, isLiked);
+              editTweetIsLiked(tweet.id, !isLiked);
             }}
           >
             {isLiked ? (

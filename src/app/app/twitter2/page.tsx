@@ -13,7 +13,6 @@ export default function TwitterPage() {
   const [isLoadingData, setIsLoadingData] = useState(true);
 
   const ParentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
-  const ReplyTweet = tweets.filter((tweet) => tweet.parentTweetId !== null);
 
   const tweetsWithReplies = ParentTweet.map((parentTweet) => {
     const replies = tweets.filter(
@@ -27,7 +26,7 @@ export default function TwitterPage() {
     setTweets(Tweets);
   };
 
-  const editTaskIsLiked = async (id: string, isLiked: boolean) => {
+  const editTweetIsLiked = async (id: string, isLiked: boolean) => {
     setIsLoadingData(true);
     await updateTwitter(id, { isLiked });
     await fetchTweets();
@@ -66,25 +65,20 @@ export default function TwitterPage() {
             Add Twitt
           </span>
           <div className="rounded-md bg-slate-900 px-10 py-6">
-            <WriteTweet
-              // addTweet={addTweet}
-              onSubmit={() => null}
-              fetchTweets={fetchTweets}
-            />
+            <WriteTweet onSubmit={() => null} fetchTweets={fetchTweets} />
           </div>
         </div>
 
         <div className="flex flex-col gap-5">
           {ParentTweet.map((tweet, index) => (
             <Tweet
-              // key={index}
               key={tweet.id}
               index={index}
               tweet={tweet}
               isExpanded={expandedTweetId === tweet.id}
               toggleExpand={toggleExpand}
               initialIsLiked={tweet.isLiked}
-              editTweetIsLiked={editTaskIsLiked}
+              editTweetIsLiked={editTweetIsLiked}
               tweetReplies={tweetsWithReplies[index]}
               deleteTweet={deleteTweet}
               fetchTweets={fetchTweets}
