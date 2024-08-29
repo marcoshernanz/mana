@@ -1,68 +1,46 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Tweet, { TweetType } from "./Tweet";
-import WriteTweet from "./WriteTweet";
-import { TweetReplyType } from "./TweetReply";
-import selectAllParentTweets from "@/server-actions/twitter/selectAllParentTweets";
+import WriteTweet, { CurrentTweetType } from "./WriteTweet";
+import selectAllTweets from "@/server-actions/twitter/selectAllTweets";
+import updateTwitter from "@/server-actions/twitter/updateTwitter";
+import deleteTwitt from "@/server-actions/twitter/deleteTwitt";
 
 export default function TwitterPage() {
-  const [expandedTweetId, setExpandedTweetId] = useState<number | null>(null);
+  const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
   const [tweets, setTweets] = useState<TweetType[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
-  // const fetchTweets = async () => {
-  //   const all_tweets = await selectAllParentTweets();
-  //   setTweets(all_tweets);
-  // };
+  const ParentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
 
-  function addTweet(newTweet: TweetType) {
-    setTweets([...tweets, newTweet]);
-  }
-
-  function addTweetReply(newReply: TweetReplyType, parentTweetId: number) {
-    setTweets(
-      tweets.map((tweet) =>
-        tweet.id === parentTweetId
-          ? { ...tweet, replies: [...(tweet.replies || []), newReply] }
-          : tweet,
-      ),
+  const tweetsWithReplies = ParentTweet.map((parentTweet) => {
+    const replies = tweets.filter(
+      (tweet) => tweet.parentTweetId === parentTweet.id,
     );
-  }
+    return replies;
+  });
 
-  const deleteTweet = (TweetIndex: number) => {
-    setTweets((tweet) => {
-      const newTweet = tweet.filter((_, index) => index !== TweetIndex);
-      return newTweet;
-    });
+  const fetchTweets = async () => {
+    const Tweets = await selectAllTweets();
+    setTweets(Tweets);
   };
 
-  const toggleLiked = (tweetId: number) => {
-    setTweets((prevTweets) =>
-      prevTweets.map((tweet) =>
-        tweet.id === tweetId ? { ...tweet, isLiked: !tweet.isLiked } : tweet,
-      ),
-    );
+  const editTweetIsLiked = async (id: string, isLiked: boolean) => {
+    setIsLoadingData(true);
+    await updateTwitter(id, { isLiked });
+    await fetchTweets();
+    setIsLoadingData(false);
   };
 
-  const toggleReplyLiked = (tweetId: number, replyId: number) => {
-    setTweets((prevTweets) =>
-      prevTweets.map((tweet) =>
-        tweet.id === tweetId
-          ? {
-              ...tweet,
-              replies: tweet.replies.map((reply) =>
-                reply.id === replyId
-                  ? { ...reply, Liked: !reply.Liked }
-                  : reply,
-              ),
-            }
-          : tweet,
-      ),
-    );
+  const deleteTweet = async (id: string) => {
+    setIsLoadingData(true);
+    await deleteTwitt(id);
+    await fetchTweets();
+    setIsLoadingData(false);
   };
 
-  const toggleExpand = (tweetId: number) => {
+  const toggleExpand = async (tweetId: string) => {
     setExpandedTweetId((expandedTweetId) =>
       expandedTweetId === tweetId ? null : tweetId,
     );
@@ -70,25 +48,23 @@ export default function TwitterPage() {
 
   useEffect(() => {
     if (isLoadingData) return;
-    window.localStorage.setItem("Tweets", JSON.stringify(tweets));
     window.localStorage.setItem(
-      "expanded-tweet-id",
+      "current-expandedTweetId",
       JSON.stringify(expandedTweetId),
     );
-  }, [tweets, isLoadingData, expandedTweetId]);
+  }, [isLoadingData, expandedTweetId]);
 
   useEffect(() => {
-    const TweetsData: TweetType[] = JSON.parse(
-      window.localStorage.getItem("Tweets") ?? "[]",
+    const expandedIdData: string | null = JSON.parse(
+      window.localStorage.getItem("current-expandedTweetId") ?? "null",
     );
-    setTweets(TweetsData);
+    setExpandedTweetId(expandedIdData);
 
-    const expandedTweetIdData: number = JSON.parse(
-      window.localStorage.getItem("expanded-tweet-id") ?? "0",
-    );
-    setExpandedTweetId(expandedTweetIdData);
-
-    setIsLoadingData(false);
+    (async () => {
+      setIsLoadingData(true);
+      await fetchTweets();
+      setIsLoadingData(false);
+    })();
   }, []);
 
   return (
@@ -102,23 +78,24 @@ export default function TwitterPage() {
             Add Twitt
           </span>
           <div className="rounded-md bg-slate-900 px-10 py-6">
-            <WriteTweet addTweet={addTweet} onSubmit={() => null} />
+            <WriteTweet onSubmit={() => null} fetchTweets={fetchTweets} />
           </div>
         </div>
 
         <div className="flex flex-col gap-5">
-          {tweets.map((tweet, index) => (
+          {ParentTweet.map((tweet, index) => (
             <Tweet
-              key={index}
+              key={tweet.id}
               index={index}
               tweet={tweet}
               isExpanded={expandedTweetId === tweet.id}
-              isLiked={tweet.isLiked ?? false}
               toggleExpand={toggleExpand}
-              toggleLiked={toggleLiked}
-              toggleReplyLiked={toggleReplyLiked}
+              initialIsLiked={tweet.isLiked}
+              editTweetIsLiked={editTweetIsLiked}
+              tweetReplies={tweetsWithReplies[index]}
               deleteTweet={deleteTweet}
-              addTweetReply={addTweetReply}
+              fetchTweets={fetchTweets}
+              expandedTweetId={expandedTweetId}
             ></Tweet>
           ))}
         </div>

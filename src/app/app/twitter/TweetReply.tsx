@@ -1,30 +1,32 @@
 import { Heart } from "lucide-react";
-
-export type TweetReplyType = {
-  id: number;
-  parentTweetId: number;
-  author: string;
-  text: string;
-  Liked: boolean;
-};
+import { useState } from "react";
 
 interface TweetReplyProps {
   TweetReply: string;
   author: string;
-  isLiked: boolean;
-  toggleLiked: () => void;
+  editTweetIsLiked: (id: string, isLiked: boolean) => void;
+  initialIsLiked: boolean;
+  id: string;
 }
 
 export default function TweetReply({
   TweetReply,
   author,
-  isLiked,
-  toggleLiked,
+  editTweetIsLiked,
+  initialIsLiked,
+  id,
 }: TweetReplyProps) {
+  const [isLiked, setIsLiked] = useState<boolean>(initialIsLiked);
+
   return (
     <div className="flex flex-col gap-2 rounded-md border border-orange-200 bg-orange-200/30 p-2 shadow-sm hover:bg-orange-200/50 dark:border-slate-600 dark:bg-slate-700/70 dark:shadow-2xl dark:hover:bg-slate-600/60">
       <div className="flex justify-end">
-        <button onClick={toggleLiked}>
+        <button
+          onClick={() => {
+            setIsLiked(!isLiked);
+            editTweetIsLiked(id, !isLiked);
+          }}
+        >
           {isLiked ? (
             <Heart size="17px" color="#ff0000" strokeWidth="3px" />
           ) : (

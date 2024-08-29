@@ -43,6 +43,13 @@
       "when": 1724859378873,
       "tag": "0005_typical_the_liberteens",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1724923418982,
+      "tag": "0006_square_darwin",
+      "breakpoints": true
     }
   ]
 }

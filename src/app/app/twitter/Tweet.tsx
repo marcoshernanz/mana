@@ -1,74 +1,96 @@
 "use client";
 
 import { ChevronDownIcon, ChevronUpIcon, Heart, Reply } from "lucide-react";
-import TweetReply, { TweetReplyType } from "./TweetReply";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import WriteTweet from "./WriteTweet";
+import TweetReply from "./TweetReply";
+import { is } from "drizzle-orm";
 
 export type TweetType = {
-  id: number;
+  id: string;
+  parentTweetId: string | null;
   author: string;
   text: string;
-  replies: TweetReplyType[];
-  isLiked?: boolean;
-
-  // isExpanded?: boolean;
-  // isReplying?: boolean;
+  isLiked: boolean;
 };
 
 interface TweetProps {
   index: number;
   tweet: TweetType;
   isExpanded: boolean;
-  isLiked: boolean;
-  toggleExpand: (tweetId: number) => void;
-  toggleLiked: (tweetId: number) => void;
-  toggleReplyLiked: (tweetId: number, replyId: number) => void;
-  deleteTweet: (TweetIndex: number) => void;
-  addTweetReply: (newReply: TweetReplyType, parentTweetId: number) => void;
+  initialIsLiked: boolean;
+  editTweetIsLiked: (id: string, isLiked: boolean) => void;
+  toggleExpand: (tweetId: string) => void;
+  deleteTweet: (TweetIndex: string) => void;
+  tweetReplies: TweetType[];
+  fetchTweets: () => void;
+  expandedTweetId: string | null;
 }
 
 export default function Tweet({
   index,
   isExpanded,
-  isLiked,
   toggleExpand,
-  toggleLiked,
-  toggleReplyLiked,
+  editTweetIsLiked,
+  initialIsLiked,
   tweet,
   deleteTweet,
-  addTweetReply,
+  tweetReplies,
+  fetchTweets,
+  expandedTweetId,
 }: TweetProps) {
-  const [isReplying, setIsReplying] = useState(() => {
-    const savedState = localStorage.getItem(`tweet-${tweet.id}-isReplying`);
-    return savedState ? JSON.parse(savedState) : false;
-  });
-  // const [isReplying, setIsReplying] = useState(false);
+  const [isLiked, setIsLiked] = useState<boolean>(initialIsLiked);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
+  // const [isReplying, setIsReplying] = useState(() => {
+  //   const savedState = localStorage.getItem(`tweet-${tweet.id}-isReplying`);
+  //   return savedState ? JSON.parse(savedState) : false;
+  // });
+  const [isReplying, setIsReplying] = useState(false);
 
   const handleReplyClick = () => {
     setIsReplying(true);
   };
 
-  const handleReplySubmit = () => {
+  const handleReplySubmit = async () => {
     setIsReplying(false);
+    if (fetchTweets) {
+      await fetchTweets();
+    }
   };
 
   useEffect(() => {
-    localStorage.setItem(
-      `tweet-${tweet.id}-isReplying`,
-      JSON.stringify(isReplying),
-    );
-  }, [isReplying, tweet.id]);
+    if (isLoadingData) return;
+
+    if (isReplying) {
+      window.localStorage.setItem(
+        `tweet-${tweet.id}-isReplying`,
+        JSON.stringify(isReplying),
+      );
+    } else {
+      window.localStorage.removeItem(`tweet-${tweet.id}-isReplying`);
+    }
+  }, [isReplying, tweet.id, isLoadingData]);
+
   useEffect(() => {
-    const Reply = localStorage.getItem(`tweet-${tweet.id}-isReplying`);
-    setIsReplying(Reply ? JSON.parse(Reply) : false);
-  }, [isReplying, tweet.id]);
+    const savedState = window.localStorage.getItem(
+      `tweet-${tweet.id}-isReplying`,
+    );
+    setIsReplying(savedState ? JSON.parse(savedState) : false);
+
+    setIsLoadingData(false);
+  }, [tweet.id]);
 
   return (
     <div>
       <div className="flex flex-col gap-1 rounded-md border border-orange-200 bg-orange-100/70 p-2 dark:border-slate-700 dark:bg-slate-900">
         <div className="flex justify-end">
-          <button onClick={() => toggleLiked(tweet.id)}>
+          <button
+            onClick={() => {
+              setIsLiked(!isLiked);
+              editTweetIsLiked(tweet.id, !isLiked);
+            }}
+          >
             {isLiked ? (
               <Heart size="20px" color="#ff0000" strokeWidth="3px" />
             ) : (
@@ -95,13 +117,14 @@ export default function Tweet({
         <div className="flex flex-col">
           {isExpanded && (
             <div className="flex flex-col gap-1.5 pb-2 pl-6">
-              {tweet.replies.map((reply) => (
+              {tweetReplies.map((reply) => (
                 <TweetReply
                   key={reply.id}
                   TweetReply={reply.text}
                   author={reply.author}
-                  isLiked={reply.Liked}
-                  toggleLiked={() => toggleReplyLiked(tweet.id, reply.id)}
+                  editTweetIsLiked={editTweetIsLiked}
+                  id={reply.id}
+                  initialIsLiked={reply.isLiked}
                 ></TweetReply>
               ))}
             </div>
@@ -110,10 +133,11 @@ export default function Tweet({
             {isReplying ? (
               <div className="w-full items-stretch">
                 <WriteTweet
-                  addTweetReply={addTweetReply}
                   parentTweetId={tweet.id}
                   onSubmit={handleReplySubmit}
                   tweetId={tweet.id}
+                  expandedTweetId={expandedTweetId}
+                  isReplying={isReplying}
                 />
               </div>
             ) : (
@@ -125,7 +149,7 @@ export default function Tweet({
                   Reply
                 </button>
                 <button
-                  onClick={() => deleteTweet(index)}
+                  onClick={() => deleteTweet(tweet.id)}
                   className="underline hover:text-slate-950 hover:no-underline dark:hover:text-slate-100"
                 >
                   Delete
