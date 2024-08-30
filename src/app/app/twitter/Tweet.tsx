@@ -47,10 +47,6 @@ export default function Tweet({
       localStorage.getItem("current-tweets") || "[]",
     );
 
-    // const isParentTweetOpen = storedTweets.some(
-    //   (tweetData) => tweetData.parentTweetId === tweet.id,
-    // );
-
     const isNotNull = storedTweets.some(
       (tweetData) =>
         tweetData.parentTweetId === tweet.id && tweetData.text !== "",
@@ -59,15 +55,7 @@ export default function Tweet({
     if (isNotNull) {
       setIsReplying(true);
     } else setIsReplying(false);
-
-    // if (isParentTweetOpen) {
-    //   setIsReplying(true);
-    // }
   }, [tweet.id]);
-
-  // const handleReplyClick = () => {
-  //   setIsReplying(true);
-  // };
 
   const handleReplyClick = () => {
     setIsReplying((prev) => !prev);

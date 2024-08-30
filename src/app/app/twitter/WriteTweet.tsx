@@ -51,7 +51,7 @@ export default function WriteTweet({
     }
 
     setHasLoadedData(true);
-  }, [parentTweetId, uniqueKey]);
+  }, [uniqueKey, parentTweetId]);
 
   useEffect(() => {
     if (!hasLoadedData) return;
@@ -96,6 +96,13 @@ export default function WriteTweet({
     const updatedTweets = storedTweets.filter(
       (tweet) => tweet.parentTweetId !== parentTweetId,
     );
+
+    // const updatedStoredTweets = storedTweets.filter(
+    //   (draft) =>
+    //     draft.parentTweetId === null ||
+    //     (draft.parentTweetId && tweetIds.has(draft.parentTweetId)),
+    // );
+    // localStorage.setItem("current-tweets", JSON.stringify(updatedStoredTweets));
 
     localStorage.setItem(uniqueKey, JSON.stringify(updatedTweets));
 

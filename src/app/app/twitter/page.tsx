@@ -36,6 +36,15 @@ export default function TwitterPage() {
   const deleteTweet = async (id: string) => {
     setIsLoadingData(true);
     await deleteTwitt(id);
+
+    const storedTweets: CurrentTweetType[] = JSON.parse(
+      localStorage.getItem("current-tweets") || "[]",
+    );
+    const updatedStoredTweets = storedTweets.filter(
+      (draft) => draft.parentTweetId !== id,
+    );
+    localStorage.setItem("current-tweets", JSON.stringify(updatedStoredTweets));
+
     await fetchTweets();
     setIsLoadingData(false);
   };
