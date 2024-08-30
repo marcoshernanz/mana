@@ -67,7 +67,7 @@ export default function WriteTweet({
     const currentTweetInfo: CurrentTweetType = {
       text,
       author,
-      parentTweetId: parentTweetId || undefined,
+      parentTweetId,
       isReplying,
     };
 
@@ -93,14 +93,14 @@ export default function WriteTweet({
       localStorage.getItem(uniqueKey) || "[]",
     );
 
-    storedTweets.push(newTweet);
+    const updatedTweets = storedTweets.filter(
+      (tweet) => tweet.parentTweetId !== parentTweetId,
+    );
 
-    localStorage.setItem(uniqueKey, JSON.stringify(storedTweets));
+    localStorage.setItem(uniqueKey, JSON.stringify(updatedTweets));
 
     setText("");
     setAuthor("");
-
-    localStorage.removeItem(uniqueKey);
 
     await insertTwitter(newTweet);
     if (fetchTweets) {

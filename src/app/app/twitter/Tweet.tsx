@@ -4,7 +4,6 @@ import { ChevronDownIcon, ChevronUpIcon, Heart, Reply } from "lucide-react";
 import { use, useEffect, useState } from "react";
 import WriteTweet, { CurrentTweetType } from "./WriteTweet";
 import TweetReply from "./TweetReply";
-import { is } from "drizzle-orm";
 
 export type TweetType = {
   id: string;
@@ -43,8 +42,35 @@ export default function Tweet({
 
   const [isReplying, setIsReplying] = useState(false);
 
+  useEffect(() => {
+    const storedTweets: CurrentTweetType[] = JSON.parse(
+      localStorage.getItem("current-tweets") || "[]",
+    );
+
+    // const isParentTweetOpen = storedTweets.some(
+    //   (tweetData) => tweetData.parentTweetId === tweet.id,
+    // );
+
+    const isNotNull = storedTweets.some(
+      (tweetData) =>
+        tweetData.parentTweetId === tweet.id && tweetData.text !== "",
+    );
+
+    if (isNotNull) {
+      setIsReplying(true);
+    } else setIsReplying(false);
+
+    // if (isParentTweetOpen) {
+    //   setIsReplying(true);
+    // }
+  }, [tweet.id]);
+
+  // const handleReplyClick = () => {
+  //   setIsReplying(true);
+  // };
+
   const handleReplyClick = () => {
-    setIsReplying(true);
+    setIsReplying((prev) => !prev);
   };
 
   const handleReplySubmit = async () => {
