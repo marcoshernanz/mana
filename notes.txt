@@ -99,5 +99,59 @@ setValue(VALUE) -> When new VALUE doesn't depend on old value
 setValue(FUNCTION(value) {}) -> When new VALUE depends on old value
 setValue((value) => newValue)
 
+https://learnxinyminutes.com/docs/javascript/ 
+- Popup: Function called with setTimeout(func , num000)
+- access value of a key in object: this.key
+- Change object with a function: adding or accessing values of it. const ... = func() {
+  return something happens to this.key }
+
+obj.func = func() //now ... : func() is in obj. 
+- Do something with this.key: call, apply, bind
+- create new object by: 
+const constructor0 = {func(this... = ....);}; 
+new constructor0(); // {.. : ....}
+- make a prototype of an obj without changing it at all:
+const prototype = {
+  key1: value1
+  func1: func() = {something happens to this.key_of_other_object}
+}
+obj.__proto__ = prototype // now prototype is part of obj and u can access their keys by using obj.prototype_key and obj has no even change
+- access keys of obj with prototype and keys of prototype: (for in obj)
+- access keys of original obj: for in obj{ if (obj.hasOwnProperty)}
+- change value ob obj: obj.key = new value
+
+
+https://learnxinyminutes.com/docs/typescript/
+- Math.sqrt(), Math.pow()
+- functions and constants can also have types
+- static?: constants, variables that are "sticked" static .. to an obj. You cannot create another object obj1 and call it with it. obj1...
+- implement?: implement the values of an interface in a data type. 
+- extend: inherit or extends the behavior of another one --> useful for parent id in answer
+- readonly: read 
+- for..in statement: iterates over keys returns values
+
+https://learnxinyminutes.com/docs/sql/
+CREATE, DROP, SELECT (* or Name) FROM (database), 
+LIMIT, WHERE Name LIKE ...
+ORDER BY title DESC
+IN, NO IN, BETWEEN
+MIN(), MAX(), COUNT(*), SUM(), AVG()
+HAVING
+order syntax: 
+SELECT _ FROM _ JOIN _ ON _ WHERE _ GROUP BY _ HAVING _ ORDER BY _ UNION
+
+(pgTable) https://orm.drizzle.team/docs/sql-schema-declaration
+https://orm.drizzle.team/docs/column-types/pg
+schema.ts
+export const name = pgTable('Table_name', {
+  column1: serial, text, varchar..
+  ...:
+})
+
+https://orm.drizzle.team/docs/select
+https://orm.drizzle.team/docs/insert
+https://orm.drizzle.team/docs/update
+https://orm.drizzle.team/docs/delete
+
 npm run db:generate
 npm run db:migrate

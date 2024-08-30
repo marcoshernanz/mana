@@ -2,7 +2,7 @@ import { Heart } from "lucide-react";
 import { useState } from "react";
 
 interface TweetReplyProps {
-  TweetReply: string;
+  tweetReply: string;
   author: string;
   editTweetIsLiked: (id: string, isLiked: boolean) => void;
   initialIsLiked: boolean;
@@ -10,7 +10,7 @@ interface TweetReplyProps {
 }
 
 export default function TweetReply({
-  TweetReply,
+  tweetReply,
   author,
   editTweetIsLiked,
   initialIsLiked,
@@ -35,7 +35,7 @@ export default function TweetReply({
         </button>
       </div>
       <span className="text-slate-700 dark:text-slate-200 dark:hover:text-slate-100">
-        {TweetReply}
+        {tweetReply}
       </span>
       <span className="text-xs text-zinc-500 dark:text-slate-200 dark:hover:text-slate-100">
         {author}

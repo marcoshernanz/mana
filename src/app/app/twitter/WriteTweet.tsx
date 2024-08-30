@@ -97,13 +97,6 @@ export default function WriteTweet({
       (tweet) => tweet.parentTweetId !== parentTweetId,
     );
 
-    // const updatedStoredTweets = storedTweets.filter(
-    //   (draft) =>
-    //     draft.parentTweetId === null ||
-    //     (draft.parentTweetId && tweetIds.has(draft.parentTweetId)),
-    // );
-    // localStorage.setItem("current-tweets", JSON.stringify(updatedStoredTweets));
-
     localStorage.setItem(uniqueKey, JSON.stringify(updatedTweets));
 
     setText("");

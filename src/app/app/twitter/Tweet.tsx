@@ -107,7 +107,7 @@ export default function Tweet({
               {tweetReplies.map((reply) => (
                 <TweetReply
                   key={reply.id}
-                  TweetReply={reply.text}
+                  tweetReply={reply.text}
                   author={reply.author}
                   editTweetIsLiked={editTweetIsLiked}
                   id={reply.id}

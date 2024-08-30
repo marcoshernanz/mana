@@ -12,9 +12,9 @@ export default function TwitterPage() {
   const [tweets, setTweets] = useState<TweetType[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
-  const ParentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
+  const parentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
 
-  const tweetsWithReplies = ParentTweet.map((parentTweet) => {
+  const tweetsWithReplies = parentTweet.map((parentTweet) => {
     const replies = tweets.filter(
       (tweet) => tweet.parentTweetId === parentTweet.id,
     );
@@ -22,8 +22,8 @@ export default function TwitterPage() {
   });
 
   const fetchTweets = async () => {
-    const Tweets = await selectAllTweets();
-    setTweets(Tweets);
+    const twits = await selectAllTweets();
+    setTweets(twits);
   };
 
   const editTweetIsLiked = async (id: string, isLiked: boolean) => {
@@ -92,7 +92,7 @@ export default function TwitterPage() {
         </div>
 
         <div className="flex flex-col gap-5">
-          {ParentTweet.map((tweet, index) => (
+          {parentTweet.map((tweet, index) => (
             <Tweet
               key={tweet.id}
               index={index}
