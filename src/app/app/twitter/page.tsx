@@ -6,6 +6,7 @@ import WriteTweet, { CurrentTweetType } from "./WriteTweet";
 import selectAllTweets from "@/server-actions/twitter/selectAllTweets";
 import updateTwitter from "@/server-actions/twitter/updateTwitter";
 import deleteTwitt from "@/server-actions/twitter/deleteTwitt";
+import TweetIsLoading from "./TweetIsLoading";
 
 export default function TwitterPage() {
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
@@ -92,21 +93,36 @@ export default function TwitterPage() {
         </div>
 
         <div className="flex flex-col gap-5">
-          {parentTweet.map((tweet, index) => (
-            <Tweet
-              key={tweet.id}
-              index={index}
-              tweet={tweet}
-              isExpanded={expandedTweetId === tweet.id}
-              toggleExpand={toggleExpand}
-              initialIsLiked={tweet.isLiked}
-              editTweetIsLiked={editTweetIsLiked}
-              tweetReplies={tweetsWithReplies[index]}
-              deleteTweet={deleteTweet}
-              fetchTweets={fetchTweets}
-              expandedTweetId={expandedTweetId}
-            ></Tweet>
-          ))}
+          {
+            // isLoadingData
+            //   ?
+            Array(parentTweet.length)
+              .fill(0)
+              .map((_, index) => (
+                <TweetIsLoading
+                  key={index}
+                  isExpanded={false}
+                  isReplying={false}
+                  tweetRepliesLength={1}
+                />
+              ))
+            // :
+            // parentTweet.map((tweet, index) => (
+            //     <Tweet
+            //       key={tweet.id}
+            //       index={index}
+            //       tweet={tweet}
+            //       isExpanded={expandedTweetId === tweet.id}
+            //       toggleExpand={toggleExpand}
+            //       initialIsLiked={tweet.isLiked}
+            //       editTweetIsLiked={editTweetIsLiked}
+            //       tweetReplies={tweetsWithReplies[index]}
+            //       deleteTweet={deleteTweet}
+            //       fetchTweets={fetchTweets}
+            //       expandedTweetId={expandedTweetId}
+            //     ></Tweet>
+            //   ))
+          }
         </div>
       </div>
     </div>
