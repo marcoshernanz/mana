@@ -14,7 +14,6 @@ export type TweetType = {
 };
 
 interface TweetProps {
-  index: number;
   tweet: TweetType;
   isExpanded: boolean;
   initialIsLiked: boolean;
@@ -27,7 +26,6 @@ interface TweetProps {
 }
 
 export default function Tweet({
-  index,
   isExpanded,
   toggleExpand,
   editTweetIsLiked,

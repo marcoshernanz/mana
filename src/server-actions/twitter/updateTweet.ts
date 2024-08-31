@@ -15,7 +15,7 @@ type UpdateTwitterType = Omit<
   parentTweetId?: string;
 };
 
-export default async function updateTwitter(
+export default async function updateTweet(
   id: string,
   tweet: UpdateTwitterType,
 ): Promise<void> {

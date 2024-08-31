@@ -125,3 +125,26 @@ If parentTweetId -> tweet is a reply
 
 Selecting tweet replies
 db.select().from(tweetsTable).where(eq(parentTweetId), <ID>); -> Gets the replies for the tweet with id = <ID>
+
+-------------------------------------------------------------
+
+REMOVE LOCAL STORAGE
+REPLACE ALL VARIABLE NAMES THAT ARE MISSPELLED
+ADD CREATEDAT TO ALL TABLES
+
+Create Alert component and use it in sign-in and sign-up
+
+Create a sign out button that signs out the user when clicked. Make that button inside auth/page.tsx
+
+Create a server action to verify if a user is signed in, and to get the payload inside the jwt. The function returns null if user in not signed in, otherwise returns the payload.
+
+In twitter, create a new column - userId (and delete author)
+
+Reimplement twitter so that the author is automatically created when you tweet something (the author is name of the user in usersTable)
+
+Documentation:
+  https://nextjs.org/docs/app/api-reference/functions/cookies
+  https://www.npmjs.com/package/jsonwebtoken
+  https://www.npmjs.com/package/bcrypt
+
+https://nextjs.org/docs/app/building-your-application/routing/middleware

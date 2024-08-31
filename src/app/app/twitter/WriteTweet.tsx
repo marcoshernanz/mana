@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { TweetType } from "./Tweet";
-import insertTwitter from "@/server-actions/twitter/insertTwitter";
+import insertTweet from "@/server-actions/twitter/insertTweet";
 
 export type CurrentTweetType = Omit<
   TweetType,
@@ -102,7 +102,7 @@ export default function WriteTweet({
     setText("");
     setAuthor("");
 
-    await insertTwitter(newTweet);
+    await insertTweet(newTweet);
     if (fetchTweets) {
       await fetchTweets?.();
     }
