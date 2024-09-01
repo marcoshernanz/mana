@@ -134,9 +134,9 @@ ADD CREATEDAT TO ALL TABLES                          ---> DONE
 
 Create Alert component and use it in sign-in and sign-up --> DONE
 
-Create a sign out button that signs out the user when clicked. Make that button inside auth/page.tsx
+Create a sign out button that signs out the user when clicked. Make that button inside auth/page.tsx                                                  --> DONE
 
-Create a server action to verify if a user is signed in, and to get the payload inside the jwt. The function returns null if user in not signed in, otherwise returns the payload.
+Create a server action to verify if a user is signed in, and to get the payload inside the jwt. The function returns null if user in not signed in, otherwise returns the payload.                                                  --> DONE?
 
 In twitter, create a new column - userId (and delete author)
 

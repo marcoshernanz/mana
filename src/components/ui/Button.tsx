@@ -46,6 +46,7 @@ interface ButtonProps {
     | "#37036c"
     | "#00396c";
   className?: string;
+  onClick?: () => void;
 }
 
 export default function Button({
@@ -54,6 +55,7 @@ export default function Button({
   size,
   color,
   className,
+  onClick,
 }: ButtonProps) {
   // Text color
   // Border color
@@ -62,6 +64,7 @@ export default function Button({
 
   return (
     <button
+      onClick={onClick}
       className={twMerge(
         "rounded-lg border font-bold transition hover:shadow-md active:shadow-none",
         types[type],
