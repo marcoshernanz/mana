@@ -1,5 +1,6 @@
 "use client";
 
+import Alert from "@/components/ui/Alert";
 import Button from "@/components/ui/Button";
 import signIn from "@/server-actions/auth/signIn";
 import { FormEvent, useState } from "react";
@@ -81,8 +82,16 @@ export default function SignUpPage() {
             className="text-base font-semibold"
           />
         </div>
-        {errorMessage && <div className="bg-red-700">{errorMessage}</div>}
-        {successMessage && <div className="bg-green-700">{successMessage}</div>}
+        {errorMessage && (
+          <Alert type="error">
+            <span>{errorMessage}</span>
+          </Alert>
+        )}
+        {successMessage && (
+          <Alert type="success">
+            <span>{successMessage}</span>
+          </Alert>
+        )}
       </form>
     </div>
   );

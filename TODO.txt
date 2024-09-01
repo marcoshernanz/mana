@@ -128,11 +128,11 @@ db.select().from(tweetsTable).where(eq(parentTweetId), <ID>); -> Gets the replie
 
 -------------------------------------------------------------
 
-REMOVE LOCAL STORAGE
-REPLACE ALL VARIABLE NAMES THAT ARE MISSPELLED
-ADD CREATEDAT TO ALL TABLES
+REMOVE LOCAL STORAGE                                 ---> DONE
+REPLACE ALL VARIABLE NAMES THAT ARE MISSPELLED       ---> DONE
+ADD CREATEDAT TO ALL TABLES                          ---> DONE
 
-Create Alert component and use it in sign-in and sign-up
+Create Alert component and use it in sign-in and sign-up --> DONE
 
 Create a sign out button that signs out the user when clicked. Make that button inside auth/page.tsx
 

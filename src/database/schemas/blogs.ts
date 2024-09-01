@@ -1,5 +1,5 @@
 import { InferSelectModel } from "drizzle-orm";
-import { boolean, integer, pgTable, text } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const blogsTable = pgTable("blogs", {
   id: text("id")
@@ -10,6 +10,7 @@ export const blogsTable = pgTable("blogs", {
   tags: text("tags").array().notNull(),
   isRead: boolean("is_read").notNull().default(false),
   pageNumber: integer("page_number").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 export type BlogsTableType = InferSelectModel<typeof blogsTable>;

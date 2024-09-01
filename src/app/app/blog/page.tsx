@@ -6,7 +6,6 @@ import BlogPost from "./BlogPost";
 import selectAllBlogs from "@/server-actions/blogs/selectAllBlogs";
 import updateBlog from "@/server-actions/blogs/updateBlog";
 
-//Tags that user already add
 export type AvailableTags = {
   tags: string[];
 };
@@ -41,15 +40,6 @@ export default function BlogPage() {
   };
 
   useEffect(() => {
-    if (isLoadingData) return;
-    window.localStorage.setItem("page-number", JSON.stringify(pageNumber));
-  }, [isLoadingData, pageNumber]);
-
-  useEffect(() => {
-    const pageNumberData: number = JSON.parse(
-      window.localStorage.getItem("page-number") ?? "0",
-    );
-    setPageNumber(pageNumberData);
     (async () => {
       setIsLoadingData(true);
       await fetchBlogs();

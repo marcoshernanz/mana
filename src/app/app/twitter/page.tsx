@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Tweet, { TweetType } from "./Tweet";
-import WriteTweet, { CurrentTweetType } from "./WriteTweet";
+import WriteTweet from "./WriteTweet";
 import selectAllTweets from "@/server-actions/twitter/selectAllTweets";
 import updateTweet from "@/server-actions/twitter/updateTweet";
 import deleteTweet from "@/server-actions/twitter/deleteTweet";
@@ -38,14 +38,6 @@ export default function TwitterPage() {
     setIsLoadingData(true);
     await deleteTweet(id);
 
-    const storedTweets: CurrentTweetType[] = JSON.parse(
-      localStorage.getItem("current-tweets") || "[]",
-    );
-    const updatedStoredTweets = storedTweets.filter(
-      (draft) => draft.parentTweetId !== id,
-    );
-    localStorage.setItem("current-tweets", JSON.stringify(updatedStoredTweets));
-
     await fetchTweets();
     setIsLoadingData(false);
   };
@@ -57,19 +49,6 @@ export default function TwitterPage() {
   };
 
   useEffect(() => {
-    if (isLoadingData) return;
-    window.localStorage.setItem(
-      "current-expandedTweetId",
-      JSON.stringify(expandedTweetId),
-    );
-  }, [isLoadingData, expandedTweetId]);
-
-  useEffect(() => {
-    const expandedIdData: string | null = JSON.parse(
-      window.localStorage.getItem("current-expandedTweetId") ?? "null",
-    );
-    setExpandedTweetId(expandedIdData);
-
     (async () => {
       setIsLoadingData(true);
       await fetchTweets();

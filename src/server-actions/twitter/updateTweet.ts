@@ -6,13 +6,14 @@ import { eq } from "drizzle-orm";
 
 type UpdateTwitterType = Omit<
   TwitterType,
-  "text" | "author" | "id" | "isLiked" | "parentTweetId"
+  "text" | "author" | "id" | "isLiked" | "parentTweetId"| "createdAt"
 > & {
   text?: string;
   author?: string;
   id?: string;
   isLiked?: boolean;
   parentTweetId?: string;
+  createdAt?: Date;
 };
 
 export default async function updateTweet(

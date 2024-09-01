@@ -5,23 +5,12 @@ import { twMerge } from "tailwind-merge";
 import { BlogPostType } from "./page";
 import insertBlog from "@/server-actions/blogs/insertBlog";
 
-type WriteBlogPostType = {
-  title: string;
-  content: string;
-  newTagInput: string;
-  allTags: string[];
-  selectedTags: string[];
-  pageNumber: number;
-};
-
 interface WriteBlogPost {
-  // addBlogPost: (blogPost: BlogPostType) => void;
   pageNumber: number;
   fetchBlog: () => void;
 }
 
 export default function WriteBlogPost({
-  // addBlogPost,
   pageNumber,
   fetchBlog,
 }: WriteBlogPost) {
@@ -31,8 +20,6 @@ export default function WriteBlogPost({
   const [allTags, setAllTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const [hasLoadedData, setHasLoadedData] = useState(false);
 
   const addTag = () => {
     if (newTagInput && !allTags.includes(newTagInput)) {
@@ -61,45 +48,6 @@ export default function WriteBlogPost({
     await fetchBlog();
     setIsLoading(false);
   };
-
-  useEffect(() => {
-    if (!hasLoadedData) return;
-
-    const currentBlogPostData: WriteBlogPostType = {
-      title,
-      content,
-      newTagInput,
-      allTags,
-      selectedTags,
-      pageNumber,
-    };
-    window.localStorage.setItem(
-      "current-blog-post",
-      JSON.stringify(currentBlogPostData),
-    );
-  }, [
-    title,
-    content,
-    newTagInput,
-    allTags,
-    selectedTags,
-    hasLoadedData,
-    pageNumber,
-  ]);
-
-  useEffect(() => {
-    const initialCurrentBlogPostData: WriteBlogPostType = JSON.parse(
-      window.localStorage.getItem("current-blog-post") ?? "{}",
-    );
-
-    setTitle(initialCurrentBlogPostData.title || "");
-    setContent(initialCurrentBlogPostData.content || "");
-    setNewTagInput(initialCurrentBlogPostData.newTagInput || "");
-    setAllTags(initialCurrentBlogPostData.allTags || []);
-    setSelectedTags(initialCurrentBlogPostData.selectedTags || []);
-
-    setHasLoadedData(true);
-  }, []);
 
   return (
     <div className="relative z-0 flex flex-col gap-8 border border-orange-100">

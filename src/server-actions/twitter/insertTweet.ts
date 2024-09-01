@@ -5,11 +5,12 @@ import { twitterTable, TwitterType } from "@/database/schemas/twitter";
 
 type InsertTwitterType = Omit<
   TwitterType,
-  "id" | "isLiked" | "parentTweetId"
+  "id" | "isLiked" | "parentTweetId" | "createdAt"
 > & {
   id?: string;
   isLiked?: boolean;
   parentTweetId?: string | null | undefined;
+  createdAt?: Date;
 };
 
 export default async function insertTweet(

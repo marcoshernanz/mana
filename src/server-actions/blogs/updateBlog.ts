@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 
 type UpdateBlogType = Omit<
   BlogsTableType,
-  "title" | "content" | "tags" | "id" | "isRead" | "pageNumber" 
+  "title" | "content" | "tags" | "id" | "isRead" | "pageNumber" | "createdAt" 
 > & {
   title?: string;
   content?: string;
@@ -14,6 +14,7 @@ type UpdateBlogType = Omit<
   id?: string;
   isRead?: boolean;
   pageNumber?: number;
+  createdAt?: Date;
 };
 
 export default async function updateTodo(

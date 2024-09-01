@@ -57,6 +57,20 @@
       "when": 1725126022463,
       "tag": "0007_hot_gideon",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1725176802623,
+      "tag": "0008_absurd_agent_brand",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1725177370649,
+      "tag": "0009_pretty_lord_tyger",
+      "breakpoints": true
     }
   ]
 }

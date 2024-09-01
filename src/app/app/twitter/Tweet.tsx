@@ -1,8 +1,8 @@
 "use client";
 
-import { ChevronDownIcon, ChevronUpIcon, Heart, Reply } from "lucide-react";
-import { use, useEffect, useState } from "react";
-import WriteTweet, { CurrentTweetType } from "./WriteTweet";
+import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
+import { useState } from "react";
+import WriteTweet from "./WriteTweet";
 import TweetReply from "./TweetReply";
 
 export type TweetType = {
@@ -39,21 +39,6 @@ export default function Tweet({
   const [isLiked, setIsLiked] = useState<boolean>(initialIsLiked);
 
   const [isReplying, setIsReplying] = useState(false);
-
-  useEffect(() => {
-    const storedTweets: CurrentTweetType[] = JSON.parse(
-      localStorage.getItem("current-tweets") || "[]",
-    );
-
-    const isNotNull = storedTweets.some(
-      (tweetData) =>
-        tweetData.parentTweetId === tweet.id && tweetData.text !== "",
-    );
-
-    if (isNotNull) {
-      setIsReplying(true);
-    } else setIsReplying(false);
-  }, [tweet.id]);
 
   const handleReplyClick = () => {
     setIsReplying((prev) => !prev);
@@ -120,9 +105,6 @@ export default function Tweet({
                 <WriteTweet
                   parentTweetId={tweet.id}
                   onSubmit={handleReplySubmit}
-                  tweetId={tweet.id}
-                  expandedTweetId={expandedTweetId}
-                  isReplying={isReplying}
                 />
               </div>
             ) : (

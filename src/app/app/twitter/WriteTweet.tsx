@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TweetType } from "./Tweet";
 import insertTweet from "@/server-actions/twitter/insertTweet";
 
@@ -17,68 +17,18 @@ export type CurrentTweetType = Omit<
 interface WriteTweetProps {
   parentTweetId?: string | undefined | null;
   onSubmit: () => void;
-  tweetId?: string;
   fetchTweets?: () => void;
-  expandedTweetId?: string | null;
-  isReplying?: boolean;
 }
 
 export default function WriteTweet({
   parentTweetId,
   onSubmit,
-  tweetId,
   fetchTweets,
-  expandedTweetId,
-  isReplying,
 }: WriteTweetProps) {
   const [text, setText] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [hasLoadedData, setHasLoadedData] = useState(false);
   const uniqueKey = `current-tweets`;
-
-  useEffect(() => {
-    const storedTweets: CurrentTweetType[] = JSON.parse(
-      window.localStorage.getItem(uniqueKey) || "[]",
-    );
-
-    const currentDraft = storedTweets.find(
-      (tweet) => tweet.parentTweetId === parentTweetId,
-    );
-
-    if (currentDraft) {
-      setText(currentDraft.text || "");
-      setAuthor(currentDraft.author || "");
-    }
-
-    setHasLoadedData(true);
-  }, [uniqueKey, parentTweetId]);
-
-  useEffect(() => {
-    if (!hasLoadedData) return;
-
-    const storedTweets: CurrentTweetType[] = JSON.parse(
-      window.localStorage.getItem(uniqueKey) || "[]",
-    );
-
-    const existingDraftIndex = storedTweets.findIndex(
-      (tweet) => tweet.parentTweetId === parentTweetId,
-    );
-
-    const currentTweetInfo: CurrentTweetType = {
-      text,
-      author,
-      parentTweetId,
-      isReplying,
-    };
-
-    if (existingDraftIndex >= 0) {
-      storedTweets[existingDraftIndex] = currentTweetInfo;
-    } else {
-      storedTweets.push(currentTweetInfo);
-    }
-
-    window.localStorage.setItem(uniqueKey, JSON.stringify(storedTweets));
-  }, [text, author, parentTweetId, isReplying, hasLoadedData, uniqueKey]);
 
   const handleAddWriteTweet = async () => {
     if (!author || !text) return;
@@ -88,16 +38,6 @@ export default function WriteTweet({
       text,
       parentTweetId: parentTweetId || undefined,
     };
-
-    const storedTweets: CurrentTweetType[] = JSON.parse(
-      localStorage.getItem(uniqueKey) || "[]",
-    );
-
-    const updatedTweets = storedTweets.filter(
-      (tweet) => tweet.parentTweetId !== parentTweetId,
-    );
-
-    localStorage.setItem(uniqueKey, JSON.stringify(updatedTweets));
 
     setText("");
     setAuthor("");

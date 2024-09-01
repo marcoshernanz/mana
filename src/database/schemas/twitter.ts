@@ -1,5 +1,5 @@
 import { InferSelectModel } from "drizzle-orm";
-import { boolean, pgTable, text } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const twitterTable = pgTable("twitter", {
   id: text("id")
@@ -9,6 +9,7 @@ export const twitterTable = pgTable("twitter", {
   author: text("author").notNull(),
   parentTweetId: text("parentTweetId"),
   isLiked: boolean("is_liked").notNull().default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
 export type TwitterType = InferSelectModel<typeof twitterTable>;
