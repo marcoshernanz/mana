@@ -1,9 +1,11 @@
 "use client";
 
+import TwitterPage from "@/app/app/twitter/page";
 import Alert from "@/components/ui/Alert";
 import Button from "@/components/ui/Button";
 // import IsSignIn from "@/server-actions/auth/IsSignIn";
 import signIn from "@/server-actions/auth/signIn";
+import { Link } from "lucide-react";
 import { FormEvent, useState } from "react";
 
 export default function SignUpPage() {
@@ -25,7 +27,6 @@ export default function SignUpPage() {
       setErrorMessage(error);
     } else {
       setSuccessMessage("Signed in successfully");
-      // IsSignIn();
     }
   };
 

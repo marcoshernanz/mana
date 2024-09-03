@@ -71,6 +71,34 @@
       "when": 1725177370649,
       "tag": "0009_pretty_lord_tyger",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1725263937509,
+      "tag": "0010_useful_sway",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1725264763682,
+      "tag": "0011_plain_iceman",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1725289514213,
+      "tag": "0012_bizarre_apocalypse",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1725304351344,
+      "tag": "0013_bored_frightful_four",
+      "breakpoints": true
     }
   ]
 }

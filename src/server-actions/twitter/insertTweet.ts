@@ -2,21 +2,25 @@
 
 import { db } from "@/database/db";
 import { twitterTable, TwitterType } from "@/database/schemas/twitter";
+import { eq } from "drizzle-orm";
+import { getSession } from "../auth/getSession";
 
-type InsertTwitterType = Omit<
-  TwitterType,
-  "id" | "isLiked" | "parentTweetId" | "createdAt"
-> & {
-  id?: string;
-  isLiked?: boolean;
-  parentTweetId?: string | null | undefined;
-  createdAt?: Date;
-};
+interface insertTweetProps {
+  text: string;
+  parentTweetId: string | null;
+}
 
-export default async function insertTweet(
-  tweet: InsertTwitterType,
-): Promise<void> {
-  await db.insert(twitterTable).values(tweet).returning();
+export default async function insertTweet({
+  text,
+  parentTweetId,
+}: insertTweetProps): Promise<void> {
+  // const userId = (await getSession())?.id;
+  const session = await getSession();
+  const userId = session?.id;
 
-  console.log(await db.select().from(twitterTable));
+  if (!userId) {
+    return;
+  }
+
+  await db.insert(twitterTable).values({ userId, text, parentTweetId });
 }

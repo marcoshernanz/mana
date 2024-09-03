@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TweetType } from "./Tweet";
 import insertTweet from "@/server-actions/twitter/insertTweet";
+import { getSession } from "@/server-actions/auth/getSession";
 
 export type CurrentTweetType = Omit<
   TweetType,
@@ -26,21 +27,18 @@ export default function WriteTweet({
   fetchTweets,
 }: WriteTweetProps) {
   const [text, setText] = useState<string>("");
-  const [author, setAuthor] = useState<string>("");
-  const [hasLoadedData, setHasLoadedData] = useState(false);
-  const uniqueKey = `current-tweets`;
 
   const handleAddWriteTweet = async () => {
-    if (!author || !text) return;
+    // !author ||
+    if (!text) return;
 
     const newTweet: CurrentTweetType = {
-      author,
       text,
       parentTweetId: parentTweetId || undefined,
     };
 
     setText("");
-    setAuthor("");
+    // setAuthor("");
 
     await insertTweet(newTweet);
     if (fetchTweets) {
@@ -58,12 +56,12 @@ export default function WriteTweet({
           placeholder="write text"
           className="dark:text-slate-800"
         ></input>
-        <input
+        {/* <input
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
           placeholder="Author"
           className="dark:text-slate-800"
-        ></input>
+        ></input> */}
       </div>
       <div>
         <button onClick={handleAddWriteTweet}>Submit</button>

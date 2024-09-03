@@ -1,0 +1,1 @@
+ALTER TABLE "twitter" RENAME COLUMN "author" TO "user_id";

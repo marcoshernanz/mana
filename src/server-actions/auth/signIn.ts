@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { SessionType } from "./getSession";
 
 interface signInProps {
   username: string;
@@ -41,8 +42,10 @@ export default async function signIn({
       throw new Error("Incorrect username or password");
     }
 
+    const session = { id: selectedUser.id, name: selectedUser.name, username: selectedUser.username} satisfies SessionType;
+
     const token = jwt.sign(
-      { id: selectedUser.id, name: selectedUser.name },
+      session,
       process.env.AUTH_SECRET!,
     );
 
