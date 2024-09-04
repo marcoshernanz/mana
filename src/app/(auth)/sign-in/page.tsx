@@ -1,12 +1,11 @@
 "use client";
 
-import TwitterPage from "@/app/app/twitter/page";
 import Alert from "@/components/ui/Alert";
 import Button from "@/components/ui/Button";
-// import IsSignIn from "@/server-actions/auth/IsSignIn";
 import signIn from "@/server-actions/auth/signIn";
-import { Link } from "lucide-react";
+import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { middleware } from "../../../../middleware/middleware";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -25,8 +24,10 @@ export default function SignUpPage() {
 
     if (error) {
       setErrorMessage(error);
+      // window.location.href = "/sign-up";
     } else {
       setSuccessMessage("Signed in successfully");
+      window.location.href = "/app/twitter";
     }
   };
 
@@ -87,12 +88,20 @@ export default function SignUpPage() {
         </div>
         {errorMessage && (
           <Alert type="error">
-            <span>{errorMessage}</span>
+            <span>
+              {errorMessage}. Have you{" "}
+              <Link href="/sign-up" className="underline">
+                sign-up?
+              </Link>
+            </span>
           </Alert>
         )}
         {successMessage && (
           <Alert type="success">
-            <span>{successMessage}</span>
+            <span>{successMessage}. </span>
+            <Link href="/app/twitter" className="underline">
+              Start twitting
+            </Link>
           </Alert>
         )}
       </form>

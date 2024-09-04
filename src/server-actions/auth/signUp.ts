@@ -49,6 +49,7 @@ export default async function signUp({
     if (error instanceof Error) {
       return { error: error.message };
     }
+    //if you don't put error instance of Error, and put Error.message, it will throw any error message?
   }
 
   return {};

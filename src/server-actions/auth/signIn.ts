@@ -42,12 +42,18 @@ export default async function signIn({
       throw new Error("Incorrect username or password");
     }
 
-    const session = { id: selectedUser.id, name: selectedUser.name, username: selectedUser.username} satisfies SessionType;
+    //why we don't use this method to include error directly?:
+    //bcrypt.compare(myPlaintextPassword, hash, function(err, result) {
+    //});
+    //because of async/await?
 
-    const token = jwt.sign(
-      session,
-      process.env.AUTH_SECRET!,
-    );
+    const session = {
+      id: selectedUser.id,
+      name: selectedUser.name,
+      username: selectedUser.username,
+    } satisfies SessionType;
+
+    const token = jwt.sign(session, process.env.AUTH_SECRET!);
 
     if (!token) {
       throw new Error("An unexpected error ocurred");

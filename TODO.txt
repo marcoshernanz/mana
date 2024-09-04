@@ -143,8 +143,30 @@ In twitter, create a new column - userId (and delete author)
 Reimplement twitter so that the author is automatically created when you tweet something (the author is name of the user in usersTable)
 
 Documentation:
-  https://nextjs.org/docs/app/api-reference/functions/cookies
-  https://www.npmjs.com/package/jsonwebtoken
+  https://nextjs.org/docs/app/api-reference/functions/cookies: 
+  - cookies.has("session")
+  https://www.npmjs.com/package/jsonwebtoken: Is ours token symmetric - synchronous?
+  Useful:
+  - complete: return an object with the decoded { payload, header, signature } instead of only the usual content of the payload.
+  - expiresIn vs maxAge?
+  - TokenExpiredError
+  - JsonWebTokenError
   https://www.npmjs.com/package/bcrypt
+  - is hash encrypting?
+  - hash password: bcrypt.hash(myPlaintextPassword, saltRounds)
+  check a password: bcrypt.compare(myPlaintextPassword)
+  We are not using synchronous so I don't need to pay attention to sync ways to hash or compare. 
 
 https://nextjs.org/docs/app/building-your-application/routing/middleware
+- Ensure user identity and check session cookies before granting access to specific pages or API routes, Redirect users at the server level based on certain conditions. 
+- define which paths Middleware will run on: 
+export const config = {
+  matcher: '/about/:path*' or ['/about/:path*', '/dashboard/:path*'],
+}
+
+IMPLEMENTED!!!!!!
+
+i want to know:
+- how to upload files 
+- insert a video 
+- do special effects 

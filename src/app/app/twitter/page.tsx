@@ -59,9 +59,7 @@ export default function TwitterPage() {
   return (
     <div className="flex justify-center">
       <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-20 pt-36">
-        <span className="text-4xl font-semibold dark:text-slate-50">
-          Twitter
-        </span>
+        <span className="text-4xl font-semibold dark:text-slate-50">Forum</span>
         <div className="pb-20 pt-16">
           <span className="flex items-center justify-center pb-1 text-sm underline dark:text-slate-100">
             Add Tweet

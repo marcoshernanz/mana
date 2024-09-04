@@ -3,6 +3,7 @@
 import Alert from "@/components/ui/Alert";
 import Button from "@/components/ui/Button";
 import signUp from "@/server-actions/auth/signUp";
+import Link from "next/link";
 import { FormEvent, useState } from "react";
 
 export default function SignUpPage() {
@@ -25,6 +26,7 @@ export default function SignUpPage() {
       setErrorMessage(error);
     } else {
       setSuccessMessage("Account created successfully");
+      window.location.href = "/sign-in";
     }
   };
 
@@ -107,7 +109,10 @@ export default function SignUpPage() {
         )}
         {successMessage && (
           <Alert type="success">
-            <span>{successMessage}</span>
+            <span>{successMessage}. </span>
+            <Link href="/sign-in" className="underline">
+              Sign in
+            </Link>
           </Alert>
         )}
       </form>
