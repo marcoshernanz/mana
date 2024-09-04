@@ -3,7 +3,7 @@
 import { db } from "@/database/db";
 import { twitterTable, TwitterType } from "@/database/schemas/twitter";
 import { eq } from "drizzle-orm";
-import { getSession } from "../auth/getSession";
+import getSession from "../auth/getSession";
 
 interface insertTweetProps {
   text: string;

@@ -2,13 +2,13 @@
 //Underline: by tailwind
 //flex-wrap: by someone's mistake in stackoverflow
 
-import Avatar from "@/components/ui/Avatar";
-import Table from "@/components/ui/Table";
-import Progress from "@/components/ui/Progress";
-import AlertDialog from "@/components/ui/AlertDialog";
+import Avatar from "../../../../old ui/Avatar";
+import Table from "../../../../old ui/Table";
+import Progress from "../../../../old ui/Progress";
+import AlertDialog from "../../../../old ui/AlertDialog";
 import Image from "next/image";
-import Product from "@/components/ui/product";
-import Label from "@/components/ui/label";
+import Product from "../../../../old ui/product";
+import Label from "../../../../old ui/label";
 
 export default function Products() {
   const ProductData = [

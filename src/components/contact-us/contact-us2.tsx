@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Input from "../ui/Input";
+import Input from "../../../old ui/Input";
 
 export default function ContactUs2() {
   return (

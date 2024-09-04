@@ -4,6 +4,9 @@ import { db } from "@/database/db";
 import { usersTable } from "@/database/schemas/users";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
+import signIn from "./signIn";
+import { permanentRedirect, RedirectType } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 interface signUpProps {
   name: string;
@@ -15,7 +18,7 @@ export default async function signUp({
   name,
   username,
   password,
-}: signUpProps): Promise<{ error?: string }> {
+}: signUpProps): Promise<{ error: string } | undefined> {
   try {
     if (!name) {
       throw new Error("Full Name is required");
@@ -49,8 +52,13 @@ export default async function signUp({
     if (error instanceof Error) {
       return { error: error.message };
     }
-    //if you don't put error instance of Error, and put Error.message, it will throw any error message?
+
+    if (isRedirectError(error)) {
+      throw error;
+    }
   }
 
-  return {};
+  await signIn({ username, password });
+
+  permanentRedirect("/app", RedirectType.replace);
 }

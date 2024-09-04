@@ -1,17 +1,11 @@
 "use client";
 
 import signOut from "@/server-actions/auth/signOut";
-import Button from "../ui/Button";
-import { useRouter } from "next/navigation";
+import Button from "../../../old ui/Button";
 
 export default function SignOutButton() {
-  console.log("SignOutButton");
-  const router = useRouter();
-
   const handleSignOut = async () => {
-    signOut();
-    router.refresh();
-    console.log("Signed out");
+    await signOut();
   };
 
   return (

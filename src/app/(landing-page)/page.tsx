@@ -11,7 +11,7 @@
 // list-disc (by Tailwind)
 
 import LandingPageHero from "@/components/landing-page/LandingPageHero";
-import AlertDialog from "@/components/ui/AlertDialog";
+import AlertDialog from "../../../old ui/AlertDialog";
 import Image from "next/image";
 
 export default function LandingPage() {

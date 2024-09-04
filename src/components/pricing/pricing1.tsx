@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Button from "../ui/Button";
+import Button from "../../../old ui/Button";
 
 export default function Pricing1() {
   const BasicIndividualData = [

@@ -1,11 +1,10 @@
 "use client";
 
-import Alert from "@/components/ui/Alert";
-import Button from "@/components/ui/Button";
+import Alert from "../../../../old ui/Alert";
+import Button from "../../../../old ui/Button";
 import signIn from "@/server-actions/auth/signIn";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { middleware } from "../../../../middleware/middleware";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -20,14 +19,16 @@ export default function SignUpPage() {
     setErrorMessage(null);
     setSuccessMessage(null);
 
-    const { error } = await signIn({ username, password });
+    const signInData = await signIn({ username, password });
 
-    if (error) {
-      setErrorMessage(error);
-      // window.location.href = "/sign-up";
-    } else {
-      setSuccessMessage("Signed in successfully");
-      window.location.href = "/app/twitter";
+    if (signInData) {
+      const { error } = signInData;
+
+      if (error) {
+        setErrorMessage(error);
+      } else {
+        setSuccessMessage("Signed in successfully");
+      }
     }
   };
 

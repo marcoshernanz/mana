@@ -1,4 +1,4 @@
-import Badge from "../ui/Badge";
+import Badge from "../../../old ui/Badge";
 
 export default function Faq2() {
   return (

@@ -1,20 +1,16 @@
-"use server"; 
+"use server";
 
-import { db } from "@/database/db";
-import { twitterTable } from "@/database/schemas/twitter";
-import { eq } from "drizzle-orm";
-import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
 export type SessionType = {
   id: string;
   name: string;
   username: string;
-}
+};
 
-export async function getSession() {
+export default async function getSession(): Promise<SessionType | null> {
   const jwtSession = cookies().get("session");
-
 
   if (!jwtSession) {
     return null;

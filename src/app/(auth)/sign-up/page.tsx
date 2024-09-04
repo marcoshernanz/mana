@@ -1,7 +1,7 @@
 "use client";
 
-import Alert from "@/components/ui/Alert";
-import Button from "@/components/ui/Button";
+import Alert from "../../../../old ui/Alert";
+import Button from "../../../../old ui/Button";
 import signUp from "@/server-actions/auth/signUp";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
@@ -20,13 +20,17 @@ export default function SignUpPage() {
     setErrorMessage(null);
     setSuccessMessage(null);
 
-    const { error } = await signUp({ name, username, password });
+    // const { error } = await signUp({ name, username, password });
+    const signUpData = await signUp({ name, username, password });
 
-    if (error) {
-      setErrorMessage(error);
-    } else {
-      setSuccessMessage("Account created successfully");
-      window.location.href = "/sign-in";
+    if (signUpData) {
+      const { error } = signUpData;
+
+      if (error) {
+        setErrorMessage(error);
+      } else {
+        setSuccessMessage("Account created successfully");
+      }
     }
   };
 
@@ -96,7 +100,7 @@ export default function SignUpPage() {
         </div>
         <div className="mt-4 flex w-full flex-col gap-2.5">
           <Button
-            text="Sign in"
+            text="Sign up"
             type="filled"
             size="medium"
             className="text-base font-semibold"
@@ -110,9 +114,6 @@ export default function SignUpPage() {
         {successMessage && (
           <Alert type="success">
             <span>{successMessage}. </span>
-            <Link href="/sign-in" className="underline">
-              Sign in
-            </Link>
           </Alert>
         )}
       </form>
