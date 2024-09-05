@@ -1,5 +1,7 @@
+import { Button } from "@/components/ui/Button";
+import { Check } from "lucide-react";
 import Image from "next/image";
-import Button from "../../../old ui/Button";
+// import Button from "../../../../old ui/Button";
 
 export default function Pricing2() {
   const BasicTeamData = [
@@ -27,19 +29,19 @@ export default function Pricing2() {
   return (
     <div className="flex flex-col gap-12 px-10 pb-28 pt-24">
       <div className="flex flex-col items-center justify-center">
-        <span className="pb-4 font-semibold text-orange-500">Pricing</span>
+        <span className="pb-4 font-semibold text-cyan-600">Pricing</span>
         <span className="pb-8 text-5xl font-bold text-slate-900 dark:text-slate-100">
           Plans for teams{" "}
         </span>
-        <span className="pb-4 text-lg font-normal text-zinc-700 dark:text-slate-300">
+        <span className="pb-4 text-lg font-normal text-slate-600 dark:text-slate-300">
           The best plans to success in groups
         </span>
       </div>
       <div className="flex justify-center gap-16">
-        <div className="rounded-2xl border border-orange-200 bg-orange-200/20 px-10 pb-10 pt-8 dark:bg-slate-800/80">
+        <div className="rounded-2xl border border-slate-200 bg-slate-200/30 px-10 pb-10 pt-8 dark:bg-slate-800/80">
           <div className="flex flex-col gap-2">
             <div className="flex">
-              <span className="pb-2 font-semibold text-orange-600">
+              <span className="pb-2 font-semibold text-cyan-600">
                 Team Basic
               </span>
             </div>
@@ -49,7 +51,9 @@ export default function Pricing2() {
                 /month
               </span>
             </span>
-            <Button size="small" type="filled" text="Buy plan"></Button>
+            <Button variant="outline" className="bg-slate-50">
+              Buy plan
+            </Button>
             <span className="pt-8 text-base font-medium text-zinc-800 dark:text-zinc-200">
               Everything in Individual Basic plus shared team dashboard, basic
               team communication tools, and support for up to 10 team members
@@ -59,22 +63,17 @@ export default function Pricing2() {
             {BasicTeamData.map(function (item, index) {
               return (
                 <div className="flex gap-4" key={index}>
-                  <Image
-                    src="/icons1/check.png"
-                    alt="check"
-                    height={22}
-                    width={22}
-                  ></Image>
+                  <Check size={22} color="#0e7490" />
                   <span>{item}</span>
                 </div>
               );
             })}
           </div>
         </div>
-        <div className="rounded-2xl border-2 border-orange-500 bg-orange-100 px-10 pb-10 pt-8 shadow-xl dark:bg-slate-900">
+        <div className="rounded-2xl border-2 border-slate-300 bg-slate-100 px-10 pb-10 pt-8 shadow-xl dark:bg-slate-900">
           <div className="flex flex-col gap-2">
             <div className="flex">
-              <span className="pb-2 font-semibold text-orange-600">
+              <span className="pb-2 font-semibold text-cyan-600">
                 Team Premium
               </span>
             </div>
@@ -84,7 +83,9 @@ export default function Pricing2() {
                 /month
               </span>
             </span>
-            <Button size="small" type="filled" text="Buy plan"></Button>
+            <Button variant="default" className="bg-slate-900">
+              Buy plan
+            </Button>
             <span className="pt-8 text-base font-medium text-zinc-800 dark:text-zinc-200">
               Everything in Team Basic plus unlimited team members, advanced
               project management tools, and dedicated account management
@@ -94,12 +95,7 @@ export default function Pricing2() {
             {PremiumTeamData.map(function (item, index) {
               return (
                 <div className="flex gap-4" key={index}>
-                  <Image
-                    src="/icons1/check.png"
-                    alt="check"
-                    height={22}
-                    width={22}
-                  ></Image>
+                  <Check size={22} color="#0e7490" />
                   <span>{item}</span>
                 </div>
               );

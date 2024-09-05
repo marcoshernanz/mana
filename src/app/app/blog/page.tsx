@@ -3,8 +3,8 @@
 import { use, useEffect, useState } from "react";
 import WriteBlogPost from "./WriteBlogPost";
 import BlogPost from "./BlogPost";
-import selectAllBlogs from "@/server-actions/blogs/selectAllBlogs";
-import updateBlog from "@/server-actions/blogs/updateBlog";
+import selectAllBlogs from "@/database/queries/blog/selectAllBlogs";
+import updateBlog from "@/database/queries/blog/updateBlog";
 
 export type AvailableTags = {
   tags: string[];

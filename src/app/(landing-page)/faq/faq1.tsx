@@ -1,5 +1,5 @@
+import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import Button from "../../../old ui/Button";
 
 export default function Faq1() {
   return (
@@ -8,7 +8,9 @@ export default function Faq1() {
         <span>{"MANA's Frequently Asked Questions"}</span>
       </div>
       <Link href="/contact-us">
-        <Button text="Contact us" type="filled" size="medium" />
+        <Button size="lg" className="h-14 px-10 text-base">
+          Contact us
+        </Button>
       </Link>
     </div>
   );

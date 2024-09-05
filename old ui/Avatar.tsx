@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { twMerge } from "tailwind-merge";
 
 const sizes = {
   huge: "w-52 h-52",
@@ -26,11 +26,7 @@ export default function Avatar({
 }: AvatarProps) {
   return (
     <div
-      className={twMerge(
-        "flex items-center justify-center",
-        className,
-        sizes[size],
-      )}
+      className={cn("flex items-center justify-center", className, sizes[size])}
     >
       <Image src={src} className="rounded-full" alt="Avatar image"></Image>
     </div>

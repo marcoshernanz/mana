@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { twMerge } from "tailwind-merge";
 import { BlogPostType } from "./page";
-import insertBlog from "@/server-actions/blogs/insertBlog";
+import insertBlog from "@/database/queries/blog/insertBlog";
+import { cn } from "@/lib/utils";
 
 interface WriteBlogPost {
   pageNumber: number;
@@ -87,7 +87,7 @@ export default function WriteBlogPost({
                   })
                 }
                 key={index}
-                className={twMerge(
+                className={cn(
                   "rounded-full border p-2 transition duration-300",
                   selectedTags.includes(tag) && "bg-black text-white",
                 )}

@@ -1,22 +1,22 @@
+import { Building2Icon, MapPinHouseIcon, NewspaperIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function Company2() {
   return (
-    <div className="relative z-0 flex w-full items-center justify-center bg-orange-100/40 dark:bg-slate-900/15">
+    <div className="relative z-0 flex w-full items-center justify-center bg-slate-100/40 dark:bg-slate-900/15">
       <div className="flex max-w-7xl flex-col items-center justify-center gap-32 px-10 pb-12">
         <div className="flex gap-64 pb-10 pt-16">
           <div className="flex flex-col items-center justify-center">
-            <Image
-              src="/icons1/maps.png"
-              height={90}
-              width={90}
-              alt="localization"
-              className="pb-8"
-            ></Image>
+            <MapPinHouseIcon
+              size="75px"
+              className="mb-8"
+              strokeWidth={1.6}
+              color="#020617"
+            />
             <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
               {" "}
               2,000{" "}
-              <span className="text-3xl font-bold text-black dark:text-orange-600">
+              <span className="text-3xl font-bold text-cyan-900 dark:text-orange-600">
                 +
               </span>
             </span>
@@ -26,17 +26,16 @@ export default function Company2() {
             </span>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <Image
-              src="/icons1/store.png"
-              height={90}
-              width={90}
-              alt="store"
-              className="pb-8"
-            ></Image>
+            <Building2Icon
+              size="75px"
+              className="mb-8"
+              strokeWidth={1.6}
+              color="#020617"
+            />
             <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
               {" "}
               100{" "}
-              <span className="text-3xl font-bold text-black dark:text-orange-600">
+              <span className="text-3xl font-bold text-cyan-900 dark:text-orange-600">
                 +
               </span>
             </span>
@@ -46,17 +45,16 @@ export default function Company2() {
             </span>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <Image
-              src="/icons1/patented1.png"
-              height={90}
-              width={90}
-              alt="patented"
-              className="pb-8"
-            ></Image>
+            <NewspaperIcon
+              size="75px"
+              className="mb-8"
+              strokeWidth={1.6}
+              color="#020617"
+            />
             <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
               {" "}
               1,000{" "}
-              <span className="text-3xl font-bold text-black dark:text-orange-600">
+              <span className="text-3xl font-bold text-cyan-900 dark:text-orange-600">
                 +
               </span>
             </span>

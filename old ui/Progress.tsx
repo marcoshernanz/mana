@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 const sizes = {
   large: "h-6 w-96",
@@ -23,14 +23,14 @@ interface ProgressProps {
 export default function Progress({ size, progress, className }: ProgressProps) {
   return (
     <div
-      className={twMerge(
+      className={cn(
         "rounded-full border border-black bg-zinc-700",
         sizes[size],
         className,
       )}
     >
       <div
-        className={twMerge(
+        className={cn(
           "h-full rounded-l-full",
           progressClass[progress],
           className,

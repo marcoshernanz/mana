@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 interface AlertDialogProps {
   className?: string;
@@ -8,13 +8,13 @@ interface AlertDialogProps {
 export default function AlertDialog({ className, children }: AlertDialogProps) {
   return (
     <div
-      className={twMerge(
+      className={cn(
         "fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center rounded-lg border shadow-2xl",
       )}
     >
       <div className="fixed h-screen w-screen bg-black/80 backdrop-blur-[2px]"></div>
       <div
-        className={twMerge(
+        className={cn(
           "relative flex max-w-2xl flex-col rounded-md border border-slate-100 bg-slate-50 p-6 shadow-sm",
           className,
         )}

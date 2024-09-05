@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
 import selectAllTweets from "@/server-actions/twitter/selectAllTweets";
-import updateTweet from "@/server-actions/twitter/updateTweet";
 import deleteTweet from "@/server-actions/twitter/deleteTweet";
 import TweetIsLoading from "./TweetIsLoading";
+import updateTweet from "@/database/queries/forum/updateTweet";
 
 export default function TwitterPage() {
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);

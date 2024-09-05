@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 const sizes = {
   large: "w-96 pt-2 pb-2",
@@ -25,7 +25,7 @@ export default function Input({
 }: InputPorps) {
   return (
     <div
-      className={twMerge(
+      className={cn(
         "flex w-full flex-col gap-1.5",
         sizes[size],
         className,

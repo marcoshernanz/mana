@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 // dark
 const types = {
@@ -65,7 +65,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={twMerge(
+      className={cn(
         "rounded-lg border font-bold transition hover:shadow-md active:shadow-none",
         types[type],
         sizes[size],

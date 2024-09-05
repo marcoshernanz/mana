@@ -1,3 +1,15 @@
+/* NEW THINGS: */
+//style={{ backgroundColor: "#f7f7f7" }} (by chatGPT)
+//leading-x (by Tailwind)
+//w-5/12 (by Tailwind)
+//w-{lo que quiera} (marquitos)
+//high, width image (by HTML)
+//import React from "react";
+//import { Rate } from "antd";
+//<Rate disabled defaultValue={4} /> (by Ant Design)
+//tracking-normal (by Tailwind)
+// list-disc (by Tailwind)
+
 ---------- GENERAL ----------
 VARIABLE -> Variable to replace
 
@@ -155,3 +167,26 @@ https://orm.drizzle.team/docs/delete
 
 npm run db:generate
 npm run db:migrate
+
+Documentation:
+  https://nextjs.org/docs/app/api-reference/functions/cookies: 
+  - cookies.has("session")
+  https://www.npmjs.com/package/jsonwebtoken: Is ours token symmetric - synchronous?
+  Useful:
+  - complete: return an object with the decoded { payload, header, signature } instead of only the usual content of the payload.
+  - expiresIn vs maxAge?
+  - TokenExpiredError
+  - JsonWebTokenError
+  https://www.npmjs.com/package/bcrypt
+  - is hash encrypting?
+  - hash password: bcrypt.hash(myPlaintextPassword, saltRounds)
+  check a password: bcrypt.compare(myPlaintextPassword)
+  We are not using synchronous so I don't need to pay attention to sync ways to hash or compare. 
+
+https://nextjs.org/docs/app/building-your-application/routing/middleware
+- Ensure user identity and check session cookies before granting access to specific pages or API routes, Redirect users at the server level based on certain conditions. 
+- define which paths Middleware will run on: 
+export const config = {
+  matcher: '/about/:path*' or ['/about/:path*', '/dashboard/:path*'],
+}
+

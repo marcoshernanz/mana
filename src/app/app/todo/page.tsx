@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { twMerge } from "tailwind-merge";
 import TodoTask from "./TodoTask";
 import { LoaderCircleIcon } from "lucide-react";
 import TodoTaskLoading from "./TodoTaskLoading";
-import selectAllTodos from "@/server-actions/todos/selectAllTodos";
-import insertTodo from "@/server-actions/todos/insertTodo";
-import updateTodo from "@/server-actions/todos/updateTodo";
-import deleteTodo from "@/server-actions/todos/deleteTodo";
+import selectAllTodos from "@/database/queries/todos/selectAllTodos";
+import insertTodo from "@/database/queries/todos/insertTodo";
+import updateTodo from "@/database/queries/todos/updateTodo";
+import deleteTodo from "@/database/queries/todos/deleteTodo";
+import { cn } from "@/lib/utils";
 
 const availableTags = ["university", "house", "urgent", "work"] as const;
 
@@ -96,7 +96,7 @@ export default function TodoPage() {
                 })
               }
               key={index}
-              className={twMerge(
+              className={cn(
                 "rounded-full border px-2 transition duration-300",
                 selectedTags.includes(tag) && "bg-black text-white",
               )}

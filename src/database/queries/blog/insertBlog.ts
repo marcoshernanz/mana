@@ -9,6 +9,6 @@ type InsertBlogType = Omit<BlogsTableType, "id" | "isRead" | "createdAt"> & {
   createdAt?: Date;
 };
 
-export default async function insertTodo(blog: InsertBlogType): Promise<void> {
+export default async function insertBlog(blog: InsertBlogType): Promise<void> {
   await db.insert(blogsTable).values(blog);
 }

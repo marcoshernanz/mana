@@ -1,8 +1,6 @@
 "use server";
 
-import { db } from "@/database/db";
-import { twitterTable, TwitterType } from "@/database/schemas/twitter";
-import { eq } from "drizzle-orm";
+import insertTwitter from "@/database/queries/forum/insertTwitter";
 import getSession from "../auth/getSession";
 
 interface insertTweetProps {
@@ -22,5 +20,6 @@ export default async function insertTweet({
     return;
   }
 
-  await db.insert(twitterTable).values({ userId, text, parentTweetId });
+  // await db.insert(twitterTable).values({ userId, text, parentTweetId });
+  await insertTwitter(userId, text, parentTweetId);
 }

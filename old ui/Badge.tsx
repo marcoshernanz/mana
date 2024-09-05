@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 const types = {
   new: "bg-blue-800 text-blue-50 hover:bg-blue-900",
@@ -48,9 +48,7 @@ interface BadgeProps {
 
 export default function Badge({ type, className, size }: BadgeProps) {
   return (
-    <div
-      className={twMerge("rounded-full", types[type], sizes[size], className)}
-    >
+    <div className={cn("rounded-full", types[type], sizes[size], className)}>
       {type}
     </div>
   );

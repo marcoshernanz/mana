@@ -2,13 +2,7 @@
 //Underline: by tailwind
 //flex-wrap: by someone's mistake in stackoverflow
 
-import Avatar from "../../../../old ui/Avatar";
-import Table from "../../../../old ui/Table";
-import Progress from "../../../../old ui/Progress";
-import AlertDialog from "../../../../old ui/AlertDialog";
-import Image from "next/image";
 import Product from "../../../../old ui/product";
-import Label from "../../../../old ui/label";
 
 export default function Products() {
   const ProductData = [
@@ -50,17 +44,17 @@ export default function Products() {
     },
   ];
   return (
-    <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
+    <div className="flex items-center justify-center bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl items-center justify-center px-10 pb-20 pt-28">
         <div className="flex h-full w-full flex-col items-center justify-center gap-16">
-          <div className="pb-10 text-4xl font-semibold text-orange-500 dark:text-orange-500">
+          <div className="0 pb-10 text-5xl font-bold text-slate-800 dark:text-orange-500">
             <span>Our Products</span>
           </div>
           <div className="gap flex flex-wrap items-center justify-center">
             {ProductData.map(function (product, i) {
               return (
                 <div key={i}>
-                  <div className="rounded-md px-10 py-10 transition hover:bg-orange-100/60 dark:hover:bg-slate-900/60">
+                  <div className="rounded-md px-10 py-10 transition hover:bg-slate-100 dark:hover:bg-slate-900/60">
                     <Product
                       name={product.name}
                       series={i}

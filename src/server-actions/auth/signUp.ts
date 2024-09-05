@@ -1,12 +1,14 @@
 "use server";
 
-import { db } from "@/database/db";
-import { usersTable } from "@/database/schemas/users";
-import { eq } from "drizzle-orm";
-import bcrypt from "bcrypt";
+// import { db } from "@/database/db";
+// import { usersTable } from "@/database/schemas/users";
+// import { eq } from "drizzle-orm";
+// import bcrypt from "bcrypt";
 import signIn from "./signIn";
 import { permanentRedirect, RedirectType } from "next/navigation";
 import { isRedirectError } from "next/dist/client/components/redirect";
+import getUserByUsername from "@/database/queries/auth/getUserByUsername";
+import insertUsers from "@/database/queries/auth/insertUsers";
 
 interface signUpProps {
   name: string;
@@ -34,20 +36,24 @@ export default async function signUp({
       throw new Error("Password must have at least 8 characters");
     }
 
-    const selectedUser = await db
-      .select()
-      .from(usersTable)
-      .where(eq(usersTable.username, username))
-      .then((res) => (res.length === 1 ? res[0] : null));
+    // const selectedUser = await db
+    //   .select()
+    //   .from(usersTable)
+    //   .where(eq(usersTable.username, username))
+    //   .then((res) => (res.length === 1 ? res[0] : null));
+
+    const selectedUser = await getUserByUsername(username);
     if (selectedUser) {
       throw new Error("Username already in use");
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // const hashedPassword = await bcrypt.hash(password, 10);
 
-    await db
-      .insert(usersTable)
-      .values({ name, username, password: hashedPassword });
+    // await db
+    //   .insert(usersTable)
+    //   .values({ name, username, password: hashedPassword });
+
+    await insertUsers(name, username, password);
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message };

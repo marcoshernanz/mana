@@ -1,6 +1,6 @@
 //boolean by tailwind
 
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 interface NewTaskProps {
   title: string;
@@ -30,7 +30,7 @@ export default function NewTask({
 }: NewTaskProps) {
   return (
     <div
-      className={twMerge(
+      className={cn(
         "flex h-24 w-full justify-center rounded-md bg-orange-100 dark:bg-slate-800",
         className,
       )}

@@ -11,8 +11,8 @@ export default function LandingPageLayout({
   children,
 }: LandingPageLayoutProps) {
   return (
-    <div className="bg-orange-50 pt-16 dark:bg-slate-950">
-      <div className="fixed left-0 top-0 z-50 flex h-20 w-full items-center justify-center gap-24 bg-orange-100 font-semibold shadow-md dark:bg-slate-800 dark:text-slate-100">
+    <div className="bg-slate-50 pt-16 dark:bg-slate-950">
+      <div className="fixed left-0 top-0 z-50 flex h-20 w-full items-center justify-center gap-24 bg-slate-300/30 font-semibold shadow-md backdrop-blur-[6px] dark:bg-slate-800 dark:text-slate-100">
         <Nav link="/" name="MANA" />
         <Nav link="/company" name="Company" />
         <Nav link="/products" name="Products" />

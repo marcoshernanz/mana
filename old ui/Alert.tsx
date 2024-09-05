@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import { CheckIcon, CircleAlertIcon } from "lucide-react";
-import { twMerge } from "tailwind-merge";
 
 const types = {
   success: "border-green-700 text-green-500",
@@ -21,7 +21,7 @@ export default function Alert({ className, children, type }: AlertProps) {
     >
       {/* <div className="fixed h-screen w-screen bg-black/70 backdrop-blur-[1px]"></div> */}
       <div
-        className={twMerge(
+        className={cn(
           "relative flex max-w-5xl flex-col rounded-md border border-slate-100 bg-black/40 p-4 pr-60 shadow-sm",
           types[type],
           className,

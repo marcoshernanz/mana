@@ -11,9 +11,10 @@
 
 //POLIZA: Es lo que entendemos comúnmente como un “seguro”. Se trata del contrato que adquiere un usuario con una compañía, mediante el cual una persona o un bien quedan cubiertos ante determinados incidentes.
 
-import ContactUs1 from "@/components/contact-us/contact-us1";
-import ContactUs2 from "@/components/contact-us/contact-us2";
+// import ContactUs1 from "@/components/contact-us/contact-us1";
+import ContactUs2 from "@/app/(landing-page)/contact-us/contact-us2";
 import Image from "next/image";
+import ContactUs1 from "./contact-us1";
 
 export default function ContactUs() {
   return (

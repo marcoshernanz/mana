@@ -1,10 +1,12 @@
 "use client";
 
-import Alert from "../../../../old ui/Alert";
-import Button from "../../../../old ui/Button";
+import { Input } from "@/components/ui/input";
 import signIn from "@/server-actions/auth/signIn";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle, Check } from "lucide-react";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -36,7 +38,7 @@ export default function SignUpPage() {
     <div className="bg-orange-50-50 flex h-screen w-screen items-center justify-center dark:bg-slate-950">
       <form
         onSubmit={(e) => handleSignIn(e)}
-        className="flex flex-col items-center justify-center gap-4 rounded-xl border border-orange-200/90 bg-white px-7 py-8 text-slate-950 shadow-sm dark:border-orange-600 dark:bg-slate-900/30 dark:text-orange-50"
+        className="flex flex-col items-center justify-center gap-4 rounded-xl border border-slate-200 bg-white px-7 py-8 text-slate-950 shadow-sm dark:border-orange-600 dark:bg-slate-900/30 dark:text-orange-50"
       >
         <div className="mb-2.5 flex w-full flex-col gap-1">
           <span className="text-2xl font-semibold dark:text-orange-500">
@@ -53,10 +55,9 @@ export default function SignUpPage() {
           >
             Username
           </label>
-          <input
+          <Input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="rounded-md border border-orange-200/65 bg-white px-3.5 py-2 text-sm placeholder:text-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:placeholder:text-slate-400"
             placeholder="marcoshernanz"
             type="text"
             id="username"
@@ -70,39 +71,37 @@ export default function SignUpPage() {
           >
             Password
           </label>
-          <input
+          <Input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-md border border-orange-200/65 bg-white px-3.5 py-2 text-sm dark:border-slate-800 dark:bg-slate-950"
             type="password"
             id="password"
             required
           />
         </div>
         <div className="mt-4 flex w-full flex-col gap-2.5">
-          <Button
-            text="Sign in"
-            type="filled"
-            size="medium"
-            className="text-base font-semibold"
-          />
+          <Button className="h-12 text-base font-semibold">Sign in</Button>
         </div>
         {errorMessage && (
-          <Alert type="error">
-            <span>
-              {errorMessage}. Have you{" "}
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+              {errorMessage} Have you{" "}
               <Link href="/sign-up" className="underline">
                 sign-up?
               </Link>
-            </span>
+            </AlertDescription>
           </Alert>
         )}
         {successMessage && (
-          <Alert type="success">
-            <span>{successMessage}. </span>
-            <Link href="/app/twitter" className="underline">
-              Start twitting
-            </Link>
+          <Alert
+            variant="destructive"
+            className="border-green-600 text-green-600"
+          >
+            <Check className="h-4 w-4" />
+            <AlertTitle>success</AlertTitle>
+            <AlertDescription>{successMessage}</AlertDescription>
           </Alert>
         )}
       </form>

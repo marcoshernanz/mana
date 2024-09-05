@@ -1,5 +1,7 @@
 import Image from "next/image";
-import Button from "../../../old ui/Button";
+// import Chart from "@/components/landing-page/Chart";
+import { Button } from "@/components/ui/Button";
+import { LandingPageChart } from "./LandingPageChart";
 
 export default function LandingPageHero() {
   return (
@@ -9,7 +11,7 @@ export default function LandingPageHero() {
           <div>
             <span>
               The platform that helps to achieve{" "}
-              <span className="text-orange-600 dark:text-orange-400">
+              <span className="text-cyan-600 dark:text-orange-400">
                 your goals
               </span>
             </span>
@@ -24,8 +26,13 @@ export default function LandingPageHero() {
           </span>
         </div>
         <div className="flex gap-6 pb-16">
-          <Button text="Start organizing" type="filled" size="large" />
-          <Button text="Start organizing" type="outlined" size="large" />
+          <Button className="h-20 px-10 text-lg">Start organizing</Button>
+          <Button
+            variant="outline"
+            className="h-20 px-10 text-lg text-slate-900"
+          >
+            Online quote
+          </Button>
         </div>
         <div className="flex items-center gap-4">
           <Image
@@ -48,7 +55,8 @@ export default function LandingPageHero() {
         </div>
       </div>
       <div className="item-center flex flex-col justify-center gap-10">
-        <Image src="/more/Graph.png" height={500} width={500} alt="Graph" />
+        <LandingPageChart></LandingPageChart>
+        {/* <Image src="/more/Graph.png" height={500} width={500} alt="Graph" /> */}
         <Image src="/icons1/Apps.png" height={100} width={100} alt="Apps" />
       </div>
     </div>
