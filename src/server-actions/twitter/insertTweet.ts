@@ -20,6 +20,5 @@ export default async function insertTweet({
     return;
   }
 
-  // await db.insert(twitterTable).values({ userId, text, parentTweetId });
   await insertTwitter(userId, text, parentTweetId);
 }

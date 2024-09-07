@@ -12,12 +12,6 @@ export default async function selectAllTweets(): Promise<TweetType[]> {
 
   const formattedTweets = await Promise.all(
     tweets.map(async (tweet: TwitterType) => {
-      // const author = await db
-      //   .select({ name: usersTable.name })
-      //   .from(usersTable)
-      //   .where(eq(usersTable.id, tweet.userId))
-      //   .then((res) => (res.length === 1 ? res[0].name : null));
-
       const author = await getAuthorName(tweet);
 
       return {

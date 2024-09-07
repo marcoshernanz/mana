@@ -156,7 +156,7 @@ Refactor all database queries to database/queries             --> DONE
 Reorganize components - Only reusable components should be inside /components --> DONE
 Replace twMerge() with cn()    --> DONE
 
-Take a look at every shadcn-ui component and replace all code with shadcn-ui components 
+Take a look at every shadcn-ui component and replace all code with shadcn-ui components                       --> DONE 
 
 Update todos and blog to store userId in database (do the same as you had to do last week with twitter)
 

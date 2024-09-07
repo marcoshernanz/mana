@@ -28,6 +28,7 @@ export default function TodoTask({
     <div className="bg-slate-50 px-6 py-3">
       <div className="flex items-center justify-between">
         <div>{task.text}</div>
+        <div className="bg-red-500">{task.author}</div>
         <div className="flex gap-2">
           {availableTags.map(
             (tag, index) =>

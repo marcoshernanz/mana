@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import TodoTask from "./TodoTask";
 import { LoaderCircleIcon } from "lucide-react";
 import TodoTaskLoading from "./TodoTaskLoading";
-import selectAllTodos from "@/database/queries/todos/selectAllTodos";
-import insertTodo from "@/database/queries/todos/insertTodo";
+// import selectAllTodos from "@/database/queries/todos/selectAllTodos";
 import updateTodo from "@/database/queries/todos/updateTodo";
 import deleteTodo from "@/database/queries/todos/deleteTodo";
 import { cn } from "@/lib/utils";
+import insertTodo from "@/server-actions/todo/insertTodo";
+import selectAllTodo from "@/server-actions/todo/selectAllTodo";
 
 const availableTags = ["university", "house", "urgent", "work"] as const;
 
@@ -19,6 +20,7 @@ export type TaskType = {
   text: string;
   tags: string[];
   isCompleted: boolean;
+  author?: string;
 };
 
 export default function TodoPage() {
@@ -30,7 +32,7 @@ export default function TodoPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const fetchTasks = async () => {
-    const todos = await selectAllTodos();
+    const todos = await selectAllTodo();
     setTasks(todos);
   };
 
@@ -44,7 +46,7 @@ export default function TodoPage() {
     setSelectedTags([]);
 
     setIsLoading(true);
-    await insertTodo(newTask);
+    await insertTodo({ text: newTask.text, tags: newTask.tags });
     await fetchTasks();
     setIsLoading(false);
   };

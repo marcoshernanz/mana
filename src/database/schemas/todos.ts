@@ -8,6 +8,7 @@ export const todosTable = pgTable("todos", {
   text: text("text").notNull(),
   isCompleted: boolean("is_completed").notNull().default(false),
   tags: text("tags").array().notNull(),
+  userId: text("user_id").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

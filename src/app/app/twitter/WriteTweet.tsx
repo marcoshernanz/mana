@@ -3,16 +3,17 @@
 import { useEffect, useState } from "react";
 import { TweetType } from "./Tweet";
 import insertTweet from "@/server-actions/twitter/insertTweet";
-import { getSession } from "@/server-actions/auth/getSession";
+// import { getSession } from "@/server-actions/auth/getSession";
 
 export type CurrentTweetType = Omit<
   TweetType,
-  "id" | "parentTweetId" | "isLiked"
+  "id" | "parentTweetId" | "isLiked" | "author"
 > & {
   id?: string;
   parentTweetId?: string | null;
   isLiked?: boolean;
   isReplying?: boolean;
+  author?: string;
 };
 
 interface WriteTweetProps {
@@ -34,7 +35,7 @@ export default function WriteTweet({
 
     const newTweet: CurrentTweetType = {
       text,
-      parentTweetId: parentTweetId || undefined,
+      parentTweetId: parentTweetId,
     };
 
     setText("");
