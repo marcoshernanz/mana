@@ -10,6 +10,8 @@ import deleteTodo from "@/database/queries/todos/deleteTodo";
 import { cn } from "@/lib/utils";
 import insertTodo from "@/server-actions/todo/insertTodo";
 import selectAllTodo from "@/server-actions/todo/selectAllTodo";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/Button";
 
 const availableTags = ["university", "house", "urgent", "work"] as const;
 
@@ -74,20 +76,23 @@ export default function TodoPage() {
   }, []);
 
   return (
-    <div className="w-full">
-      <div className="flex w-full flex-col items-center justify-center">
-        <div className="flex gap-2">
-          <input
+    <div className="flex flex-col items-center justify-center px-10">
+      <div className="flex w-full max-w-7xl flex-col items-center justify-center">
+        <div className="flex gap-2 pt-20">
+          <Input
             placeholder="Enter your task"
             className="border"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
-          <button onClick={addTask}>Add</button>
+          <Button onClick={addTask} className="bg-slate-800">
+            Add
+          </Button>
         </div>
-        <div className="flex gap-2 text-sm">
+        <div className="flex gap-5 text-sm">
           {availableTags.map((tag, index) => (
-            <button
+            <Button
+              variant="default"
               onClick={() =>
                 setSelectedTags((tags) => {
                   if (tags.includes(tag)) {
@@ -99,17 +104,17 @@ export default function TodoPage() {
               }
               key={index}
               className={cn(
-                "rounded-full border px-2 transition duration-300",
-                selectedTags.includes(tag) && "bg-black text-white",
+                "mt-6 border bg-slate-400 p-2 transition duration-300",
+                selectedTags.includes(tag) && "bg-slate-800 text-slate-50",
               )}
             >
               <span>{selectedTags.includes(tag) ? "-" : "+"}</span>
               {tag}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex w-full flex-col gap-3 pt-10">
         {/* {isLoading
           ? // <div className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center">
             //   <LoaderCircleIcon className="h-32 w-32 animate-spin text-slate-400" />

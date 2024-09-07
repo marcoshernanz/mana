@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { BlogPostType } from "./page";
 import { cn } from "@/lib/utils";
 import insertBlogs from "@/server-actions/blogs/insertBlogs";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/Button";
 
 interface WriteBlogPost {
   pageNumber: number;
@@ -55,33 +57,36 @@ export default function WriteBlogPost({
   };
 
   return (
-    <div className="relative z-0 flex flex-col gap-8 rounded-lg border border-slate-300 pt-5">
-      <div className="flex gap-10">
-        <div className="w-sm flex items-start gap-3 pl-5 pt-28">
-          <input
+    <div className="relative z-0 flex flex-col gap-8 rounded-lg border border-slate-300 bg-slate-100 pb-10 pl-5 pr-5 pt-10">
+      <div className="flex gap-24">
+        <div className="w-sm flex items-start gap-3 pl-5 pt-36">
+          <Input
             value={newTagInput}
             onChange={(e) => setNewTagInput(e.target.value)}
             placeholder="Add tag"
             className="dark:text-slate-800"
-          ></input>
-          <button onClick={addTag}>Add</button>
+          ></Input>
+          <Button onClick={addTag} className="bg-slate-800 pt-2">
+            Add
+          </Button>
         </div>
         <div className="flex flex-col gap-8 pb-28 pr-40">
-          <input
+          <Input
             placeholder="Title"
             className="dark:text-slate-800"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-          ></input>
-          <input
+          ></Input>
+          <Input
             placeholder="Content"
             className="dark:text-slate-800"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-          ></input>
+          ></Input>
           <div className="flex gap-5">
             {allTags.map((tag, index) => (
-              <button
+              <Button
+                variant="default"
                 onClick={() =>
                   setSelectedTags((tags) => {
                     if (tags.includes(tag)) {
@@ -93,24 +98,21 @@ export default function WriteBlogPost({
                 }
                 key={index}
                 className={cn(
-                  "rounded-full border p-2 transition duration-300",
-                  selectedTags.includes(tag) && "bg-black text-white",
+                  "border bg-slate-300 p-2 transition duration-300",
+                  selectedTags.includes(tag) && "bg-slate-800 text-slate-50",
                 )}
               >
                 <span>{selectedTags.includes(tag) ? "-" : "+"}</span>
                 {tag}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
       </div>
       <div className="flex w-full justify-around gap-96">
-        <button
-          className="flex items-end justify-end pb-5 pr-5"
-          onClick={handleAddBlogPost}
-        >
+        <Button variant="default" onClick={handleAddBlogPost} size="lg">
           Submit
-        </button>
+        </Button>
       </div>
     </div>
   );

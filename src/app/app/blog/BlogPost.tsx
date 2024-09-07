@@ -15,7 +15,7 @@ export default function BlogPost({
   pageNumber,
 }: BlogPostProps) {
   return (
-    <div className="flex flex-col gap-8 border border-slate-300">
+    <div className="flex flex-col gap-8 rounded-md border border-slate-300 bg-slate-100 p-5 shadow-lg">
       <div className="flex justify-end pr-5 pt-5">
         <input
           type="checkbox"
@@ -29,17 +29,22 @@ export default function BlogPost({
       </div>
       <div className="flex gap-10">
         <div className="w-sm flex items-start gap-3 pl-5 pt-28"></div>
-        <div className="flex flex-col gap-8 pb-28 pr-40">
-          <div className="dark:text-slate-50">{blogPost.title}</div>
+        <div className="flex flex-col gap-8 pb-8 pr-40">
+          <div className="pb-5 text-xl font-medium dark:text-slate-50">
+            {blogPost.title}
+          </div>
           <div className="dark:text-slate-50">{blogPost.content}</div>
           <div className="flex gap-5">
             {blogPost.tags.map((tag, index) => (
-              <span key={index} className="rounded-full border px-2">
+              <span
+                key={index}
+                className="rounded-md border bg-slate-200 px-2 text-slate-600"
+              >
                 {tag}
               </span>
             ))}
           </div>
-          <div>{blogPost.author}</div>
+          <div className="pt-10 text-sm text-slate-500">{blogPost.author}</div>
         </div>
       </div>
       <span>{pageNumber}</span>
