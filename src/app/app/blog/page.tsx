@@ -3,8 +3,8 @@
 import { use, useEffect, useState } from "react";
 import WriteBlogPost from "./WriteBlogPost";
 import BlogPost from "./BlogPost";
-import selectAllBlogs from "@/database/queries/blog/selectAllBlogs";
 import updateBlog from "@/database/queries/blog/updateBlog";
+import selectAllBlogs from "@/server-actions/blogs/selectAllBlogs";
 
 export type AvailableTags = {
   tags: string[];
@@ -17,6 +17,7 @@ export type BlogPostType = {
   tags: string[];
   isRead: boolean;
   pageNumber: number;
+  author?: string;
 };
 
 export default function BlogPage() {
@@ -52,9 +53,9 @@ export default function BlogPage() {
       {isLoadingData ? (
         <div className="flex h-screen w-screen items-center justify-center bg-red-600"></div>
       ) : (
-        <div className="flex items-center justify-center bg-orange-50 dark:bg-slate-950">
+        <div className="flex items-center justify-center bg-slate-50 dark:bg-slate-950">
           <div className="h-full w-full max-w-7xl px-10 py-28">
-            <div className="flex h-full w-full justify-around text-white">
+            <div className="flex h-full w-full justify-around text-slate-900">
               {pageNumber > 0 && (
                 <button
                   onClick={() => setPageNumber((pageNumber) => pageNumber - 1)}

@@ -6,7 +6,14 @@ import { eq } from "drizzle-orm";
 
 type UpdateBlogType = Omit<
   BlogsTableType,
-  "title" | "content" | "tags" | "id" | "isRead" | "pageNumber" | "createdAt"
+  | "title"
+  | "content"
+  | "tags"
+  | "id"
+  | "isRead"
+  | "pageNumber"
+  | "createdAt"
+  | "userId"
 > & {
   title?: string;
   content?: string;
@@ -15,6 +22,7 @@ type UpdateBlogType = Omit<
   isRead?: boolean;
   pageNumber?: number;
   createdAt?: Date;
+  userId?: string;
 };
 
 export default async function updateBlog(

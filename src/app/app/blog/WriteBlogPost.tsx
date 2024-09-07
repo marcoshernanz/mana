@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { BlogPostType } from "./page";
-import insertBlog from "@/database/queries/blog/insertBlog";
 import { cn } from "@/lib/utils";
+import insertBlogs from "@/server-actions/blogs/insertBlogs";
 
 interface WriteBlogPost {
   pageNumber: number;
@@ -44,13 +44,18 @@ export default function WriteBlogPost({
     setNewTagInput("");
 
     setIsLoading(true);
-    await insertBlog(newBlog);
+    await insertBlogs({
+      title: newBlog.title,
+      content: newBlog.content,
+      tags: newBlog.tags,
+      pageNumber: newBlog.pageNumber,
+    });
     await fetchBlog();
     setIsLoading(false);
   };
 
   return (
-    <div className="relative z-0 flex flex-col gap-8 border border-orange-100">
+    <div className="relative z-0 flex flex-col gap-8 rounded-lg border border-slate-300 pt-5">
       <div className="flex gap-10">
         <div className="w-sm flex items-start gap-3 pl-5 pt-28">
           <input

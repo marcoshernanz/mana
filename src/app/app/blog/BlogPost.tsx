@@ -15,7 +15,7 @@ export default function BlogPost({
   pageNumber,
 }: BlogPostProps) {
   return (
-    <div className="flex flex-col gap-8 border border-orange-100">
+    <div className="flex flex-col gap-8 border border-slate-300">
       <div className="flex justify-end pr-5 pt-5">
         <input
           type="checkbox"
@@ -39,6 +39,7 @@ export default function BlogPost({
               </span>
             ))}
           </div>
+          <div>{blogPost.author}</div>
         </div>
       </div>
       <span>{pageNumber}</span>

@@ -1,0 +1,1 @@
+ALTER TABLE "blogs" ADD COLUMN "user_id" text NOT NULL;

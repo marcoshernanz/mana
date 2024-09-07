@@ -1,10 +1,17 @@
 import { InferSelectModel } from "drizzle-orm";
-import { boolean, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 export const blogsTable = pgTable("blogs", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id").notNull(),
   title: text("title").notNull(),
   content: text("content").notNull(),
   tags: text("tags").array().notNull(),
