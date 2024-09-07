@@ -18,12 +18,13 @@ import ContactUs1 from "./contact-us1";
 
 export default function ContactUs() {
   return (
-    <div className="flex flex-col items-center justify-center gap-10 bg-orange-50 dark:bg-slate-950">
+    <div className="flex flex-col items-center justify-center gap-10 bg-slate-50 dark:bg-slate-950">
       <Image
         src="/backround/lab3_2.png"
         height={1600}
         width={1600}
         alt="lab"
+        className="pt-4"
       ></Image>
       <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-12">
         <ContactUs1 />

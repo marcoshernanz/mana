@@ -1,125 +1,112 @@
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  MailIcon,
+  MessageCircleIcon,
+  PhoneCall,
+  XIcon,
+  YoutubeIcon,
+} from "lucide-react";
 import Image from "next/image";
-import Input from "../../../../old ui/Input";
 
 export default function ContactUs2() {
   return (
     <div className="flex flex-col items-center justify-center gap-12">
       <div className="flex flex-col items-center justify-center gap-4 pt-28">
-        <span className="items-center justify-center text-5xl font-bold text-orange-500 dark:text-orange-500">
+        <span className="items-center justify-center text-4xl font-bold text-slate-900 dark:text-orange-500">
           Contact Us
         </span>
-        <hr className="mt-4 size-10/12 h-1 w-full bg-red-900 dark:bg-red-100"></hr>
-        {/* <Input placeholder="Enter your name" size="small" /> */}
+        <hr className="mt-4 size-10/12 h-1 w-full bg-slate-900 dark:bg-red-100"></hr>
       </div>
       <div className="flex gap-8">
-        {/* w-72 */}
-        <div className="flex flex-col items-center gap-24 rounded-lg bg-orange-200/20 px-16 pb-14 pt-14 dark:bg-slate-900/30">
+        <div className="flex flex-col items-center gap-24 rounded-lg bg-slate-200/30 px-16 pb-14 pt-14 dark:bg-slate-900/30">
           <div className="flex flex-col items-center gap-24">
-            <span className="text-xl font-medium text-orange-950 dark:text-orange-50">
+            <span className="text-xl font-medium text-slate-950 dark:text-orange-50">
               Phone Support
             </span>
-            <Image
-              src="/icons1/phone.png"
-              height={90}
-              width={90}
-              alt="phone"
-            ></Image>
+            <PhoneCall size={80} color="#020617" strokeWidth={1.2} />
           </div>
-          {/* max-w-56 */}
           <div className="pt-1.5 text-center">
-            <span className="text-orange-700 dark:text-orange-200">
-              We serve you 24/7. Call us at +34 600 960 824
+            <span className="text-slate-600 dark:text-orange-200">
+              We serve you 24/7. Call us at{" "}
+              <span className="text-cyan-700">+34 600 960 824</span>
             </span>
           </div>
         </div>
         {/* w-72 */}
-        <div className="flex flex-col items-center gap-24 rounded-lg bg-orange-200/20 px-8 pb-14 pt-14 dark:bg-slate-900/30">
+        <div className="flex flex-col items-center gap-24 rounded-lg bg-slate-200/30 px-8 pb-14 pt-14 dark:bg-slate-900/30">
           <div className="flex flex-col items-center gap-24">
-            <span className="text-xl font-medium text-orange-950 dark:text-orange-50">
+            <span className="text-xl font-medium text-slate-950 dark:text-orange-50">
               Whatsapp assistant
             </span>
-            <Image
-              src="/icons1/WhatsApp1.png"
-              height={75}
-              width={75}
-              alt="Whatsapp"
-            ></Image>
+            <MessageCircleIcon size={80} color="#020617" strokeWidth={1.2} />
           </div>
           <div className="pt-5 text-center">
-            <span className="text-orange-700 dark:text-orange-200">
+            <span className="text-slate-600 dark:text-orange-200">
               Hi Im Xingi, your WhatsApp virtual assistant! In what can I help
               you?
             </span>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-20 rounded-lg bg-orange-200/20 px-8 pb-14 pt-14 dark:bg-slate-900/30">
+        <div className="flex flex-col items-center gap-20 rounded-lg bg-slate-200/30 px-8 pb-14 pt-14 dark:bg-slate-900/30">
           {" "}
           <div className="flex flex-col items-center gap-24">
-            <span className="text-xl font-medium text-orange-950 dark:text-orange-50">
+            <span className="text-xl font-medium text-slate-950 dark:text-orange-50">
               Email Support
             </span>
-            <Image
-              src="/icons1/emailwhite.png"
-              height={100}
-              width={100}
-              alt="email white"
-            ></Image>
+            <MailIcon size={80} color="#020617" strokeWidth={1.2} />
           </div>
           <div className="px-8 pt-3 text-center">
-            <span className="text-orange-700 dark:text-orange-200">
+            <span className="text-slate-600 dark:text-orange-200">
               MANA@gmail.com
             </span>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-16 rounded-lg bg-orange-200/20 px-2 pb-14 pt-14 dark:bg-slate-900/30">
-          <span className="text-xl font-medium text-orange-950 dark:text-orange-50">
+        <div className="flex flex-col items-center gap-16 rounded-lg bg-slate-200/30 px-2 pb-14 pt-14 dark:bg-slate-900/30">
+          <span className="text-xl font-medium text-slate-950 dark:text-orange-50">
             Media Contact
           </span>
           <div className="flex flex-col items-center">
             <div className="flex items-center justify-center gap-4">
-              <Image
-                src="/icons1/youtube.png"
-                height={61}
-                width={61}
-                alt="youtube"
+              <YoutubeIcon
+                size={60}
+                color="#020617"
+                strokeWidth={1.2}
                 className="-rotate-12"
-              ></Image>
-              <Image
-                src="/icons1/facebook.png"
-                height={51}
-                width={51}
-                alt="facebook"
+              />
+              <FacebookIcon
+                size={50}
+                color="#020617"
+                strokeWidth={1.4}
                 className="rotate-12"
-              ></Image>
+              />
             </div>
             <div className="items-center justify-center">
-              <Image
-                src="/icons1/linkedin.png"
-                height={55}
-                width={55}
-                alt="linkedin"
+              <LinkedinIcon
+                size={50}
+                color="#020617"
+                strokeWidth={1.5}
                 className="-rotate-3"
-              ></Image>
+              />
             </div>
             <div className="flex items-center justify-center gap-6">
-              <Image
-                src="/icons1/Xwhite.png"
-                height={52}
-                width={52}
-                alt="X"
+              <XIcon
+                size={50}
+                color="#020617"
+                strokeWidth={1.5}
                 className="-rotate-6"
-              ></Image>
-              <Image
-                src="/icons1/instagram.png"
-                height={45}
-                width={45}
-                alt="instagram"
+              />
+              <InstagramIcon
+                size={50}
+                color="#020617"
+                strokeWidth={1.5}
                 className="rotate-6"
-              ></Image>
+              />
             </div>
           </div>
           <div className="px-2 text-center">
-            <span className="text-orange-700 dark:text-orange-200">
+            <span className="text-slate-600 dark:text-orange-200">
               You can also contact us throught{" "}
               <a
                 className="underline"
