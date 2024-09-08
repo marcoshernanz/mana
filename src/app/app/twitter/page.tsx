@@ -1,18 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
-import selectAllTweets from "@/server-actions/twitter/selectAllTweets";
 import deleteTweet from "@/server-actions/twitter/deleteTweet";
 import TweetIsLoading from "./TweetIsLoading";
 import updateTweet from "@/database/queries/forum/updateTweet";
 import SideBar from "../SideBar";
+import selectBlockTweets from "@/server-actions/twitter/selectBlockTweets";
+import { LoaderCircleIcon } from "lucide-react";
+import insertTweet from "@/server-actions/twitter/insertTweet";
+
+const numTweetsPerBlock = 20;
 
 export default function TwitterPage() {
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
   const [tweets, setTweets] = useState<TweetType[]>([]);
-  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [isLoadingTweets, setIsLoadingTweets] = useState(true);
+  const [isFirstTimeLoadingTweets, setIsFirstTimeLoadingTweets] =
+    useState(true);
+
+  const numBlocksRef = useRef(0);
 
   const parentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
 
@@ -23,24 +31,21 @@ export default function TwitterPage() {
     return replies;
   });
 
-  const fetchTweets = async () => {
-    const tweets = await selectAllTweets();
-    setTweets(tweets);
-  };
-
   const editTweetIsLiked = async (id: string, isLiked: boolean) => {
-    setIsLoadingData(true);
+    // setIsLoadingData(true);
     await updateTweet(id, { isLiked });
-    await fetchTweets();
-    setIsLoadingData(false);
+    // await fetchTweets();
+    // setIsLoadingData(false);
   };
 
-  const deleteTweetFromDatabase = async (id: string) => {
-    setIsLoadingData(true);
-    await deleteTweet(id);
+  const handleAddTweet = async (tweet: TweetType) => {
+    setTweets((tweets) => [tweet, ...tweets]);
+    await insertTweet(tweet);
+  };
 
-    await fetchTweets();
-    setIsLoadingData(false);
+  const handleDeleteTweet = async (id: string) => {
+    setTweets((tweets) => tweets.filter((tweet) => tweet.id !== id));
+    await deleteTweet(id);
   };
 
   const toggleExpand = async (tweetId: string) => {
@@ -49,13 +54,53 @@ export default function TwitterPage() {
     );
   };
 
-  useEffect(() => {
-    (async () => {
-      setIsLoadingData(true);
-      await fetchTweets();
-      setIsLoadingData(false);
-    })();
+  const fetchTweets = useCallback(async () => {
+    const tweets = await selectBlockTweets({
+      numTweetsPerBlock,
+      blockNumber: numBlocksRef.current,
+      orderBy: "date",
+      descending: true,
+    });
+
+    setTweets((currTweets) => [...currTweets, ...tweets]);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const documentHeight = document.documentElement.scrollHeight;
+      const currentScroll = window.scrollY + window.innerHeight;
+
+      if (
+        currentScroll >=
+        (documentHeight * numBlocksRef.current) / (numBlocksRef.current + 1)
+      ) {
+        if (
+          !isLoadingTweets &&
+          !isFirstTimeLoadingTweets &&
+          tweets.length === numTweetsPerBlock * numBlocksRef.current
+        ) {
+          setIsLoadingTweets(true);
+          numBlocksRef.current += 1;
+          fetchTweets();
+          setIsLoadingTweets(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [fetchTweets, isLoadingTweets, tweets, isFirstTimeLoadingTweets]);
+
+  useEffect(() => {
+    if (!isFirstTimeLoadingTweets || numBlocksRef.current !== 0) return;
+
+    setIsLoadingTweets(true);
+    numBlocksRef.current += 1;
+    fetchTweets();
+    setIsLoadingTweets(false);
+    setIsFirstTimeLoadingTweets(false);
+  }, [fetchTweets, isFirstTimeLoadingTweets]);
 
   return (
     <div className="flex">
@@ -70,37 +115,40 @@ export default function TwitterPage() {
               Add Tweet
             </span>
             <div className="py-4">
-              <WriteTweet onSubmit={() => null} fetchTweets={fetchTweets} />
+              <WriteTweet onSubmit={() => null} />
             </div>
           </div>
 
           <div className="flex flex-col gap-5">
-            {isLoadingData
-              ? Array(parentTweet.length)
-                  .fill(0)
-                  .map((_, index) => (
-                    <TweetIsLoading
-                      key={index}
-                      isExpanded={false}
-                      isReplying={false}
-                      tweetRepliesLength={1}
-                    />
-                  ))
-              : parentTweet.map((tweet, index) => (
-                  <Tweet
-                    key={tweet.id}
-                    tweet={tweet}
-                    isExpanded={expandedTweetId === tweet.id}
-                    toggleExpand={toggleExpand}
-                    initialIsLiked={tweet.isLiked}
-                    editTweetIsLiked={editTweetIsLiked}
-                    tweetReplies={tweetsWithReplies[index]}
-                    deleteTweet={deleteTweetFromDatabase}
-                    fetchTweets={fetchTweets}
-                    expandedTweetId={expandedTweetId}
-                  ></Tweet>
-                ))}
+            {
+              // isLoadingData
+              //   ? Array(parentTweet.length)
+              //       .fill(0)
+              //       .map((_, index) => (
+              //         <TweetIsLoading
+              //           key={index}
+              //           isExpanded={false}
+              //           isReplying={false}
+              //           tweetRepliesLength={1}
+              //         />
+              //       ))
+              //   :
+              parentTweet.map((tweet, index) => (
+                <Tweet
+                  key={tweet.id}
+                  tweet={tweet}
+                  isExpanded={expandedTweetId === tweet.id}
+                  toggleExpand={toggleExpand}
+                  initialIsLiked={tweet.isLiked}
+                  editTweetIsLiked={editTweetIsLiked}
+                  tweetReplies={tweetsWithReplies[index]}
+                  deleteTweet={handleDeleteTweet}
+                  expandedTweetId={expandedTweetId}
+                ></Tweet>
+              ))
+            }
           </div>
+          {isLoadingTweets && <LoaderCircleIcon className="animate-spin" />}
         </div>
       </div>
     </div>

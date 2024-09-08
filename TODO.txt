@@ -170,5 +170,37 @@ For the user button dropdown: https://ui.shadcn.com/docs/components/dropdown-men
 
 Follow instructions to enable dark mode: https://ui.shadcn.com/docs/dark-mode/next
 
-
 Don't use forms from shadcn-ui
+
+
+
+
+Remove "use server" from everything that isn't a server action
+
+Remove unneeded props in twitter, todo, and blog
+
+Fetch tweet replies inside each tweet component
+
+Fix twitter
+
+Delete only the tweets that are written by the user
+
+Fix insert in twitter
+
+Only fetch tweets (without replies) in twitter
+
+Apply learnings of fetching data with infinite scrolling in blog and todo
+
+Finish everything that was due saturday
+
+Likes table
+  1. Create a new table in the database
+    id
+    userId
+    tweetId
+    createdAt
+  2. Create a server action to handle likes
+    - If the user has already liked the tweet, remove the row from the database
+    - If the user hasn't liked the tweet, add a row to the database
+  3. Select all rows where tweetId is the same as that tweetId and count how many there are (https://orm.drizzle.team/docs/select#aggregations)
+  4. Fetch whether the user has liked the tweet in each Tweet component

@@ -1,11 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { cookies } from "next/headers";
+import jwt from "./lib/jwt";
 
 const protectedRoutes = ["/app"];
 const unauthorizedRoutes = ["/sign-in", "/sign-up"];
 
-export function middleware(request: NextRequest) {
-  const isAuthenticated = cookies().get("session") !== undefined;
+export async function middleware(request: NextRequest) {
+  const session = cookies().get("session");
+  const isAuthenticated = !!(session && (await jwt.verify(session.value)));
+
   const pathname = request.nextUrl.pathname;
 
   if (isAuthenticated) {

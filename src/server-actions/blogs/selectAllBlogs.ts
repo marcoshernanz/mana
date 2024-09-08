@@ -13,7 +13,6 @@ export default async function selectAllBlogs(): Promise<BlogPostType[]> {
   const formattedBlogs = await Promise.all(
     blogs.map(async (blog: BlogsTableType) => {
       const author = await getAuthorName(blog);
-      console.log("author", author);
 
       return {
         id: blog.id,

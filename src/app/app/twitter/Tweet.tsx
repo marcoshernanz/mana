@@ -12,18 +12,18 @@ export type TweetType = {
   author: string;
   text: string;
   isLiked: boolean;
+  isUserTweet: boolean;
 };
 
 interface TweetProps {
   tweet: TweetType;
-  isExpanded: boolean;
-  initialIsLiked: boolean;
+  isExpanded: boolean; // Not needed, it should be created in this component
+  initialIsLiked: boolean; // Not needed, already in tweet
   editTweetIsLiked: (id: string, isLiked: boolean) => void;
-  toggleExpand: (tweetId: string) => void;
+  toggleExpand: (tweetId: string) => void; // Not needed, it should be created in this component
   deleteTweet: (TweetIndex: string) => void;
-  tweetReplies: TweetType[];
-  fetchTweets: () => void;
-  expandedTweetId: string | null;
+  tweetReplies: TweetType[]; // Not needed, it should be fetched in this component
+  expandedTweetId: string | null; // Not needed, it should be created in this component
 }
 
 export default function Tweet({
@@ -34,12 +34,13 @@ export default function Tweet({
   tweet,
   deleteTweet,
   tweetReplies,
-  fetchTweets,
   expandedTweetId,
 }: TweetProps) {
   const [isLiked, setIsLiked] = useState<boolean>(initialIsLiked);
 
   const [isReplying, setIsReplying] = useState(false);
+
+  // Fetch tweet replies
 
   const handleReplyClick = () => {
     setIsReplying((prev) => !prev);
@@ -47,9 +48,6 @@ export default function Tweet({
 
   const handleReplySubmit = async () => {
     setIsReplying(false);
-    if (fetchTweets) {
-      await fetchTweets();
-    }
   };
 
   return (
@@ -120,12 +118,14 @@ export default function Tweet({
                 >
                   Reply
                 </Button>
-                <Button
-                  onClick={() => deleteTweet(tweet.id)}
-                  className="underline hover:text-slate-950 hover:no-underline dark:hover:text-slate-100"
-                >
-                  Delete
-                </Button>
+                {tweet.isUserTweet && (
+                  <Button
+                    onClick={() => deleteTweet(tweet.id)}
+                    className="underline hover:text-slate-950 hover:no-underline dark:hover:text-slate-100"
+                  >
+                    Delete
+                  </Button>
+                )}
               </div>
             )}
           </div>

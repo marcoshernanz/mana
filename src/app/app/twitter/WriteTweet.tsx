@@ -34,17 +34,17 @@ export default function WriteTweet({
   const handleAddWriteTweet = async () => {
     if (!text) return;
 
-    const newTweet: CurrentTweetType = {
-      text,
-      parentTweetId: parentTweetId,
-    };
+    // const newTweet: CurrentTweetType = {
+    //   text,
+    //   parentTweetId: parentTweetId,
+    // };
 
     setText("");
 
-    await insertTweet(newTweet);
-    if (fetchTweets) {
-      await fetchTweets?.();
-    }
+    // await insertTweet(newTweet);
+    // if (fetchTweets) {
+    // await fetchTweets?.();
+    // }
     onSubmit();
   };
 

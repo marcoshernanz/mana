@@ -2,7 +2,7 @@
 
 import "@/../envConfig";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt from "@/lib/jwt";
 import { cookies } from "next/headers";
 import { SessionType } from "./getSession";
 import getUserByUsername from "@/database/queries/auth/getUserByUsername";
@@ -44,7 +44,7 @@ export default async function signIn({
       username: selectedUser.username,
     } satisfies SessionType;
 
-    const token = jwt.sign(session, process.env.AUTH_SECRET!);
+    const token = await jwt.sign(session);
 
     if (!token) {
       throw new Error("An unexpected error ocurred");

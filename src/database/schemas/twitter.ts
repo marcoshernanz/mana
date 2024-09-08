@@ -7,22 +7,10 @@ export const twitterTable = pgTable("twitter", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   text: text("text").notNull(),
-  // author: text("author").notNull(),
   userId: text("user_id").notNull(),
   parentTweetId: text("parentTweetId"),
   isLiked: boolean("is_liked").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+});
 
 export type TwitterType = InferSelectModel<typeof twitterTable>;
-
-
-
-
-
-
-
-
-
-
-
