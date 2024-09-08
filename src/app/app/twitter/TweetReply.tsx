@@ -21,7 +21,7 @@ export default function TweetReply({
   const [isLiked, setIsLiked] = useState<boolean>(initialIsLiked);
 
   return (
-    <div className="flex flex-col gap-2 rounded-md border border-orange-200 bg-orange-200/30 p-2 shadow-sm hover:bg-orange-200/50 dark:border-slate-600 dark:bg-slate-700/70 dark:shadow-2xl dark:hover:bg-slate-600/60">
+    <div className="flex flex-col gap-2 rounded-md border border-slate-300 bg-slate-300/30 px-3 py-2 shadow-sm hover:bg-slate-300/50 dark:border-slate-600 dark:bg-slate-700/70 dark:shadow-2xl dark:hover:bg-slate-600/60">
       <div className="flex justify-end">
         <button
           onClick={() => {

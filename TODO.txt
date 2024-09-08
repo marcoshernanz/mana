@@ -158,12 +158,13 @@ Replace twMerge() with cn()    --> DONE
 
 Take a look at every shadcn-ui component and replace all code with shadcn-ui components                       --> DONE 
 
-Update todos and blog to store userId in database (do the same as you had to do last week with twitter)
+Update todos and blog to store userId in database (do the same as you had to do last week with twitter)                                      --> DONE
 
 Style twitter, todos and blog to make it look beautiful and useful
 
 Create a sidebar that lets you navigate to twitter, todos and blog. It should also have a user button with a dropdown that lets you change between dark and light mode and that allows you to sign out
-Inspiration (https://supabase.com/dashboard/project/ramgqgpverhvfajeaxlu) without the animation
+Inspiration (https://supabase.com/dashboard/project/ramgqgpverhvfajeaxlu) without the animation:
+- fixed div to the screen
 
 For the user button dropdown: https://ui.shadcn.com/docs/components/dropdown-menu
 

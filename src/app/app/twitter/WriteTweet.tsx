@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { TweetType } from "./Tweet";
 import insertTweet from "@/server-actions/twitter/insertTweet";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/Button";
 // import { getSession } from "@/server-actions/auth/getSession";
 
 export type CurrentTweetType = Omit<
@@ -30,7 +32,6 @@ export default function WriteTweet({
   const [text, setText] = useState<string>("");
 
   const handleAddWriteTweet = async () => {
-    // !author ||
     if (!text) return;
 
     const newTweet: CurrentTweetType = {
@@ -39,7 +40,6 @@ export default function WriteTweet({
     };
 
     setText("");
-    // setAuthor("");
 
     await insertTweet(newTweet);
     if (fetchTweets) {
@@ -49,23 +49,17 @@ export default function WriteTweet({
   };
 
   return (
-    <div className="flex items-center justify-center gap-3 rounded-lg bg-slate-800 p-3 text-slate-900 dark:text-white">
+    <div className="dark: dark: flex items-center justify-center gap-3 rounded-lg p-3 text-slate-900 dark:bg-slate-800 dark:text-white">
       <div className="flex w-full flex-col items-stretch gap-3">
-        <input
+        <Input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="write text"
-          className="dark:text-slate-800"
-        ></input>
-        {/* <input
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          placeholder="Author"
-          className="dark:text-slate-800"
-        ></input> */}
+          className="text-md dark:text-slate-800"
+        ></Input>
       </div>
       <div>
-        <button onClick={handleAddWriteTweet}>Submit</button>
+        <Button onClick={handleAddWriteTweet}>Submit</Button>
       </div>
     </div>
   );

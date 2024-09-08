@@ -7,6 +7,7 @@ import selectAllTweets from "@/server-actions/twitter/selectAllTweets";
 import deleteTweet from "@/server-actions/twitter/deleteTweet";
 import TweetIsLoading from "./TweetIsLoading";
 import updateTweet from "@/database/queries/forum/updateTweet";
+import SideBar from "../SideBar";
 
 export default function TwitterPage() {
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
@@ -57,44 +58,49 @@ export default function TwitterPage() {
   }, []);
 
   return (
-    <div className="flex justify-center">
-      <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-20 pt-36">
-        <span className="text-4xl font-semibold dark:text-slate-50">Forum</span>
-        <div className="pb-20 pt-16">
-          <span className="flex items-center justify-center pb-1 text-sm underline dark:text-slate-100">
-            Add Tweet
+    <div className="flex">
+      <SideBar />
+      <div className="flex justify-center bg-slate-50 pl-72">
+        <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-20 pt-36">
+          <span className="text-4xl font-semibold text-slate-900 dark:text-slate-50">
+            Forum
           </span>
-          <div className="rounded-md bg-slate-900 px-10 py-6">
-            <WriteTweet onSubmit={() => null} fetchTweets={fetchTweets} />
+          <div className="pb-20 pt-16">
+            <span className="flex items-center justify-center pb-1 text-sm underline dark:text-slate-100">
+              Add Tweet
+            </span>
+            <div className="py-4">
+              <WriteTweet onSubmit={() => null} fetchTweets={fetchTweets} />
+            </div>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-5">
-          {isLoadingData
-            ? Array(parentTweet.length)
-                .fill(0)
-                .map((_, index) => (
-                  <TweetIsLoading
-                    key={index}
-                    isExpanded={false}
-                    isReplying={false}
-                    tweetRepliesLength={1}
-                  />
-                ))
-            : parentTweet.map((tweet, index) => (
-                <Tweet
-                  key={tweet.id}
-                  tweet={tweet}
-                  isExpanded={expandedTweetId === tweet.id}
-                  toggleExpand={toggleExpand}
-                  initialIsLiked={tweet.isLiked}
-                  editTweetIsLiked={editTweetIsLiked}
-                  tweetReplies={tweetsWithReplies[index]}
-                  deleteTweet={deleteTweetFromDatabase}
-                  fetchTweets={fetchTweets}
-                  expandedTweetId={expandedTweetId}
-                ></Tweet>
-              ))}
+          <div className="flex flex-col gap-5">
+            {isLoadingData
+              ? Array(parentTweet.length)
+                  .fill(0)
+                  .map((_, index) => (
+                    <TweetIsLoading
+                      key={index}
+                      isExpanded={false}
+                      isReplying={false}
+                      tweetRepliesLength={1}
+                    />
+                  ))
+              : parentTweet.map((tweet, index) => (
+                  <Tweet
+                    key={tweet.id}
+                    tweet={tweet}
+                    isExpanded={expandedTweetId === tweet.id}
+                    toggleExpand={toggleExpand}
+                    initialIsLiked={tweet.isLiked}
+                    editTweetIsLiked={editTweetIsLiked}
+                    tweetReplies={tweetsWithReplies[index]}
+                    deleteTweet={deleteTweetFromDatabase}
+                    fetchTweets={fetchTweets}
+                    expandedTweetId={expandedTweetId}
+                  ></Tweet>
+                ))}
+          </div>
         </div>
       </div>
     </div>

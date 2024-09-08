@@ -12,6 +12,7 @@ import insertTodo from "@/server-actions/todo/insertTodo";
 import selectAllTodo from "@/server-actions/todo/selectAllTodo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
+import SideBar from "../SideBar";
 
 const availableTags = ["university", "house", "urgent", "work"] as const;
 
@@ -76,46 +77,51 @@ export default function TodoPage() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center px-10">
-      <div className="flex w-full max-w-7xl flex-col items-center justify-center">
-        <div className="flex gap-2 pt-20">
-          <Input
-            placeholder="Enter your task"
-            className="border"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-          <Button onClick={addTask} className="bg-slate-800">
-            Add
-          </Button>
-        </div>
-        <div className="flex gap-5 text-sm">
-          {availableTags.map((tag, index) => (
-            <Button
-              variant="default"
-              onClick={() =>
-                setSelectedTags((tags) => {
-                  if (tags.includes(tag)) {
-                    return tags.filter((tagToDelete) => tagToDelete !== tag);
-                  } else {
-                    return [...tags, tag];
+    <div className="flex">
+      <SideBar />
+      <div className="flex flex-1 justify-center bg-slate-50">
+        <div className="flex w-full max-w-7xl flex-col items-center justify-center px-10 pb-20 pt-20">
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex gap-2 pt-20">
+              <Input
+                placeholder="Enter your task"
+                className="border"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <Button onClick={addTask} className="bg-slate-800">
+                Add
+              </Button>
+            </div>
+            <div className="flex gap-5 text-sm">
+              {availableTags.map((tag, index) => (
+                <Button
+                  variant="default"
+                  onClick={() =>
+                    setSelectedTags((tags) => {
+                      if (tags.includes(tag)) {
+                        return tags.filter(
+                          (tagToDelete) => tagToDelete !== tag,
+                        );
+                      } else {
+                        return [...tags, tag];
+                      }
+                    })
                   }
-                })
-              }
-              key={index}
-              className={cn(
-                "mt-6 border bg-slate-400 p-2 transition duration-300",
-                selectedTags.includes(tag) && "bg-slate-800 text-slate-50",
-              )}
-            >
-              <span>{selectedTags.includes(tag) ? "-" : "+"}</span>
-              {tag}
-            </Button>
-          ))}
-        </div>
-      </div>
-      <div className="flex w-full flex-col gap-3 pt-10">
-        {/* {isLoading
+                  key={index}
+                  className={cn(
+                    "mt-6 border bg-slate-400 p-2 transition duration-300",
+                    selectedTags.includes(tag) && "bg-slate-800 text-slate-50",
+                  )}
+                >
+                  <span>{selectedTags.includes(tag) ? "-" : "+"}</span>
+                  {tag}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <div className="flex w-full flex-col gap-3 pt-10">
+            {/* {isLoading
           ? // <div className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center">
             //   <LoaderCircleIcon className="h-32 w-32 animate-spin text-slate-400" />
             // </div>
@@ -123,20 +129,20 @@ export default function TodoPage() {
               .fill(0)
               .map((_, index) => <TodoTaskLoading key={index} />)
           : */}
-        {tasks.map((task, index) => (
-          <TodoTask
-            key={index}
-            task={task}
-            deleteTask={deleteTask}
-            initialIsCompleted={task.isCompleted}
-            editTaskIsCompleted={editTaskIsCompleted}
-            availableTags={availableTags}
-          />
-        ))}
-        {/* } */}
+            {tasks.map((task, index) => (
+              <TodoTask
+                key={index}
+                task={task}
+                deleteTask={deleteTask}
+                initialIsCompleted={task.isCompleted}
+                editTaskIsCompleted={editTaskIsCompleted}
+                availableTags={availableTags}
+              />
+            ))}
+            {/* } */}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-// x = addTask()

@@ -4,6 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
 import { useState } from "react";
 import WriteTweet from "./WriteTweet";
 import TweetReply from "./TweetReply";
+import { Button } from "@/components/ui/Button";
 
 export type TweetType = {
   id: string;
@@ -53,7 +54,7 @@ export default function Tweet({
 
   return (
     <div>
-      <div className="flex flex-col gap-1 rounded-md border border-orange-200 bg-orange-100/70 p-2 dark:border-slate-700 dark:bg-slate-900">
+      <div className="flex flex-col gap-1 rounded-md border border-slate-300 bg-slate-200/50 px-4 py-3 dark:border-slate-700 dark:bg-slate-900">
         <div className="flex justify-end">
           <button
             onClick={() => {
@@ -64,7 +65,7 @@ export default function Tweet({
             {isLiked ? (
               <Heart size="20px" color="#ff0000" strokeWidth="3px" />
             ) : (
-              <Heart size="20px" />
+              <Heart size="20px" color="#0f172a" />
             )}
           </button>
         </div>
@@ -74,7 +75,11 @@ export default function Tweet({
         <span className="max-w-6xl break-words pb-3 pl-6 pr-6 text-sm text-slate-600 dark:text-slate-300">
           {tweet.author}
         </span>
-        <button onClick={() => toggleExpand(tweet.id)} className="pl-5 pt-2">
+        <Button
+          variant="ghost"
+          onClick={() => toggleExpand(tweet.id)}
+          className="justify-start pl-5 pt-2"
+        >
           {isExpanded ? (
             <>
               <ChevronUpIcon />
@@ -83,7 +88,7 @@ export default function Tweet({
           ) : (
             <ChevronDownIcon />
           )}
-        </button>
+        </Button>
         <div className="flex flex-col">
           {isExpanded && (
             <div className="flex flex-col gap-1.5 pb-2 pl-6">
@@ -109,18 +114,18 @@ export default function Tweet({
               </div>
             ) : (
               <div className="flex w-full justify-around gap-96 p-2 text-lg text-slate-900 dark:text-slate-50">
-                <button
+                <Button
                   onClick={handleReplyClick}
-                  className="underline hover:text-slate-950 hover:no-underline dark:hover:text-slate-100"
+                  className="hover:text-slate-950 dark:hover:text-slate-100"
                 >
                   Reply
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => deleteTweet(tweet.id)}
                   className="underline hover:text-slate-950 hover:no-underline dark:hover:text-slate-100"
                 >
                   Delete
-                </button>
+                </Button>
               </div>
             )}
           </div>
