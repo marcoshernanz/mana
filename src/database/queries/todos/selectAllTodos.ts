@@ -1,5 +1,3 @@
-"use server";
-
 import { db } from "@/database/db";
 import { todosTable, type TodosType } from "@/database/schemas/todos";
 

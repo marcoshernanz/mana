@@ -14,7 +14,7 @@ import insertTweet from "@/server-actions/twitter/insertTweet";
 const numTweetsPerBlock = 20;
 
 export default function TwitterPage() {
-  const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
+  // const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
   const [tweets, setTweets] = useState<TweetType[]>([]);
   const [isLoadingTweets, setIsLoadingTweets] = useState(true);
   const [isFirstTimeLoadingTweets, setIsFirstTimeLoadingTweets] =
@@ -48,11 +48,11 @@ export default function TwitterPage() {
     await deleteTweet(id);
   };
 
-  const toggleExpand = async (tweetId: string) => {
-    setExpandedTweetId((expandedTweetId) =>
-      expandedTweetId === tweetId ? null : tweetId,
-    );
-  };
+  // const toggleExpand = async (tweetId: string) => {
+  //   setExpandedTweetId((expandedTweetId) =>
+  //     expandedTweetId === tweetId ? null : tweetId,
+  //   );
+  // };
 
   const fetchTweets = useCallback(async () => {
     const tweets = await selectBlockTweets({
@@ -137,13 +137,13 @@ export default function TwitterPage() {
                 <Tweet
                   key={tweet.id}
                   tweet={tweet}
-                  isExpanded={expandedTweetId === tweet.id}
-                  toggleExpand={toggleExpand}
-                  initialIsLiked={tweet.isLiked}
+                  // isExpanded={expandedTweetId === tweet.id}
+                  // toggleExpand={toggleExpand}
+                  // initialIsLiked={tweet.isLiked}
                   editTweetIsLiked={editTweetIsLiked}
                   tweetReplies={tweetsWithReplies[index]}
                   deleteTweet={handleDeleteTweet}
-                  expandedTweetId={expandedTweetId}
+                  // expandedTweetId={expandedTweetId}
                 ></Tweet>
               ))
             }

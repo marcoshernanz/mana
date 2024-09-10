@@ -175,9 +175,10 @@ Don't use forms from shadcn-ui
 
 
 
-Remove "use server" from everything that isn't a server action
+Remove "use server" from everything that isn't a server action  --> DONE
 
-Remove unneeded props in twitter, todo, and blog
+Remove unneeded props in twitter                                --> DONE
+Remove unneeded props in todo, and blog
 
 Fetch tweet replies inside each tweet component
 

@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 
 type UpdateTwitterType = Omit<
   TwitterType,
-  "text" | "userId" | "id" | "isLiked" | "parentTweetId"| "createdAt"
+  "text" | "userId" | "id" | "isLiked" | "parentTweetId" | "createdAt"
 > & {
   text?: string;
   userId?: string;

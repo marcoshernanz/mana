@@ -1,5 +1,3 @@
-"use server";
-
 import { db } from "@/database/db";
 import { blogsTable, BlogsTableType } from "@/database/schemas/blogs";
 

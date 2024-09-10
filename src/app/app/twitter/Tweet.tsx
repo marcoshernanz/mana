@@ -17,30 +17,29 @@ export type TweetType = {
 
 interface TweetProps {
   tweet: TweetType;
-  isExpanded: boolean; // Not needed, it should be created in this component
-  initialIsLiked: boolean; // Not needed, already in tweet
   editTweetIsLiked: (id: string, isLiked: boolean) => void;
-  toggleExpand: (tweetId: string) => void; // Not needed, it should be created in this component
   deleteTweet: (TweetIndex: string) => void;
   tweetReplies: TweetType[]; // Not needed, it should be fetched in this component
-  expandedTweetId: string | null; // Not needed, it should be created in this component
 }
 
 export default function Tweet({
-  isExpanded,
-  toggleExpand,
   editTweetIsLiked,
-  initialIsLiked,
   tweet,
   deleteTweet,
   tweetReplies,
-  expandedTweetId,
 }: TweetProps) {
-  const [isLiked, setIsLiked] = useState<boolean>(initialIsLiked);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
 
   const [isReplying, setIsReplying] = useState(false);
 
   // Fetch tweet replies
+
+  const toggleExpand = async (tweetId: string) => {
+    setExpandedTweetId((expandedTweetId) =>
+      expandedTweetId === tweetId ? null : tweetId,
+    );
+  };
 
   const handleReplyClick = () => {
     setIsReplying((prev) => !prev);
@@ -78,7 +77,7 @@ export default function Tweet({
           onClick={() => toggleExpand(tweet.id)}
           className="justify-start pl-5 pt-2"
         >
-          {isExpanded ? (
+          {expandedTweetId === tweet.id ? (
             <>
               <ChevronUpIcon />
               <div className="py-3"></div>
@@ -88,7 +87,7 @@ export default function Tweet({
           )}
         </Button>
         <div className="flex flex-col">
-          {isExpanded && (
+          {expandedTweetId === tweet.id && (
             <div className="flex flex-col gap-1.5 pb-2 pl-6">
               {tweetReplies.map((reply) => (
                 <TweetReply

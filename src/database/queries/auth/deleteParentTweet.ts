@@ -1,4 +1,3 @@
-"use server";
 
 import { db } from "@/database/db";
 import { twitterTable } from "@/database/schemas/twitter";
