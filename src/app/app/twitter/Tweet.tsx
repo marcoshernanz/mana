@@ -1,10 +1,12 @@
 "use client";
 
 import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
-import { useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import WriteTweet from "./WriteTweet";
 import TweetReply from "./TweetReply";
 import { Button } from "@/components/ui/Button";
+import selectTweetReplies from "@/server-actions/twitter/selectTweetReplies";
+import insertTweet from "@/server-actions/twitter/insertTweet";
 
 export type TweetType = {
   id: string;
@@ -19,26 +21,38 @@ interface TweetProps {
   tweet: TweetType;
   editTweetIsLiked: (id: string, isLiked: boolean) => void;
   deleteTweet: (TweetIndex: string) => void;
-  tweetReplies: TweetType[]; // Not needed, it should be fetched in this component
+  // tweetReplies: TweetType[]; // Not needed, it should be fetched in this component
 }
 
 export default function Tweet({
   editTweetIsLiked,
   tweet,
   deleteTweet,
-  tweetReplies,
+  // tweetReplies,
 }: TweetProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
-
+  const [tweetReplies, setTweetReplies] = useState<TweetType[]>([]);
   const [isReplying, setIsReplying] = useState(false);
+  const [isLoadingReplies, setIsLoadingReplies] = useState(false);
+  const [isFirstTimeLoadingTweets, setIsFirstTimeLoadingTweets] =
+    useState(true);
 
-  // Fetch tweet replies
+  const fetchTweetReplies = useCallback(async () => {
+    const replies = await selectTweetReplies(tweet.id);
+
+    setTweetReplies(replies);
+  }, [tweet.id]);
 
   const toggleExpand = async (tweetId: string) => {
-    setExpandedTweetId((expandedTweetId) =>
-      expandedTweetId === tweetId ? null : tweetId,
-    );
+    const isExpanding = expandedTweetId === tweetId ? null : tweetId;
+    setExpandedTweetId(isExpanding);
+
+    await fetchTweetReplies();
+
+    if (isExpanding && tweetReplies.length === 0) {
+      await fetchTweetReplies();
+    }
   };
 
   const handleReplyClick = () => {
@@ -47,6 +61,7 @@ export default function Tweet({
 
   const handleReplySubmit = async () => {
     setIsReplying(false);
+    await fetchTweetReplies();
   };
 
   return (
@@ -107,6 +122,7 @@ export default function Tweet({
                 <WriteTweet
                   parentTweetId={tweet.id}
                   onSubmit={handleReplySubmit}
+                  fetchTweetReplies={fetchTweetReplies}
                 />
               </div>
             ) : (

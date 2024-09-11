@@ -9,42 +9,46 @@ import { Button } from "@/components/ui/Button";
 
 export type CurrentTweetType = Omit<
   TweetType,
-  "id" | "parentTweetId" | "isLiked" | "author"
+  "id" | "parentTweetId" | "isLiked" | "author" | "isUserTweet"
 > & {
   id?: string;
-  parentTweetId?: string | null;
+  parentTweetId: string | null;
   isLiked?: boolean;
   isReplying?: boolean;
   author?: string;
+  isUserTweet?: boolean;
 };
 
 interface WriteTweetProps {
-  parentTweetId?: string | undefined | null;
+  parentTweetId?: string | null;
   onSubmit: () => void;
   fetchTweets?: () => void;
+  fetchTweetReplies?: () => void;
 }
 
 export default function WriteTweet({
   parentTweetId,
   onSubmit,
   fetchTweets,
+  fetchTweetReplies,
 }: WriteTweetProps) {
   const [text, setText] = useState<string>("");
 
   const handleAddWriteTweet = async () => {
     if (!text) return;
 
-    // const newTweet: CurrentTweetType = {
-    //   text,
-    //   parentTweetId: parentTweetId,
-    // };
+    const newTweet: CurrentTweetType = {
+      text,
+      parentTweetId: parentTweetId as string | null,
+    };
 
     setText("");
 
-    // await insertTweet(newTweet);
-    // if (fetchTweets) {
-    // await fetchTweets?.();
-    // }
+    await insertTweet(newTweet);
+    if (fetchTweets) {
+      await fetchTweets?.();
+      await fetchTweetReplies?.();
+    }
     onSubmit();
   };
 

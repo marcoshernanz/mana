@@ -48,12 +48,6 @@ export default function TwitterPage() {
     await deleteTweet(id);
   };
 
-  // const toggleExpand = async (tweetId: string) => {
-  //   setExpandedTweetId((expandedTweetId) =>
-  //     expandedTweetId === tweetId ? null : tweetId,
-  //   );
-  // };
-
   const fetchTweets = useCallback(async () => {
     const tweets = await selectBlockTweets({
       numTweetsPerBlock,
@@ -105,7 +99,7 @@ export default function TwitterPage() {
   return (
     <div className="flex">
       <SideBar />
-      <div className="flex justify-center bg-slate-50 pl-72">
+      <div className="flex justify-center bg-slate-50 pl-96">
         <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-20 pt-36">
           <span className="text-4xl font-semibold text-slate-900 dark:text-slate-50">
             Forum
@@ -119,7 +113,7 @@ export default function TwitterPage() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-5">
+          <div className="flex w-full flex-col gap-5">
             {
               // isLoadingData
               //   ? Array(parentTweet.length)
@@ -137,13 +131,9 @@ export default function TwitterPage() {
                 <Tweet
                   key={tweet.id}
                   tweet={tweet}
-                  // isExpanded={expandedTweetId === tweet.id}
-                  // toggleExpand={toggleExpand}
-                  // initialIsLiked={tweet.isLiked}
                   editTweetIsLiked={editTweetIsLiked}
-                  tweetReplies={tweetsWithReplies[index]}
+                  // tweetReplies={tweetsWithReplies[index]}
                   deleteTweet={handleDeleteTweet}
-                  // expandedTweetId={expandedTweetId}
                 ></Tweet>
               ))
             }
