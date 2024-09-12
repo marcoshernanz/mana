@@ -14,7 +14,6 @@ import insertTweet from "@/server-actions/twitter/insertTweet";
 const numTweetsPerBlock = 20;
 
 export default function TwitterPage() {
-  // const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
   const [tweets, setTweets] = useState<TweetType[]>([]);
   const [isLoadingTweets, setIsLoadingTweets] = useState(true);
   const [isFirstTimeLoadingTweets, setIsFirstTimeLoadingTweets] =
@@ -31,16 +30,14 @@ export default function TwitterPage() {
     return replies;
   });
 
-  const editTweetIsLiked = async (id: string, isLiked: boolean) => {
-    // setIsLoadingData(true);
+  const editTweetIsLiked = async (
+    id: string,
+    isLiked: boolean,
+    fetchTweetReplies: () => Promise<void>,
+  ) => {
     await updateTweet(id, { isLiked });
-    // await fetchTweets();
-    // setIsLoadingData(false);
-  };
-
-  const handleAddTweet = async (tweet: TweetType) => {
-    setTweets((tweets) => [tweet, ...tweets]);
-    await insertTweet(tweet);
+    await fetchTweets();
+    // await fetchTweetReplies()
   };
 
   const handleDeleteTweet = async (id: string) => {
@@ -56,7 +53,8 @@ export default function TwitterPage() {
       descending: true,
     });
 
-    setTweets((currTweets) => [...currTweets, ...tweets]);
+    // setTweets((currTweets) => [...currTweets, ...tweets]);
+    setTweets(tweets);
   }, []);
 
   useEffect(() => {
@@ -109,7 +107,7 @@ export default function TwitterPage() {
               Add Tweet
             </span>
             <div className="py-4">
-              <WriteTweet onSubmit={() => null} />
+              <WriteTweet onSubmit={() => null} fetchTweets={fetchTweets} />
             </div>
           </div>
 
@@ -134,6 +132,7 @@ export default function TwitterPage() {
                   editTweetIsLiked={editTweetIsLiked}
                   // tweetReplies={tweetsWithReplies[index]}
                   deleteTweet={handleDeleteTweet}
+                  fetchTweets={fetchTweets}
                 ></Tweet>
               ))
             }

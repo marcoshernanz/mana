@@ -1,12 +1,11 @@
 "use client";
 
 import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
-import { use, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import WriteTweet from "./WriteTweet";
 import TweetReply from "./TweetReply";
 import { Button } from "@/components/ui/Button";
 import selectTweetReplies from "@/server-actions/twitter/selectTweetReplies";
-import insertTweet from "@/server-actions/twitter/insertTweet";
 
 export type TweetType = {
   id: string;
@@ -19,24 +18,26 @@ export type TweetType = {
 
 interface TweetProps {
   tweet: TweetType;
-  editTweetIsLiked: (id: string, isLiked: boolean) => void;
+  editTweetIsLiked: (
+    id: string,
+    isLiked: boolean,
+    fetchTweetReplies: () => Promise<void>,
+  ) => void;
   deleteTweet: (TweetIndex: string) => void;
-  // tweetReplies: TweetType[]; // Not needed, it should be fetched in this component
+  fetchTweets: () => Promise<void>;
 }
 
 export default function Tweet({
   editTweetIsLiked,
   tweet,
   deleteTweet,
-  // tweetReplies,
+  fetchTweets,
 }: TweetProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
+
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
   const [tweetReplies, setTweetReplies] = useState<TweetType[]>([]);
   const [isReplying, setIsReplying] = useState(false);
-  const [isLoadingReplies, setIsLoadingReplies] = useState(false);
-  const [isFirstTimeLoadingTweets, setIsFirstTimeLoadingTweets] =
-    useState(true);
 
   const fetchTweetReplies = useCallback(async () => {
     const replies = await selectTweetReplies(tweet.id);
@@ -47,8 +48,6 @@ export default function Tweet({
   const toggleExpand = async (tweetId: string) => {
     const isExpanding = expandedTweetId === tweetId ? null : tweetId;
     setExpandedTweetId(isExpanding);
-
-    await fetchTweetReplies();
 
     if (isExpanding && tweetReplies.length === 0) {
       await fetchTweetReplies();
@@ -64,6 +63,11 @@ export default function Tweet({
     await fetchTweetReplies();
   };
 
+  const handleLikeToggle = async () => {
+    const updatedIsLiked = !isLiked;
+    await editTweetIsLiked(tweet.id, updatedIsLiked, fetchTweetReplies);
+  };
+
   return (
     <div>
       <div className="flex flex-col gap-1 rounded-md border border-slate-300 bg-slate-200/50 px-4 py-3 dark:border-slate-700 dark:bg-slate-900">
@@ -71,10 +75,10 @@ export default function Tweet({
           <button
             onClick={() => {
               setIsLiked(!isLiked);
-              editTweetIsLiked(tweet.id, !isLiked);
+              handleLikeToggle();
             }}
           >
-            {isLiked ? (
+            {tweet.isLiked ? (
               <Heart size="20px" color="#ff0000" strokeWidth="3px" />
             ) : (
               <Heart size="20px" color="#0f172a" />
@@ -109,7 +113,7 @@ export default function Tweet({
                   key={reply.id}
                   tweetReply={reply.text}
                   author={reply.author}
-                  editTweetIsLiked={editTweetIsLiked}
+                  editTweetIsLiked={handleLikeToggle}
                   id={reply.id}
                   initialIsLiked={reply.isLiked}
                 ></TweetReply>

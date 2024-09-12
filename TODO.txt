@@ -180,7 +180,7 @@ Remove "use server" from everything that isn't a server action  --> DONE
 Remove unneeded props in twitter                                --> DONE
 Remove unneeded props in todo, and blog
 
-Fetch tweet replies inside each tweet component
+Fetch tweet replies inside each tweet component                 --> DONE
 
 Fix twitter
 
