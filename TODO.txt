@@ -190,7 +190,8 @@ Fix insert in twitter                                 --> DONE (I don't see any 
 
 Only fetch tweets (without replies) in twitter        --> DONE (fetched parent tweets and its replies separately)
 
-Apply learnings of fetching data with infinite scrolling in blog and todo
+Apply learnings of fetching data with infinite scrolling in todo    --> DONE
+Apply learnings of fetching data with infinite scrolling in blog 
 
 Finish everything that was due saturday
 
