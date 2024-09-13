@@ -37,7 +37,7 @@ export default function TwitterPage() {
   ) => {
     await updateTweet(id, { isLiked });
     await fetchTweets();
-    // await fetchTweetReplies()
+    fetchTweetReplies();
   };
 
   const handleDeleteTweet = async (id: string) => {

@@ -111,11 +111,9 @@ export default function Tweet({
               {tweetReplies.map((reply) => (
                 <TweetReply
                   key={reply.id}
-                  tweetReply={reply.text}
-                  author={reply.author}
-                  editTweetIsLiked={handleLikeToggle}
-                  id={reply.id}
-                  initialIsLiked={reply.isLiked}
+                  reply={reply}
+                  editTweetIsLiked={editTweetIsLiked}
+                  fetchTweetReplies={fetchTweetReplies}
                 ></TweetReply>
               ))}
             </div>
