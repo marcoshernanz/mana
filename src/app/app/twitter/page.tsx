@@ -4,12 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
 import deleteTweet from "@/server-actions/twitter/deleteTweet";
-import TweetIsLoading from "./TweetIsLoading";
 import updateTweet from "@/database/queries/forum/updateTweet";
 import SideBar from "../SideBar";
 import selectBlockTweets from "@/server-actions/twitter/selectBlockTweets";
 import { LoaderCircleIcon } from "lucide-react";
-import insertTweet from "@/server-actions/twitter/insertTweet";
 
 const numTweetsPerBlock = 20;
 
@@ -46,15 +44,20 @@ export default function TwitterPage() {
   };
 
   const fetchTweets = useCallback(async () => {
-    const tweets = await selectBlockTweets({
+    const newTweetBlock = await selectBlockTweets({
       numTweetsPerBlock,
       blockNumber: numBlocksRef.current,
       orderBy: "date",
       descending: true,
     });
 
-    // setTweets((currTweets) => [...currTweets, ...tweets]);
-    setTweets(tweets);
+    setTweets((currTweets) => {
+      const filteredTweets = currTweets.filter(
+        (currTweet) =>
+          !newTweetBlock.some((newTweet) => newTweet.id === currTweet.id),
+      );
+      return [...filteredTweets, ...newTweetBlock];
+    });
   }, []);
 
   useEffect(() => {
@@ -130,9 +133,7 @@ export default function TwitterPage() {
                   key={tweet.id}
                   tweet={tweet}
                   editTweetIsLiked={editTweetIsLiked}
-                  // tweetReplies={tweetsWithReplies[index]}
                   deleteTweet={handleDeleteTweet}
-                  fetchTweets={fetchTweets}
                 ></Tweet>
               ))
             }

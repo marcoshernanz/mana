@@ -24,16 +24,14 @@ interface TweetProps {
     fetchTweetReplies: () => Promise<void>,
   ) => void;
   deleteTweet: (TweetIndex: string) => void;
-  fetchTweets: () => Promise<void>;
 }
 
 export default function Tweet({
   editTweetIsLiked,
   tweet,
   deleteTweet,
-  fetchTweets,
 }: TweetProps) {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(tweet.isLiked);
 
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
   const [tweetReplies, setTweetReplies] = useState<TweetType[]>([]);

@@ -1,20 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import TodoTask from "./TodoTask";
 import { LoaderCircleIcon } from "lucide-react";
 import TodoTaskLoading from "./TodoTaskLoading";
-// import selectAllTodos from "@/database/queries/todos/selectAllTodos";
 import updateTodo from "@/database/queries/todos/updateTodo";
 import deleteTodo from "@/database/queries/todos/deleteTodo";
 import { cn } from "@/lib/utils";
 import insertTodo from "@/server-actions/todo/insertTodo";
-import selectAllTodo from "@/server-actions/todo/selectAllTodo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import SideBar from "../SideBar";
+import selectBlockTodos from "@/server-actions/todo/selectBlockTodos";
 
 const availableTags = ["university", "house", "urgent", "work"] as const;
+const numTodosPerBlock = 20;
 
 export type AvailableTagsType = typeof availableTags;
 
@@ -27,18 +27,14 @@ export type TaskType = {
 };
 
 export default function TodoPage() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingTasks, setIsLoadingTasks] = useState(true);
+  const [isFirstTimeLoadingTasks, setIsFirstTimeLoadingTasks] = useState(true);
 
   const [tasks, setTasks] = useState<TaskType[]>([]);
-
   const [text, setText] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const fetchTasks = async () => {
-    const todos = await selectAllTodo();
-    setTasks(todos);
-  };
-
+  const numBlocksRef = useRef(0);
   const addTask = async () => {
     const newTask = {
       text,
@@ -48,33 +44,72 @@ export default function TodoPage() {
     setText("");
     setSelectedTags([]);
 
-    setIsLoading(true);
     await insertTodo({ text: newTask.text, tags: newTask.tags });
     await fetchTasks();
-    setIsLoading(false);
-  };
-
-  const editTaskIsCompleted = async (id: string, isCompleted: boolean) => {
-    setIsLoading(true);
-    await updateTodo(id, { isCompleted });
-    await fetchTasks();
-    setIsLoading(false);
   };
 
   const deleteTask = async (id: string) => {
-    setIsLoading(true);
     await deleteTodo(id);
     await fetchTasks();
-    setIsLoading(false);
+  };
+  const editTaskIsCompleted = async (id: string, isCompleted: boolean) => {
+    await updateTodo(id, { isCompleted });
+    await fetchTasks();
   };
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      await fetchTasks();
-      setIsLoading(false);
-    })();
+  const fetchTasks = useCallback(async () => {
+    const newTaskBlock = await selectBlockTodos({
+      numTodosPerBlock,
+      blockNumber: numBlocksRef.current,
+      orderBy: "date",
+      descending: true,
+    });
+
+    setTasks((currTasks) => {
+      const filteredTasks = currTasks.filter(
+        (currTasks) =>
+          !newTaskBlock.some((newTask) => newTask.id === currTasks.id),
+      );
+      return [...filteredTasks, ...newTaskBlock];
+    });
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const documentHeight = document.documentElement.scrollHeight;
+      const currentScroll = window.scrollY + window.innerHeight;
+
+      if (
+        currentScroll >=
+        (documentHeight * numBlocksRef.current) / (numBlocksRef.current + 1)
+      ) {
+        if (
+          !isLoadingTasks &&
+          !isFirstTimeLoadingTasks &&
+          tasks.length === numTodosPerBlock * numBlocksRef.current
+        ) {
+          setIsLoadingTasks(true);
+          numBlocksRef.current += 1;
+          fetchTasks();
+          setIsLoadingTasks(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [fetchTasks, isLoadingTasks, tasks, isFirstTimeLoadingTasks]);
+
+  useEffect(() => {
+    if (!isFirstTimeLoadingTasks || numBlocksRef.current !== 0) return;
+
+    setIsLoadingTasks(true);
+    numBlocksRef.current += 1;
+    fetchTasks();
+    setIsLoadingTasks(false);
+    setIsFirstTimeLoadingTasks(false);
+  }, [fetchTasks, isFirstTimeLoadingTasks]);
 
   return (
     <div className="flex">
@@ -134,7 +169,6 @@ export default function TodoPage() {
                 key={index}
                 task={task}
                 deleteTask={deleteTask}
-                initialIsCompleted={task.isCompleted}
                 editTaskIsCompleted={editTaskIsCompleted}
                 availableTags={availableTags}
               />

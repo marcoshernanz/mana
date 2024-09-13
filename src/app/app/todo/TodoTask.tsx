@@ -7,23 +7,17 @@ import { Button } from "@/components/ui/Button";
 interface TodoTaskProps {
   task: TaskType;
   deleteTask: (id: string) => void;
-
-  initialIsCompleted: boolean;
   editTaskIsCompleted: (id: string, isCompleted: boolean) => void;
-
   availableTags: AvailableTagsType;
 }
 
 export default function TodoTask({
   task,
   deleteTask,
-
-  initialIsCompleted,
   editTaskIsCompleted,
-
   availableTags,
 }: TodoTaskProps) {
-  const [isCompleted, setIsCompleted] = useState<boolean>(initialIsCompleted);
+  const [isCompleted, setIsCompleted] = useState<boolean>(task.isCompleted);
 
   return (
     <div className="items-center justify-center bg-slate-50 px-6 py-3">

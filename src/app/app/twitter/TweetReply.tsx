@@ -20,8 +20,6 @@ export default function TweetReply({
   fetchTweetReplies,
 }: TweetReplyProps) {
   const [isLiked, setIsLiked] = useState<boolean>(reply.isLiked);
-  console.log("AAA");
-  console.log(reply.id, reply.isLiked);
 
   return (
     <div className="flex flex-col gap-2 rounded-md border border-slate-300 bg-slate-300/30 px-3 py-2 shadow-sm hover:bg-slate-300/50 dark:border-slate-600 dark:bg-slate-700/70 dark:shadow-2xl dark:hover:bg-slate-600/60">

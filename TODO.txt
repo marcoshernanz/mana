@@ -182,13 +182,13 @@ Remove unneeded props in todo, and blog
 
 Fetch tweet replies inside each tweet component                 --> DONE
 
-Fix twitter
+Fix twitter                                                     --> DONE
 
-Delete only the tweets that are written by the user
+Delete only the tweets that are written by the user   --> DONE (together)
 
-Fix insert in twitter
+Fix insert in twitter                                 --> DONE (I don't see any problem)
 
-Only fetch tweets (without replies) in twitter
+Only fetch tweets (without replies) in twitter        --> DONE (fetched parent tweets and its replies separately)
 
 Apply learnings of fetching data with infinite scrolling in blog and todo
 
