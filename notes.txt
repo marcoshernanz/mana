@@ -190,3 +190,8 @@ export const config = {
   matcher: '/about/:path*' or ['/about/:path*', '/dashboard/:path*'],
 }
 
+
+GET: Get information from the server
+POST: Post information to the server
+PATCH: Update information from the server
+DELETE: Delete information from the server

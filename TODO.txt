@@ -213,3 +213,9 @@ Likes table
 Replace all icons to only use className
 
 Use .references() in all tables that have foreign keys
+
+Install REST Client
+
+Convert all server actions to api routes
+
+Make a good and usable todo

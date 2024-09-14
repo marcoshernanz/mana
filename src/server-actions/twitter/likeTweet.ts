@@ -4,6 +4,7 @@ import { db } from "@/database/db";
 import { twitterLikesTable } from "@/database/schemas/tweetLikes";
 import getSession from "../auth/getSession";
 import { and, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 interface likeTweetProps {
   tweetId: string;
@@ -28,4 +29,6 @@ export default async function likeTweet({ tweetId, like }: likeTweetProps) {
         ),
       );
   }
+
+  revalidatePath("/");
 }

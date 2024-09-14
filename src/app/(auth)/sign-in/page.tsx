@@ -21,17 +21,21 @@ export default function SignUpPage() {
     setErrorMessage(null);
     setSuccessMessage(null);
 
-    const signInData = await signIn({ username, password });
+    // const signInData = await signIn({ username, password });
+    fetch("/api/auth/sign-in", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+    });
 
-    if (signInData) {
-      const { error } = signInData;
+    // if (signInData) {
+    //   const { error } = signInData;
 
-      if (error) {
-        setErrorMessage(error);
-      } else {
-        setSuccessMessage("Signed in successfully");
-      }
-    }
+    //   if (error) {
+    //     setErrorMessage(error);
+    //   } else {
+    //     setSuccessMessage("Signed in successfully");
+    //   }
+    // }
   };
 
   return (

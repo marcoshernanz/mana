@@ -2,11 +2,11 @@
 
 import { Input } from "@/components/ui/input";
 import signUp from "@/server-actions/auth/signUp";
-import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -14,25 +14,23 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setErrorMessage(null);
-    setSuccessMessage(null);
 
-    // const { error } = await signUp({ name, username, password });
-    const signUpData = await signUp({ name, username, password });
+    const request = await fetch("/api/auth/sign-up", {
+      method: "POST",
+      body: JSON.stringify({ name, username, password }),
+    });
 
-    if (signUpData) {
-      const { error } = signUpData;
-
-      if (error) {
-        setErrorMessage(error);
-      } else {
-        setSuccessMessage("Account created successfully");
-      }
+    if (request.ok) {
+      router.push("/app");
+    } else {
+      const response = await request.json();
+      setErrorMessage(response.message);
     }
   };
 
@@ -105,16 +103,6 @@ export default function SignUpPage() {
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{errorMessage}</AlertDescription>
-          </Alert>
-        )}
-        {successMessage && (
-          <Alert
-            variant="destructive"
-            className="border-green-600 text-green-600"
-          >
-            <Check className="h-4 w-4" />
-            <AlertTitle>success</AlertTitle>
-            <AlertDescription>{successMessage}</AlertDescription>
           </Alert>
         )}
       </form>

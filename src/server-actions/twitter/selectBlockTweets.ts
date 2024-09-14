@@ -33,6 +33,7 @@ export default async function selectBlockTweets({
     text: tweet.twitter.text,
     isLiked: tweet.twitter.isLiked,
     author: tweet.users?.name as string,
+    account: tweet.users?.username as string,
     isUserTweet: tweet.twitter.userId === session.id,
   }));
 

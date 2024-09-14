@@ -9,12 +9,13 @@ import selectTweetReplies from "@/server-actions/twitter/selectTweetReplies";
 import likeTweet from "@/server-actions/twitter/likeTweet";
 import getIsTweetLiked from "@/server-actions/twitter/getIsTweetLiked";
 import getTweetNumLikes from "@/server-actions/twitter/getTweetNumLikes";
-import { revalidatePath } from "next/cache";
+import Link from "next/link";
 
 export type TweetType = {
   id: string;
   parentTweetId: string | null;
   author: string;
+  account: string;
   text: string;
   isUserTweet: boolean;
 };
@@ -80,7 +81,6 @@ export default function Tweet({
     setIsLiked((prev) => !prev);
     setNumLikes((prev) => (isLiked ? prev - 1 : prev + 1));
     await likeTweet({ tweetId: tweet.id, like: !isLiked });
-    revalidatePath("/app/twitter");
   };
 
   useEffect(() => {
@@ -112,9 +112,12 @@ export default function Tweet({
         <span className="max-w-6xl break-words pb-2 pl-6 pr-6 text-lg text-slate-800 dark:text-slate-100">
           {tweet.text}
         </span>
-        <span className="max-w-6xl break-words pb-3 pl-6 pr-6 text-sm text-slate-600 dark:text-slate-300">
+        <Link
+          href={`/app/twitter/${tweet.account}`}
+          className="max-w-6xl break-words pb-3 pl-6 pr-6 text-sm text-slate-600 dark:text-slate-300"
+        >
           {tweet.author}
-        </span>
+        </Link>
         <Button
           variant="ghost"
           onClick={() => toggleExpand(tweet.id)}

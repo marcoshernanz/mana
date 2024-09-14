@@ -1,5 +1,3 @@
-"use server";
-
 import jwt from "@/lib/jwt";
 import { cookies } from "next/headers";
 
