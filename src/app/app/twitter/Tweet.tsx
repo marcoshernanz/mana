@@ -9,6 +9,7 @@ import selectTweetReplies from "@/server-actions/twitter/selectTweetReplies";
 import likeTweet from "@/server-actions/twitter/likeTweet";
 import getIsTweetLiked from "@/server-actions/twitter/getIsTweetLiked";
 import getTweetNumLikes from "@/server-actions/twitter/getTweetNumLikes";
+import { revalidatePath } from "next/cache";
 
 export type TweetType = {
   id: string;
@@ -79,6 +80,7 @@ export default function Tweet({
     setIsLiked((prev) => !prev);
     setNumLikes((prev) => (isLiked ? prev - 1 : prev + 1));
     await likeTweet({ tweetId: tweet.id, like: !isLiked });
+    revalidatePath("/app/twitter");
   };
 
   useEffect(() => {
