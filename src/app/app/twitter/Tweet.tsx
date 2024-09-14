@@ -6,13 +6,15 @@ import WriteTweet from "./WriteTweet";
 import TweetReply from "./TweetReply";
 import { Button } from "@/components/ui/Button";
 import selectTweetReplies from "@/server-actions/twitter/selectTweetReplies";
+import likeTweet from "@/server-actions/twitter/likeTweet";
+import getIsTweetLiked from "@/server-actions/twitter/getIsTweetLiked";
+import getTweetNumLikes from "@/server-actions/twitter/getTweetNumLikes";
 
 export type TweetType = {
   id: string;
   parentTweetId: string | null;
   author: string;
   text: string;
-  isLiked: boolean;
   isUserTweet: boolean;
 };
 
@@ -31,11 +33,23 @@ export default function Tweet({
   tweet,
   deleteTweet,
 }: TweetProps) {
-  const [isLiked, setIsLiked] = useState<boolean>(tweet.isLiked);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [numLikes, setNumLikes] = useState<number>(0);
 
   const [expandedTweetId, setExpandedTweetId] = useState<string | null>(null);
   const [tweetReplies, setTweetReplies] = useState<TweetType[]>([]);
   const [isReplying, setIsReplying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchIsLiked = useCallback(async () => {
+    const initialIsLiked = await getIsTweetLiked(tweet.id);
+    setIsLiked(initialIsLiked);
+  }, [tweet.id]);
+
+  const fetchNumLikes = useCallback(async () => {
+    const initialNumLikes = await getTweetNumLikes(tweet.id);
+    setNumLikes(initialNumLikes);
+  }, [tweet.id]);
 
   const fetchTweetReplies = useCallback(async () => {
     const replies = await selectTweetReplies(tweet.id);
@@ -61,25 +75,35 @@ export default function Tweet({
     await fetchTweetReplies();
   };
 
-  const handleLikeToggle = async () => {
-    const updatedIsLiked = !isLiked;
-    await editTweetIsLiked(tweet.id, updatedIsLiked, fetchTweetReplies);
+  const handleLike = async () => {
+    setIsLiked((prev) => !prev);
+    setNumLikes((prev) => (isLiked ? prev - 1 : prev + 1));
+    await likeTweet({ tweetId: tweet.id, like: !isLiked });
   };
+
+  useEffect(() => {
+    (async () => {
+      const isLikedPromise = fetchIsLiked();
+      const numLikesPromise = fetchNumLikes();
+      await Promise.all([isLikedPromise, numLikesPromise]);
+
+      setIsLoading(false);
+    })();
+  }, [fetchIsLiked, fetchNumLikes]);
 
   return (
     <div>
       <div className="flex flex-col gap-1 rounded-md border border-slate-300 bg-slate-200/50 px-4 py-3 dark:border-slate-700 dark:bg-slate-900">
         <div className="flex justify-end">
           <button
-            onClick={() => {
-              setIsLiked(!isLiked);
-              handleLikeToggle();
-            }}
+            onClick={() => handleLike()}
+            className="flex items-center gap-2"
           >
-            {tweet.isLiked ? (
-              <Heart size="20px" color="#ff0000" strokeWidth="3px" />
+            {numLikes}
+            {isLiked ? (
+              <Heart className="text-lg text-red-600" fill="#dc2626" />
             ) : (
-              <Heart size="20px" color="#0f172a" />
+              <Heart className="text-lg text-slate-400" />
             )}
           </button>
         </div>

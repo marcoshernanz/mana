@@ -206,3 +206,10 @@ Likes table
     - If the user hasn't liked the tweet, add a row to the database
   3. Select all rows where tweetId is the same as that tweetId and count how many there are (https://orm.drizzle.team/docs/select#aggregations)
   4. Fetch whether the user has liked the tweet in each Tweet component
+
+
+
+
+Replace all icons to only use className
+
+Use .references() in all tables that have foreign keys

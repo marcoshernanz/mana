@@ -22,7 +22,7 @@ export type BlogPostType = {
   tags: string[];
   isRead: boolean;
   pageNumber: number;
-  author?: string;
+  author: string;
 };
 
 export default function BlogPage() {
@@ -77,21 +77,33 @@ export default function BlogPage() {
   useEffect(() => {
     const handleClick = () => {
       if (
-        !isLoadingBlogs &&
-        !isFirstTimeLoadingBlogs &&
-        blogPosts.length === numBlogsPerBlock * numBlocksRef.current
+        pageNumber ===
+        numBlocksRef.current * numBlogsPerBlock - numBlogsPerBlock / 2
       ) {
-        setIsLoadingBlogs(true);
-        numBlocksRef.current += 1;
-        fetchBlogs();
-        setIsLoadingBlogs(false);
+        if (
+          !isLoadingBlogs &&
+          !isFirstTimeLoadingBlogs &&
+          blogPosts.length === numBlogsPerBlock * numBlocksRef.current
+        ) {
+          console.log("AAA");
+          setIsLoadingBlogs(true);
+          numBlocksRef.current += 1;
+          fetchBlogs();
+          setIsLoadingBlogs(false);
+        }
       }
     };
 
     window.addEventListener("click", handleClick);
 
     return () => window.removeEventListener("click", handleClick);
-  }, [fetchBlogs, isLoadingBlogs, blogPosts, isFirstTimeLoadingBlogs]);
+  }, [
+    fetchBlogs,
+    isLoadingBlogs,
+    blogPosts,
+    isFirstTimeLoadingBlogs,
+    pageNumber,
+  ]);
 
   useEffect(() => {
     if (!isFirstTimeLoadingBlogs || numBlocksRef.current !== 0) return;
@@ -135,7 +147,7 @@ export default function BlogPage() {
                 {pageNumber === 0 ? (
                   <WriteBlogPost
                     pageNumber={pageNumber - 1}
-                    fetchBlog={fetchBlogs}
+                    setBlogs={setBlogPosts}
                   />
                 ) : (
                   unreadBlogPosts.length > 0 && (

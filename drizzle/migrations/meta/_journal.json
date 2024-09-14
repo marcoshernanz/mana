@@ -113,6 +113,13 @@
       "when": 1725709971908,
       "tag": "0015_premium_gambit",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1726322666909,
+      "tag": "0016_burly_dreadnoughts",
+      "breakpoints": true
     }
   ]
 }

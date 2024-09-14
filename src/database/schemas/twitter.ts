@@ -1,6 +1,5 @@
 import { InferSelectModel } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { usersTable } from "./users";
 
 export const twitterTable = pgTable("twitter", {
   id: text("id")

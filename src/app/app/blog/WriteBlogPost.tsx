@@ -5,16 +5,14 @@ import { cn } from "@/lib/utils";
 import insertBlogs from "@/server-actions/blogs/insertBlogs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
+import { BlogPostType } from "./page";
 
 interface WriteBlogPost {
   pageNumber: number;
-  fetchBlog: () => void;
+  setBlogs: React.Dispatch<React.SetStateAction<BlogPostType[]>>;
 }
 
-export default function WriteBlogPost({
-  pageNumber,
-  fetchBlog,
-}: WriteBlogPost) {
+export default function WriteBlogPost({ pageNumber, setBlogs }: WriteBlogPost) {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [newTagInput, setNewTagInput] = useState<string>("");
@@ -43,14 +41,14 @@ export default function WriteBlogPost({
     setSelectedTags([]);
     setNewTagInput("");
 
-    await insertBlogs({
+    const blog = await insertBlogs({
       title: newBlog.title,
       content: newBlog.content,
       tags: newBlog.tags,
       pageNumber: newBlog.pageNumber,
     });
 
-    await fetchBlog();
+    setBlogs((prevBlogs) => [blog, ...prevBlogs]);
   };
 
   return (
