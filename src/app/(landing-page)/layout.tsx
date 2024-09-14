@@ -1,6 +1,6 @@
 //Added z-50 to header due to a probelm with relatives and absolutes
 
-import Nav from "../../../old ui/Nav";
+import Nav from "@/components/Nav";
 import Link from "next/link";
 
 interface LandingPageLayoutProps {

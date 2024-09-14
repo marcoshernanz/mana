@@ -2,7 +2,7 @@
 //Underline: by tailwind
 //flex-wrap: by someone's mistake in stackoverflow
 
-import Product from "../../../../old ui/product";
+import Product from "@/components/Product";
 
 export default function Products() {
   const ProductData = [
