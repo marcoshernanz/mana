@@ -41,6 +41,7 @@ export default function TwitterPage() {
   const handleDeleteTweet = async (id: string) => {
     setTweets((tweets) => tweets.filter((tweet) => tweet.id !== id));
     await deleteTweet(id);
+    // await fetchTweets();
   };
 
   const fetchTweets = useCallback(async () => {

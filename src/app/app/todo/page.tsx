@@ -49,9 +49,11 @@ export default function TodoPage() {
   };
 
   const deleteTask = async (id: string) => {
+    setTasks((tasks) => tasks.filter((task) => task.id !== id));
     await deleteTodo(id);
-    await fetchTasks();
+    // await fetchTasks();
   };
+
   const editTaskIsCompleted = async (id: string, isCompleted: boolean) => {
     await updateTodo(id, { isCompleted });
     await fetchTasks();

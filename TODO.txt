@@ -160,7 +160,7 @@ Take a look at every shadcn-ui component and replace all code with shadcn-ui com
 
 Update todos and blog to store userId in database (do the same as you had to do last week with twitter)                                      --> DONE
 
-Style twitter, todos and blog to make it look beautiful and useful
+Style twitter, todos and blog to make it look beautiful and useful   --> DONE
 
 Create a sidebar that lets you navigate to twitter, todos and blog. It should also have a user button with a dropdown that lets you change between dark and light mode and that allows you to sign out
 Inspiration (https://supabase.com/dashboard/project/ramgqgpverhvfajeaxlu) without the animation:
@@ -188,10 +188,10 @@ Delete only the tweets that are written by the user   --> DONE (together)
 
 Fix insert in twitter                                 --> DONE (I don't see any problem)
 
-Only fetch tweets (without replies) in twitter        --> DONE (fetched parent tweets and its replies separately)
+Only fetch tweets (without replies) in twitter        --> DONE (fetched parent tweets and its replies separately)                    
 
 Apply learnings of fetching data with infinite scrolling in todo    --> DONE
-Apply learnings of fetching data with infinite scrolling in blog 
+Apply learnings of fetching data with infinite scrolling in blog    --> DONE: little issue with blogs
 
 Finish everything that was due saturday
 

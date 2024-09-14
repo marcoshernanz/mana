@@ -1,4 +1,5 @@
-"use client";
+// "use client";
+// "A "use client" directive means that component is a boundary between server and client components. Since parent.tsx is already inside the client boundary, everything imported will be client components already. And that includes child.tsx.": https://github.com/vercel/next.js/discussions/46795
 
 import { useState } from "react";
 import { type TaskType, type AvailableTagsType } from "./page";

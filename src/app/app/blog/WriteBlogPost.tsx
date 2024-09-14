@@ -1,7 +1,6 @@
-"use client";
+// "use client";
 
 import { useEffect, useState } from "react";
-import { BlogPostType } from "./page";
 import { cn } from "@/lib/utils";
 import insertBlogs from "@/server-actions/blogs/insertBlogs";
 import { Input } from "@/components/ui/input";
@@ -21,7 +20,6 @@ export default function WriteBlogPost({
   const [newTagInput, setNewTagInput] = useState<string>("");
   const [allTags, setAllTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const addTag = () => {
     if (newTagInput && !allTags.includes(newTagInput)) {
@@ -45,15 +43,14 @@ export default function WriteBlogPost({
     setSelectedTags([]);
     setNewTagInput("");
 
-    setIsLoading(true);
     await insertBlogs({
       title: newBlog.title,
       content: newBlog.content,
       tags: newBlog.tags,
       pageNumber: newBlog.pageNumber,
     });
+
     await fetchBlog();
-    setIsLoading(false);
   };
 
   return (

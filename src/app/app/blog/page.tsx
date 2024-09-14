@@ -1,14 +1,15 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import WriteBlogPost from "./WriteBlogPost";
 import BlogPost from "./BlogPost";
 import updateBlog from "@/database/queries/blog/updateBlog";
-import selectAllBlogs from "@/server-actions/blogs/selectAllBlogs";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import SideBar from "../SideBar";
+import selectBlockBlogs from "@/server-actions/blogs/selectBlockBlogs";
+
+const numBlogsPerBlock = 20;
 
 export type AvailableTags = {
   tags: string[];
@@ -28,34 +29,84 @@ export default function BlogPage() {
   const [blogPosts, setBlogPosts] = useState<BlogPostType[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  const [isLoadingData, setIsLoadingData] = useState(true);
+  // const [isLoadingData, setIsLoadingData] = useState(true);
+  const [isLoadingBlogs, setIsLoadingBlogs] = useState(true);
+  const [isFirstTimeLoadingBlogs, setIsFirstTimeLoadingBlogs] = useState(true);
+  const numBlocksRef = useRef(0);
 
   const unreadBlogPosts = blogPosts.filter((blogPost) => !blogPost.isRead);
 
-  const fetchBlogs = async () => {
-    const blogs = await selectAllBlogs();
-    setBlogPosts(blogs);
-  };
+  // const fetchBlogs = async () => {
+  //   const blogs = await selectAllBlogs();
+  //   setBlogPosts(blogs);
+  // };
+
+  const fetchBlogs = useCallback(async () => {
+    console.log("fetching blogs");
+    const newBlogBlock = await selectBlockBlogs({
+      numBlogsPerBlock,
+      blockNumber: numBlocksRef.current,
+      orderBy: "date",
+      descending: true,
+    });
+
+    setBlogPosts((currBlogs) => {
+      const filteredBlogs = currBlogs.filter(
+        (currBlog) =>
+          !newBlogBlock.some((newBlogs) => newBlogs.id === currBlog.id),
+      );
+      return [...filteredBlogs, ...newBlogBlock];
+    });
+  }, []);
 
   const editBlogPostIsRead = async (id: string, isRead: boolean) => {
-    setIsLoadingData(true);
+    setBlogPosts((currBlogs) =>
+      currBlogs.map((blog) => (blog.id === id ? { ...blog, isRead } : blog)),
+    );
     await updateBlog(id, { isRead });
-    await fetchBlogs();
-    setIsLoadingData(false);
   };
 
+  // useEffect(() => {
+  //   (async () => {
+  //     setIsLoadingData(true);
+  //     await fetchBlogs();
+  //     setIsLoadingData(false);
+  //   })();
+  // }, []);
+
   useEffect(() => {
-    (async () => {
-      setIsLoadingData(true);
-      await fetchBlogs();
-      setIsLoadingData(false);
-    })();
-  }, []);
+    const handleClick = () => {
+      if (
+        !isLoadingBlogs &&
+        !isFirstTimeLoadingBlogs &&
+        blogPosts.length === numBlogsPerBlock * numBlocksRef.current
+      ) {
+        setIsLoadingBlogs(true);
+        numBlocksRef.current += 1;
+        fetchBlogs();
+        setIsLoadingBlogs(false);
+      }
+    };
+
+    window.addEventListener("click", handleClick);
+
+    return () => window.removeEventListener("click", handleClick);
+  }, [fetchBlogs, isLoadingBlogs, blogPosts, isFirstTimeLoadingBlogs]);
+
+  useEffect(() => {
+    if (!isFirstTimeLoadingBlogs || numBlocksRef.current !== 0) return;
+
+    setIsLoadingBlogs(true);
+    numBlocksRef.current += 1;
+    fetchBlogs();
+    setIsLoadingBlogs(false);
+    setIsFirstTimeLoadingBlogs(false);
+  }, [fetchBlogs, isFirstTimeLoadingBlogs]);
 
   return (
     <div className="flex">
-      <SideBar />
-      <div className="relative flex w-screen flex-col items-center justify-center">
+      <SideBar className="fixed z-50 w-96" />
+      <div className="relative ml-44 flex w-screen flex-col items-center justify-center">
         <Image
           src="https://www.publicdomainpictures.net/pictures/230000/nahled/light-blue-background.jpg"
           alt="Photo by Drew 1"
@@ -63,7 +114,7 @@ export default function BlogPage() {
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectFit: "cover", zIndex: 0 }}
         />
-        {isLoadingData ? (
+        {isLoadingBlogs ? (
           <div className="absolute inset-0 flex h-screen w-screen items-center justify-center bg-red-600"></div>
         ) : (
           <div className="flex w-full items-center justify-center bg-slate-50 dark:bg-slate-950">

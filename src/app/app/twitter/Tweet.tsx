@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { ChevronDownIcon, ChevronUpIcon, Heart } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
