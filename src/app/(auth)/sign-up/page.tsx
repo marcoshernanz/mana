@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import signUp from "@/server-actions/auth/signUp";
+// import signUp from "@/server-actions/auth/signUp";
 import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

@@ -140,7 +140,7 @@ export default function Tweet({
                   key={reply.id}
                   reply={reply}
                   editTweetIsLiked={editTweetIsLiked}
-                  fetchTweetReplies={fetchTweetReplies}
+                  // fetchTweetReplies={fetchTweetReplies}
                 ></TweetReply>
               ))}
             </div>

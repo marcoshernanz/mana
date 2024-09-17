@@ -6,12 +6,15 @@ import {
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
+import { usersTable } from "./users";
 
 export const blogsTable = pgTable("blogs", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  userId: text("user_id").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => usersTable.id),
   title: text("title").notNull(),
   content: text("content").notNull(),
   tags: text("tags").array().notNull(),

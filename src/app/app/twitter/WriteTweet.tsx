@@ -34,7 +34,7 @@ export default function WriteTweet({
 }: WriteTweetProps) {
   const [text, setText] = useState<string>("");
 
-  const handleAddWriteTweet = async () => {
+  const handleAddTweet = async () => {
     if (!text) return;
 
     const newTweet: CurrentTweetType = {
@@ -63,7 +63,7 @@ export default function WriteTweet({
         ></Input>
       </div>
       <div>
-        <Button onClick={handleAddWriteTweet}>Submit</Button>
+        <Button onClick={handleAddTweet}>Submit</Button>
       </div>
     </div>
   );

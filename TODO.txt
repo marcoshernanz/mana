@@ -210,11 +210,11 @@ Likes table
 
 
 
-Replace all icons to only use className
+Replace all icons to only use className            --> DONE
 
-Use .references() in all tables that have foreign keys
+Use .references() in all tables that have foreign keys  --> DONE
 
-Install REST Client
+Install REST Client                                 --> DONE
 
 Convert all server actions to api routes
 

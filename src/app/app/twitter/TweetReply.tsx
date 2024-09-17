@@ -11,13 +11,13 @@ interface TweetReplyProps {
     fetchTweetReplies: () => Promise<void>,
   ) => void;
   reply: TweetType;
-  fetchTweetReplies: () => Promise<void>;
+  // fetchTweetReplies: () => Promise<void>;
 }
 
 export default function TweetReply({
-  editTweetIsLiked,
+  // editTweetIsLiked,
   reply,
-  fetchTweetReplies,
+  // fetchTweetReplies,
 }: TweetReplyProps) {
   // const [isLiked, setIsLiked] = useState<boolean>(reply.isLiked);
 

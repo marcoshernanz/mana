@@ -25,7 +25,7 @@ export default function ContactUs2() {
             <span className="text-xl font-medium text-slate-950 dark:text-orange-50">
               Phone Support
             </span>
-            <PhoneCall size={80} color="#020617" strokeWidth={1.2} />
+            <PhoneCall className="mb-6 h-16 w-16 text-slate-950" />
           </div>
           <div className="pt-1.5 text-center">
             <span className="text-slate-600 dark:text-orange-200">
@@ -40,7 +40,7 @@ export default function ContactUs2() {
             <span className="text-xl font-medium text-slate-950 dark:text-orange-50">
               Whatsapp assistant
             </span>
-            <MessageCircleIcon size={80} color="#020617" strokeWidth={1.2} />
+            <MessageCircleIcon className="mb-6 h-20 w-20 text-slate-950" />
           </div>
           <div className="pt-5 text-center">
             <span className="text-slate-600 dark:text-orange-200">
@@ -55,7 +55,7 @@ export default function ContactUs2() {
             <span className="text-xl font-medium text-slate-950 dark:text-orange-50">
               Email Support
             </span>
-            <MailIcon size={80} color="#020617" strokeWidth={1.2} />
+            <MailIcon className="mb-6 h-20 w-20 text-slate-950" />
           </div>
           <div className="px-8 pt-3 text-center">
             <span className="text-slate-600 dark:text-orange-200">
@@ -69,45 +69,20 @@ export default function ContactUs2() {
           </span>
           <div className="flex flex-col items-center">
             <div className="flex items-center justify-center gap-4">
-              <YoutubeIcon
-                size={60}
-                color="#020617"
-                strokeWidth={1.2}
-                className="-rotate-12"
-              />
-              <FacebookIcon
-                size={50}
-                color="#020617"
-                strokeWidth={1.4}
-                className="rotate-12"
-              />
+              <YoutubeIcon className="h-12 w-12 -rotate-12 text-slate-950" />
+              <FacebookIcon className="h-12 w-12 rotate-12 text-slate-950" />
             </div>
             <div className="items-center justify-center">
-              <LinkedinIcon
-                size={50}
-                color="#020617"
-                strokeWidth={1.5}
-                className="-rotate-3"
-              />
+              <LinkedinIcon className="h-12 w-12 -rotate-3 text-slate-950" />
             </div>
             <div className="flex items-center justify-center gap-6">
-              <XIcon
-                size={50}
-                color="#020617"
-                strokeWidth={1.5}
-                className="-rotate-6"
-              />
-              <InstagramIcon
-                size={50}
-                color="#020617"
-                strokeWidth={1.5}
-                className="rotate-6"
-              />
+              <XIcon className="h-12 w-12 -rotate-6 text-slate-950" />
+              <InstagramIcon className="h-12 w-12 rotate-6 text-slate-950" />
             </div>
           </div>
           <div className="px-2 text-center">
             <span className="text-slate-600 dark:text-orange-200">
-              You can also contact us throught{" "}
+              You can also contact us through{" "}
               <a
                 className="underline"
                 href="https://www.facebook.com/profile.php?id=61563843962924"

@@ -117,8 +117,7 @@ export default function BlogPage() {
 
   return (
     <div className="flex">
-      <SideBar className="fixed z-50 w-96" />
-      <div className="relative ml-44 flex w-screen flex-col items-center justify-center">
+      <div className="relative flex w-screen flex-col items-center justify-center">
         <Image
           src="https://www.publicdomainpictures.net/pictures/230000/nahled/light-blue-background.jpg"
           alt="Photo by Drew 1"

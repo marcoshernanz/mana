@@ -10,7 +10,7 @@ export default function ContactUs1() {
         </span>
         <div className="flex items-center justify-center gap-20">
           <div className="flex flex-col items-center justify-center gap-4">
-            <FileMinusIcon size="60px" strokeWidth={1.7} color="#020617" />
+            <FileMinusIcon className="h-16 w-16 text-slate-950" />
             <span className="text-lg font-medium">After-sales Policy</span>
           </div>
         </div>

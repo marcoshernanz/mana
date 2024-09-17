@@ -7,12 +7,7 @@ export default function Company2() {
       <div className="flex max-w-7xl flex-col items-center justify-center gap-32 px-10 pb-12">
         <div className="flex gap-64 pb-10 pt-16">
           <div className="flex flex-col items-center justify-center">
-            <MapPinHouseIcon
-              size="75px"
-              className="mb-8"
-              strokeWidth={1.6}
-              color="#020617"
-            />
+            <MapPinHouseIcon className="mb-6 h-16 w-16 text-slate-950" />
             <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
               {" "}
               2,000{" "}
@@ -26,12 +21,7 @@ export default function Company2() {
             </span>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <Building2Icon
-              size="75px"
-              className="mb-8"
-              strokeWidth={1.6}
-              color="#020617"
-            />
+            <Building2Icon className="mb-6 h-16 w-16 text-slate-950" />
             <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
               {" "}
               100{" "}
@@ -45,12 +35,7 @@ export default function Company2() {
             </span>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <NewspaperIcon
-              size="75px"
-              className="mb-8"
-              strokeWidth={1.6}
-              color="#020617"
-            />
+            <NewspaperIcon className="mb-6 h-16 w-16 text-slate-950" />
             <span className="flex gap-1 text-5xl font-bold text-slate-950 dark:text-orange-500">
               {" "}
               1,000{" "}

@@ -2,6 +2,7 @@
 
 import { BirdIcon, BookIcon, HomeIcon, ListCheckIcon } from "lucide-react";
 import SideBarItem, { SideBarItemProps } from "./SideBarItem";
+import { useEffect, useState } from "react";
 
 const sideBarItems = [
   {
@@ -27,11 +28,33 @@ const sideBarItems = [
 ] satisfies SideBarItemProps[];
 
 export default function SideBar() {
+  const [clickedIndex, setClickedIndex] = useState<number>(0);
+
+  const handleClick = (index: number) => {
+    setClickedIndex(index);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("clickedIndex", JSON.stringify(clickedIndex));
+  }, [clickedIndex]);
+
+  useEffect(() => {
+    const click = localStorage.getItem("clickedIndex");
+    if (click) {
+      setClickedIndex(JSON.parse(click));
+    }
+  }, [clickedIndex]);
+
   return (
     <div className="fixed left-0 right-0 z-30 flex h-screen w-44 flex-col justify-between border-r bg-white px-1 pb-3 pt-2 shadow-lg">
       <div className="flex flex-col gap-1">
         {sideBarItems.map((item, index) => (
-          <SideBarItem key={index} {...item} />
+          <SideBarItem
+            key={index}
+            {...item}
+            isClicked={index === clickedIndex}
+            onClick={() => handleClick(index)}
+          />
         ))}
       </div>
       <button>User button</button>

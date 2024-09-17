@@ -5,7 +5,6 @@ import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
 import deleteTweet from "@/server-actions/twitter/deleteTweet";
 import updateTweet from "@/database/queries/forum/updateTweet";
-import SideBar from "../SideBar";
 import selectBlockTweets from "@/server-actions/twitter/selectBlockTweets";
 import { LoaderCircleIcon } from "lucide-react";
 
@@ -21,12 +20,12 @@ export default function TwitterPage() {
 
   const parentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
 
-  const tweetsWithReplies = parentTweet.map((parentTweet) => {
-    const replies = tweets.filter(
-      (tweet) => tweet.parentTweetId === parentTweet.id,
-    );
-    return replies;
-  });
+  // const tweetsWithReplies = parentTweet.map((parentTweet) => {
+  //   const replies = tweets.filter(
+  //     (tweet) => tweet.parentTweetId === parentTweet.id,
+  //   );
+  //   return replies;
+  // });
 
   const editTweetIsLiked = async (
     id: string,
@@ -100,7 +99,6 @@ export default function TwitterPage() {
 
   return (
     <div className="flex">
-      <SideBar />
       <div className="flex justify-center bg-slate-50 pl-96">
         <div className="flex max-w-7xl flex-col items-center justify-center px-10 pb-20 pt-36">
           <span className="text-4xl font-semibold text-slate-900 dark:text-slate-50">

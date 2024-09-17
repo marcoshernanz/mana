@@ -1,12 +1,13 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import signIn from "@/server-actions/auth/signIn";
+// import signIn from "@/server-actions/auth/signIn";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -15,27 +16,25 @@ export default function SignUpPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  const router = useRouter();
+
   const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setErrorMessage(null);
     setSuccessMessage(null);
 
-    // const signInData = await signIn({ username, password });
-    fetch("/api/auth/sign-in", {
+    const request = await fetch("/api/auth/sign-in", {
       method: "POST",
       body: JSON.stringify({ username, password }),
     });
 
-    // if (signInData) {
-    //   const { error } = signInData;
-
-    //   if (error) {
-    //     setErrorMessage(error);
-    //   } else {
-    //     setSuccessMessage("Signed in successfully");
-    //   }
-    // }
+    if (request.ok) {
+      router.push("/app");
+    } else {
+      const response = await request.json();
+      setErrorMessage(response.message);
+    }
   };
 
   return (
