@@ -5,17 +5,24 @@ import { TaskType } from "./page";
 
 interface TodoItemProps {
   task: TaskType;
-  updateTodo: (id: string, todo: Partial<TodosType>) => void;
+  updateTodo: (
+    id: string,
+    isCompleted: boolean,
+    todo: Partial<TodosType>,
+  ) => void;
 }
 
-export default function TodoItem({ task }: TodoItemProps) {
+export default function TodoItem({ task, updateTodo }: TodoItemProps) {
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
 
-  // const handleIsCompleted = () => {
-  //   const currentIsCompleted = isCompleted;
-  //   setIsCompleted((prev) => !prev);
-  //   // API route
-  // };
+  const handleIsCompleted = (
+    id: string,
+    isCompleted: boolean,
+    task: TaskType,
+  ) => {
+    setIsCompleted((prev) => !prev);
+    updateTodo(id, isCompleted, task);
+  };
 
   return (
     <div className="items-center justify-center bg-slate-50 px-6 py-3">
@@ -31,7 +38,7 @@ export default function TodoItem({ task }: TodoItemProps) {
             onChange={(e) => {
               const isCompleted = e.target.checked;
               setIsCompleted(isCompleted);
-              // editTaskIsCompleted(task.id, isCompleted);
+              handleIsCompleted(task.id, isCompleted, task);
             }}
           />
         </div>

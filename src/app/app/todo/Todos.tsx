@@ -15,17 +15,21 @@ interface WriteTodoProps {
 export default function Todos({ initialData }: WriteTodoProps) {
   const [todos, setTodos] = useState(initialData);
 
-  const addTodo = (text: string) => {
-    fetch("/api/todo/PostTask", {
+  const addTodo = async (text: string) => {
+    await fetch("/api/todo/postTask", {
       method: "POST",
-      body: JSON.stringify({ text }),
+      body: JSON.stringify({ text, isCompleted: false }),
     });
   };
 
-  const updateTodo = () => {
+  const updateTodo = async (
+    id: string,
+    task: TaskType,
+    isCompleted: boolean,
+  ) => {
     fetch("/api/todo/updateTodo", {
       method: "PATCH",
-      body: JSON.stringify({ initialData }),
+      body: JSON.stringify({ id, task, isCompleted }),
     });
   };
 
@@ -36,7 +40,7 @@ export default function Todos({ initialData }: WriteTodoProps) {
       </div>
       <div className="flex w-full flex-col gap-3 pt-10">
         {todos.map((task, index) => (
-          <TodoItem key={index} task={task} updateTodo={updateTodo} />
+          <TodoItem key={index} task={task} updateTodo={() => updateTodo} />
         ))}
       </div>
     </>

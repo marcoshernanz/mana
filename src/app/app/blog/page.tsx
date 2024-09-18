@@ -42,7 +42,6 @@ export default function BlogPage() {
   // };
 
   const fetchBlogs = useCallback(async () => {
-    console.log("fetching blogs");
     const newBlogBlock = await selectBlockBlogs({
       numBlogsPerBlock,
       blockNumber: numBlocksRef.current,
@@ -85,7 +84,6 @@ export default function BlogPage() {
           !isFirstTimeLoadingBlogs &&
           blogPosts.length === numBlogsPerBlock * numBlocksRef.current
         ) {
-          console.log("AAA");
           setIsLoadingBlogs(true);
           numBlocksRef.current += 1;
           fetchBlogs();

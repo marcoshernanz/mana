@@ -9,11 +9,13 @@ export async function PATCH(request: Request) {
 
     if (!response.id) {
       throw new Error("ID is required");
+    } else if (!response.task) {
+      throw new Error("Todo is required");
     }
 
-    const { id, todo } = response;
+    const { id, task } = response;
 
-    await db.update(todosTable).set(todo).where(eq(todosTable.id, id));
+    await db.update(todosTable).set(task).where(eq(todosTable.id, id));
 
     return new Response("");
   } catch (error) {

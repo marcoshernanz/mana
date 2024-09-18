@@ -23,18 +23,13 @@ export default async function TodoPage() {
   }
 
   //get data
-  const data = await db
+  const todos = await db
     .select()
     .from(todosTable)
     .where(
       and(eq(todosTable.userId, userId), eq(todosTable.isCompleted, false)),
-    );
-
-  const todos = await db
-    .select()
-    .from(todosTable)
-    .leftJoin(usersTable, eq(todosTable.userId, usersTable.id))
-    .limit(data.length);
+    )
+    .leftJoin(usersTable, eq(todosTable.userId, usersTable.id));
 
   const formattedTodos = todos.map((todo) => ({
     id: todo.todos.id,
@@ -48,15 +43,6 @@ export default async function TodoPage() {
     <div className="flex">
       <div className="flex flex-1 justify-center bg-slate-50">
         <div className="flex w-full max-w-7xl flex-col items-center justify-center px-10 pb-20 pt-20">
-          {/* <div className="flex flex-col items-center justify-center">
-            <WriteTodo />
-          </div>
-          <div className="flex w-full flex-col gap-3 pt-10">
-            {tasks.map((task, index) => (
-              <Todos key={index} task={task} />
-            ))}
-          </div> */}
-
           <Todos initialData={formattedTodos} />
         </div>
       </div>

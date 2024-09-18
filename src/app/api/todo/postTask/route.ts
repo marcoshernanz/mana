@@ -9,23 +9,21 @@ export async function POST(request: Request) {
 
     if (!response.text) {
       throw new Error("Text is required");
+    } else if (response.isCompleted === undefined) {
+      throw new Error("Text is required");
     }
 
-    const { text, tags } = response;
+    const { text, isCompleted } = response;
 
     const session = await getSession();
-
     const userId = session?.id;
-
     if (!userId) {
-      return;
+      throw new Error("User not found");
     }
 
-    console.log("AAA");
+    await db.insert(todosTable).values({ text, userId, isCompleted });
 
-    await db.insert(todosTable).values({ text, tags, userId });
-
-    return new Response("");
+    return new Response("", { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return Response.json({ message: error.message }, { status: 400 });
