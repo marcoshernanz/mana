@@ -21,9 +21,13 @@ export async function POST(request: Request) {
       throw new Error("User not found");
     }
 
-    await db.insert(todosTable).values({ text, userId, isCompleted });
+    const newTodo = await db
+      .insert(todosTable)
+      .values({ text, userId, isCompleted })
+      .returning()
+      .then((res) => (res.length === 1 ? res[0] : null));
 
-    return new Response("", { status: 200 });
+    return new Response(JSON.stringify(newTodo), { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return Response.json({ message: error.message }, { status: 400 });

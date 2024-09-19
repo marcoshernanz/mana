@@ -8,6 +8,18 @@ import AddTodo from "./AddTodo";
 import TodoItem from "./TodoItem";
 import { TodosType } from "@/database/schemas/todos";
 
+export type UpdateTodoType = Omit<
+  TodosType,
+  "text" | "tags" | "id" | "isCompleted" | "createdAt" | "userId"
+> & {
+  text?: string;
+  tags?: string[];
+  id?: string;
+  isCompleted?: boolean;
+  createdAt?: Date;
+  userId?: string;
+};
+
 interface WriteTodoProps {
   initialData: TaskType[];
 }
@@ -16,21 +28,27 @@ export default function Todos({ initialData }: WriteTodoProps) {
   const [todos, setTodos] = useState(initialData);
 
   const addTodo = async (text: string) => {
-    await fetch("/api/todo/postTask", {
+    const response = await fetch("/api/todo/postTask", {
       method: "POST",
       body: JSON.stringify({ text, isCompleted: false }),
     });
+
+    const newTodo = await response.json();
+
+    setTodos((prev) => [...prev, newTodo]);
   };
 
-  const updateTodo = async (
-    id: string,
-    task: TaskType,
-    isCompleted: boolean,
-  ) => {
-    fetch("/api/todo/updateTodo", {
+  const updateTodo = async (id: string, task: UpdateTodoType) => {
+    const response = await fetch("/api/todo/updateTodo", {
       method: "PATCH",
-      body: JSON.stringify({ id, task, isCompleted }),
+      body: JSON.stringify({ id, task }),
     });
+
+    if (response.ok) {
+      setTodos((prev) =>
+        prev.filter((todo) => todo.id !== id || !task.isCompleted),
+      );
+    }
   };
 
   return (
@@ -40,7 +58,7 @@ export default function Todos({ initialData }: WriteTodoProps) {
       </div>
       <div className="flex w-full flex-col gap-3 pt-10">
         {todos.map((task, index) => (
-          <TodoItem key={index} task={task} updateTodo={() => updateTodo} />
+          <TodoItem key={index} task={task} updateTodo={updateTodo} />
         ))}
       </div>
     </>
