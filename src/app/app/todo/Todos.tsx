@@ -57,8 +57,8 @@ export default function Todos({ initialData }: WriteTodoProps) {
         <AddTodo addTodo={addTodo} />
       </div>
       <div className="flex w-full flex-col gap-3 pt-10">
-        {todos.map((task, index) => (
-          <TodoItem key={index} task={task} updateTodo={updateTodo} />
+        {todos.map((task) => (
+          <TodoItem key={task.id} task={task} updateTodo={updateTodo} />
         ))}
       </div>
     </>
