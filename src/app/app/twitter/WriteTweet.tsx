@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { TweetType } from "./Tweet";
-import insertTweet from "@/server-actions/twitter/insertTweet";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 // import { getSession } from "@/server-actions/auth/getSession";
@@ -22,34 +21,26 @@ export type CurrentTweetType = Omit<
 interface WriteTweetProps {
   parentTweetId?: string | null;
   onSubmit: () => void;
-  fetchTweets?: () => void;
   fetchTweetReplies?: () => void;
+  handleAddTweet?: (text: string, parentTweetId: string) => void;
 }
 
 export default function WriteTweet({
   parentTweetId,
   onSubmit,
-  fetchTweets,
   fetchTweetReplies,
+  handleAddTweet,
 }: WriteTweetProps) {
   const [text, setText] = useState<string>("");
 
-  const handleAddTweet = async () => {
+  const addTweet = async (text: string) => {
     if (!text) return;
 
-    const newTweet: CurrentTweetType = {
-      text,
-      parentTweetId: parentTweetId as string | null,
-    };
-
-    setText("");
-
-    await insertTweet(newTweet);
-    if (fetchTweets) {
-      await fetchTweets?.();
-      await fetchTweetReplies?.();
-    }
-    onSubmit();
+    await fetch("/api/twitter/postTweet", {
+      method: "POST",
+      body: JSON.stringify({ text, parentTweetId }),
+    });
+    await handleAddTweet?.(text, parentTweetId as string);
   };
 
   return (
@@ -63,7 +54,7 @@ export default function WriteTweet({
         ></Input>
       </div>
       <div>
-        <Button onClick={handleAddTweet}>Submit</Button>
+        <Button onClick={() => addTweet(text)}>Submit</Button>
       </div>
     </div>
   );
