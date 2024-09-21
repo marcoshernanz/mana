@@ -9,11 +9,9 @@ export async function POST(request: Request) {
 
     if (!response.text) {
       throw new Error("Text is required");
-    } else if (response.isCompleted === undefined) {
-      throw new Error("Text is required");
     }
 
-    const { text, isCompleted } = response;
+    const { text }: { text: string } = response;
 
     const session = await getSession();
     const userId = session?.id;
@@ -23,7 +21,7 @@ export async function POST(request: Request) {
 
     const newTodo = await db
       .insert(todosTable)
-      .values({ text, userId, isCompleted })
+      .values({ text, userId, isCompleted: false })
       .returning()
       .then((res) => (res.length === 1 ? res[0] : null));
 

@@ -1,23 +1,44 @@
 import { db } from "@/database/db";
 import { todosTable } from "@/database/schemas/todos";
-import { eq } from "drizzle-orm";
+import getSession from "@/server-actions/auth/getSession";
+import { and, eq } from "drizzle-orm";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function PATCH(request: Request) {
   try {
+    console.log("AAA");
     const response = await request.json();
 
     if (!response.id) {
-      throw new Error("ID is required");
-    } else if (!response.task) {
-      throw new Error("Todo is required");
+      throw new Error("Id is required");
     }
 
-    const { id, task } = response;
+    const {
+      id,
+      text,
+      isCompleted,
+    }: {
+      id: string;
+      text: string | undefined;
+      isCompleted: boolean | undefined;
+    } = response;
 
-    await db.update(todosTable).set(task).where(eq(todosTable.id, id));
+    if (text === undefined && isCompleted === undefined) {
+      return;
+    }
 
-    return new Response("");
+    const session = await getSession();
+    const userId = session?.id;
+    if (!userId) {
+      throw new Error("User not found");
+    }
+
+    await db
+      .update(todosTable)
+      .set({ text, isCompleted })
+      .where(and(eq(todosTable.id, id), eq(todosTable.userId, userId)));
+
+    return Response.json({ message: "Todo updated" }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return Response.json({ message: error.message }, { status: 400 });
