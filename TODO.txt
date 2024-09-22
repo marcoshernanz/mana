@@ -240,3 +240,4 @@ https://calendar.google.com/calendar/u/0/r/tasks
 - Edit tasks
 - Drag and drop to reorder
 
+Weird behaviour: When i create a tweet and like it, and later delete it, i have an error in the whole screen. 

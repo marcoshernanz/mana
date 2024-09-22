@@ -1,41 +1,40 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+import Tweet, { TweetType } from "./Tweet";
+import WriteTweet from "./WriteTweet";
 import deleteTweet from "@/server-actions/twitter/deleteTweet";
 import updateTweet from "@/database/queries/forum/updateTweet";
 import { LoaderCircleIcon } from "lucide-react";
-import { db } from "@/database/db";
-import { twitterTable } from "@/database/schemas/twitter";
-import { eq } from "drizzle-orm";
-import Tweets from "./Tweets";
-import getSession from "@/server-actions/auth/getSession";
 
-type TweetResponse = {
-  twitter: {
-    id: string;
-    parentTweetId: string | null;
-    text: string;
-    isLiked: boolean;
-    userId: string;
-    createdAt: Date;
-  };
-  users: {
-    id: string;
-    name: string;
-    username: string;
-    password: string;
-    createdAt: Date;
-  } | null;
+type NewTweetBlockType = {
+  id: string;
+  parentTweetId: string;
+  text: string;
+  isLiked: boolean;
+  author: string;
+  account: string;
+  isUserTweet: boolean;
 };
 
 const numTweetsPerBlock = 20;
 
-export default async function TwitterPage() {
-  const numBlocksRef = 0;
+export default function TwitterPage() {
+  const [tweets, setTweets] = useState<TweetType[]>([]);
+  const [isLoadingTweets, setIsLoadingTweets] = useState(true);
+  const [isFirstTimeLoadingTweets, setIsFirstTimeLoadingTweets] =
+    useState(true);
 
-  const session = await getSession();
-  if (!session) throw new Error("User not logged in");
-  const userId = session?.id;
-  if (!userId) {
-    throw new Error("User not found");
-  }
+  const numBlocksRef = useRef(0);
+
+  const parentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
+
+  // const tweetsWithReplies = parentTweet.map((parentTweet) => {
+  //   const replies = tweets.filter(
+  //     (tweet) => tweet.parentTweetId === parentTweet.id,
+  //   );
+  //   return replies;
+  // });
 
   const editTweetIsLiked = async (
     id: string,
@@ -43,59 +42,79 @@ export default async function TwitterPage() {
     fetchTweetReplies: () => Promise<void>,
   ) => {
     await updateTweet(id, { isLiked });
-    // await fetchTweets();
+    await fetchTweets();
     fetchTweetReplies();
   };
 
   const handleDeleteTweet = async (id: string) => {
-    // setTweets((tweets) => tweets.filter((tweet) => tweet.id !== id));
-    // await deleteTweet(id);
-    await db.delete(twitterTable).where(eq(twitterTable.parentTweetId, id));
-    await db.delete(twitterTable).where(eq(twitterTable.id, id));
+    setTweets((tweets) => tweets.filter((tweet) => tweet.id !== id));
+    await deleteTweet(id);
     // await fetchTweets();
   };
 
-  const fetchTweets = () => {};
+  const fetchTweets = useCallback(async () => {
+    console.log("AAA");
+    const response = await fetch("/api/twitter/selectBlockTweets", {
+      method: "POST",
+      body: JSON.stringify({
+        numTweetsPerBlock,
+        blockNumber: numBlocksRef.current,
+        orderBy: "date",
+        descending: true,
+      }),
+    });
 
-  // const fetchTweets = useCallback(async () => {
-  //   const newTweetBlock = await selectBlockTweets({
-  //     numTweetsPerBlock,
-  //     blockNumber: numBlocksRef.current,
-  //     orderBy: "date",
-  //     descending: true,
-  //   });
+    if (response.ok) {
+      ("EEE");
+      const newTweetBlock = await response.json();
+      setTweets((currTweets) => {
+        const filteredTweets = currTweets.filter(
+          (currTweet) =>
+            !newTweetBlock.some(
+              (newTweet: NewTweetBlockType) => newTweet.id === currTweet.id,
+            ),
+        );
+        return [...filteredTweets, ...newTweetBlock];
+      });
+    }
+  }, []);
 
-  //   setTweets((currTweets) => {
-  //     const filteredTweets = currTweets.filter(
-  //       (currTweet) =>
-  //         !newTweetBlock.some((newTweet) => newTweet.id === currTweet.id),
-  //     );
-  //     return [...filteredTweets, ...newTweetBlock];
-  //   });
-  // }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      const documentHeight = document.documentElement.scrollHeight;
+      const currentScroll = window.scrollY + window.innerHeight;
 
-  //get data
-  const response = await fetch("/api/twitter/getTweets", {
-    method: "POST",
-    body: JSON.stringify({
-      numTweets: numTweetsPerBlock,
-      offset: numTweetsPerBlock * (numBlocksRef - 1),
-      orderBy: "date",
-      descending: true,
-    }),
-  });
+      if (
+        currentScroll >=
+        (documentHeight * numBlocksRef.current) / (numBlocksRef.current + 1)
+      ) {
+        if (
+          !isLoadingTweets &&
+          !isFirstTimeLoadingTweets &&
+          tweets.length === numTweetsPerBlock * numBlocksRef.current
+        ) {
+          setIsLoadingTweets(true);
+          numBlocksRef.current += 1;
+          fetchTweets();
+          setIsLoadingTweets(false);
+        }
+      }
+    };
 
-  const tweets: TweetResponse[] = await response.json();
+    window.addEventListener("scroll", handleScroll);
 
-  const formattedTweets = tweets.map((tweet: TweetResponse) => ({
-    id: tweet.twitter.id,
-    parentTweetId: tweet.twitter.parentTweetId,
-    text: tweet.twitter.text,
-    isLiked: tweet.twitter.isLiked,
-    author: tweet.users?.name as string,
-    account: tweet.users?.username as string,
-    isUserTweet: tweet.twitter.userId === session.id,
-  }));
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [fetchTweets, isLoadingTweets, tweets, isFirstTimeLoadingTweets]);
+
+  useEffect(() => {
+    if (!isFirstTimeLoadingTweets || numBlocksRef.current !== 0) return;
+
+    setIsLoadingTweets(true);
+    numBlocksRef.current += 1;
+    fetchTweets();
+    setIsLoadingTweets(false);
+    setIsFirstTimeLoadingTweets(false);
+  }, [fetchTweets, isFirstTimeLoadingTweets]);
 
   return (
     <div className="flex">
@@ -104,10 +123,40 @@ export default async function TwitterPage() {
           <span className="text-4xl font-semibold text-slate-900 dark:text-slate-50">
             Forum
           </span>
-          <div>
-            <Tweets initialData={formattedTweets} />
+          <div className="pb-20 pt-16">
+            <span className="flex items-center justify-center pb-1 text-sm underline dark:text-slate-100">
+              Add Tweet
+            </span>
+            <div className="py-4">
+              <WriteTweet onSubmit={() => null} fetchTweets={fetchTweets} />
+            </div>
           </div>
-          {/* {isLoadingTweets && <LoaderCircleIcon className="animate-spin" />} */}
+
+          <div className="flex w-full flex-col gap-5">
+            {
+              // isLoadingData
+              //   ? Array(parentTweet.length)
+              //       .fill(0)
+              //       .map((_, index) => (
+              //         <TweetIsLoading
+              //           key={index}
+              //           isExpanded={false}
+              //           isReplying={false}
+              //           tweetRepliesLength={1}
+              //         />
+              //       ))
+              //   :
+              parentTweet.map((tweet, index) => (
+                <Tweet
+                  key={tweet.id}
+                  tweet={tweet}
+                  editTweetIsLiked={editTweetIsLiked}
+                  deleteTweet={handleDeleteTweet}
+                ></Tweet>
+              ))
+            }
+          </div>
+          {isLoadingTweets && <LoaderCircleIcon className="animate-spin" />}
         </div>
       </div>
     </div>

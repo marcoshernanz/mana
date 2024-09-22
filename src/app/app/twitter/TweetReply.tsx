@@ -5,11 +5,11 @@ import { useState } from "react";
 import { TweetType } from "./Tweet";
 
 interface TweetReplyProps {
-  // editTweetIsLiked: (
-  //   id: string,
-  //   isLiked: boolean,
-  //   fetchTweetReplies: () => Promise<void>,
-  // ) => void;
+  editTweetIsLiked: (
+    id: string,
+    isLiked: boolean,
+    fetchTweetReplies: () => Promise<void>,
+  ) => void;
   reply: TweetType;
   // fetchTweetReplies: () => Promise<void>;
 }

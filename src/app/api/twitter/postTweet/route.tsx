@@ -6,11 +6,11 @@ import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function POST(request: Request) {
   try {
+    console.log("XXX");
     const response = await request.json();
 
     if (!response.text) {
-      throw new Error("Text is required");
-    } else if (response.parentTweetId === undefined) {
+      console.log("Missing text");
       throw new Error("Text is required");
     }
 

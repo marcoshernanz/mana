@@ -22,18 +22,18 @@ export type TweetType = {
 
 interface TweetProps {
   tweet: TweetType;
-  // editTweetIsLiked: (
-  //   id: string,
-  //   isLiked: boolean,
-  //   fetchTweetReplies: () => Promise<void>,
-  // ) => void;
-  // deleteTweet: (TweetIndex: string) => void;
+  editTweetIsLiked: (
+    id: string,
+    isLiked: boolean,
+    fetchTweetReplies: () => Promise<void>,
+  ) => void;
+  deleteTweet: (TweetIndex: string) => void;
 }
 
 export default function Tweet({
-  // editTweetIsLiked,
+  editTweetIsLiked,
   tweet,
-  // deleteTweet,
+  deleteTweet,
 }: TweetProps) {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [numLikes, setNumLikes] = useState<number>(0);
@@ -139,7 +139,7 @@ export default function Tweet({
                 <TweetReply
                   key={reply.id}
                   reply={reply}
-                  // editTweetIsLiked={editTweetIsLiked}
+                  editTweetIsLiked={editTweetIsLiked}
                   // fetchTweetReplies={fetchTweetReplies}
                 ></TweetReply>
               ))}
@@ -164,7 +164,7 @@ export default function Tweet({
                 </Button>
                 {tweet.isUserTweet && (
                   <Button
-                    // onClick={() => deleteTweet(tweet.id)}
+                    onClick={() => deleteTweet(tweet.id)}
                     className="underline hover:text-slate-950 hover:no-underline dark:hover:text-slate-100"
                   >
                     Delete

@@ -21,26 +21,29 @@ export type CurrentTweetType = Omit<
 interface WriteTweetProps {
   parentTweetId?: string | null;
   onSubmit: () => void;
+  fetchTweets?: () => void;
   fetchTweetReplies?: () => void;
-  handleAddTweet?: (text: string, parentTweetId: string) => void;
 }
 
 export default function WriteTweet({
   parentTweetId,
   onSubmit,
+  fetchTweets,
   fetchTweetReplies,
-  handleAddTweet,
 }: WriteTweetProps) {
+  console.log("parentTweetId", parentTweetId);
   const [text, setText] = useState<string>("");
 
-  const addTweet = async (text: string) => {
+  const addTweet = async () => {
     if (!text) return;
-
     await fetch("/api/twitter/postTweet", {
       method: "POST",
       body: JSON.stringify({ text, parentTweetId }),
     });
-    await handleAddTweet?.(text, parentTweetId as string);
+    if (fetchTweets) {
+      await fetchTweets();
+    }
+    setText("");
   };
 
   return (
@@ -54,7 +57,7 @@ export default function WriteTweet({
         ></Input>
       </div>
       <div>
-        <Button onClick={() => addTweet(text)}>Submit</Button>
+        <Button onClick={addTweet}>Submit</Button>
       </div>
     </div>
   );
