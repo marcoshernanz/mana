@@ -31,18 +31,21 @@ export default function WriteTweet({
   fetchTweets,
   fetchTweetReplies,
 }: WriteTweetProps) {
-  console.log("parentTweetId", parentTweetId);
   const [text, setText] = useState<string>("");
 
   const addTweet = async () => {
     if (!text) return;
-    await fetch("/api/twitter/postTweet", {
+    const response = await fetch("/api/twitter/postTweet", {
       method: "POST",
       body: JSON.stringify({ text, parentTweetId }),
     });
-    if (fetchTweets) {
-      await fetchTweets();
+    if (response.ok) {
+      if (fetchTweets) {
+        await fetchTweets();
+      }
+      fetchTweetReplies ? await fetchTweetReplies() : null;
     }
+
     setText("");
   };
 

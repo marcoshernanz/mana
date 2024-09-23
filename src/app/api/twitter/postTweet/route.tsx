@@ -6,11 +6,9 @@ import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function POST(request: Request) {
   try {
-    console.log("XXX");
     const response = await request.json();
 
     if (!response.text) {
-      console.log("Missing text");
       throw new Error("Text is required");
     }
 
@@ -22,9 +20,11 @@ export async function POST(request: Request) {
       throw new Error("User not found");
     }
 
-    await db.insert(twitterTable).values({ userId, text, parentTweetId });
+    const twitter = await db
+      .insert(twitterTable)
+      .values({ userId, text, parentTweetId });
 
-    return new Response("", { status: 200 });
+    return Response.json({ message: twitter }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return Response.json({ message: error.message }, { status: 400 });

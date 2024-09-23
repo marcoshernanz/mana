@@ -28,16 +28,12 @@ export async function POST(request: Request) {
     const response = await request.json();
 
     if (!response.numTweetsPerBlock) {
-      console.log("Missing numTweetsPerBlock");
       throw new Error("Num tweets per block is required");
     } else if (response.blockNumber === undefined) {
-      console.log("Missing blockNumber");
       throw new Error("Block number is required");
     } else if (response.orderBy === undefined) {
-      console.log("Missing orderBy");
       throw new Error("Order by is required");
     } else if (response.descending === undefined) {
-      console.log("Missing descending");
       throw new Error("Descending is required");
     }
 

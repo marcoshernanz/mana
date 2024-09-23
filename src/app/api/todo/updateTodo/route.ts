@@ -6,7 +6,6 @@ import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function PATCH(request: Request) {
   try {
-    console.log("AAA");
     const response = await request.json();
 
     if (!response.id) {

@@ -58,7 +58,6 @@ export default function Todos({ initialData }: WriteTodoProps) {
       undoRegisterRef.current.push(newTodo);
     } else {
       // TODO
-      console.error("Error adding todo");
     }
   };
 
@@ -66,7 +65,6 @@ export default function Todos({ initialData }: WriteTodoProps) {
     async ({ id, isUndo = false }: { id: string; isUndo?: boolean }) => {
       const todo = todos.find((todo) => todo.id === id);
       if (!todo) {
-        console.error("Todo not found");
         return;
       }
 
@@ -83,7 +81,6 @@ export default function Todos({ initialData }: WriteTodoProps) {
         );
       } else {
         // TODO
-        console.error("Error updating todo");
       }
 
       if (isUndo === false) {
