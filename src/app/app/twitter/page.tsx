@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
-import deleteTweet from "@/server-actions/twitter/deleteTweet";
 import updateTweet from "@/database/queries/forum/updateTweet";
 import { LoaderCircleIcon } from "lucide-react";
 
@@ -47,9 +46,16 @@ export default function TwitterPage() {
   };
 
   const handleDeleteTweet = async (id: string) => {
-    setTweets((tweets) => tweets.filter((tweet) => tweet.id !== id));
-    await deleteTweet(id);
-    // await fetchTweets();
+    const response = await fetch("/api/twitter/deleteTweets", {
+      method: "DELETE",
+      body: JSON.stringify({
+        id,
+      }),
+    });
+
+    if (response.ok) {
+      setTweets((tweets) => tweets.filter((tweet) => tweet.id !== id));
+    }
   };
 
   const fetchTweets = useCallback(async () => {

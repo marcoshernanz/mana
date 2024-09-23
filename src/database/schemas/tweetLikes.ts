@@ -9,10 +9,10 @@ export const twitterLikesTable = pgTable("twitter_likes", {
     .$defaultFn(() => crypto.randomUUID()),
   userId: text("user_id")
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => usersTable.id, { onDelete: "cascade" }),
   tweetId: text("tweet_id")
     .notNull()
-    .references(() => twitterTable.id),
+    .references(() => twitterTable.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
