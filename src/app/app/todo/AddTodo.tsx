@@ -1,7 +1,7 @@
 // "use client";
 
 import { useState } from "react";
-import { TaskType } from "./page";
+// import { TaskType } from "./page";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
@@ -19,7 +19,7 @@ export default function AddTodo({ addTodo }: AddTodoProps) {
   };
 
   return (
-    <div className="flex gap-2 pt-20">
+    <div className="flex gap-2 pt-10">
       <Input
         placeholder="Enter your task"
         value={text}

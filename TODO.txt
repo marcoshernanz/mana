@@ -229,8 +229,8 @@ https://calendar.google.com/calendar/u/0/r/tasks
 
 - Toast with undo button https://ui.shadcn.com/docs/components/toast   --> DONE 
 - Menu with delete button                                              --> DONE
-- Accordion with completed tasks (On a later date we will implement pagination)
-- Cleaner UI
+- Accordion with completed tasks (On a later date we will implement pagination) --> DONE
+- Cleaner UI                                                           --> DONE
 - Starred button
 
 

@@ -6,18 +6,8 @@ import TodoItem from "./TodoItem";
 import { TodosType } from "@/database/schemas/todos";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
-
-// export type UpdateTodoType = Omit<
-//   TodosType,
-//   "text" | "tags" | "id" | "isCompleted" | "createdAt" | "userId"
-// > & {
-//   text?: string;
-//   tags?: string[];
-//   id?: string;
-//   isCompleted?: boolean;
-//   createdAt?: Date;
-//   userId?: string;
-// };
+import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 interface WriteTodoProps {
   initialData: TodosType[];
@@ -30,7 +20,12 @@ type UndoRegisterType = {
 
 export default function Todos({ initialData }: WriteTodoProps) {
   const [todos, setTodos] = useState(initialData);
+  const [expanded, setExpanded] = useState(false);
   const { toast } = useToast();
+
+  const toggleExpand = () => {
+    setExpanded((prev) => !prev);
+  };
 
   const OnDelete = (id: string) => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
@@ -42,6 +37,17 @@ export default function Todos({ initialData }: WriteTodoProps) {
     () =>
       todos
         .filter((todo) => !todo.isCompleted)
+        .sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        ),
+    [todos],
+  );
+
+  const CompletedTodos = useMemo(
+    () =>
+      todos
+        .filter((todo) => todo.isCompleted)
         .sort(
           (a, b) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
@@ -140,11 +146,12 @@ export default function Todos({ initialData }: WriteTodoProps) {
   }, [handleUndo]);
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center">
+    <div className="flex w-full flex-col rounded-xl border border-slate-200 bg-white px-6 pt-6 hover:shadow-md">
+      <span>My Tasks</span>
+      <div className="flex max-w-lg flex-col pt-8">
         <AddTodo addTodo={addTodo} />
       </div>
-      <div className="flex w-full flex-col gap-3 pt-10">
+      <div className="mt-10 flex w-full flex-col gap-3">
         {uncompletedTodos.map((todo) => (
           <TodoItem
             key={todo.id}
@@ -154,6 +161,27 @@ export default function Todos({ initialData }: WriteTodoProps) {
           />
         ))}
       </div>
-    </>
+      <div className="mb-9 flex w-full flex-col gap-4">
+        <div className="flex items-center gap-4 pt-10">
+          <Button variant="ghost" onClick={toggleExpand}>
+            {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+          </Button>
+          <span>Completed ({CompletedTodos.length})</span>
+        </div>
+
+        {expanded && (
+          <div className="flex w-full flex-col gap-3">
+            {CompletedTodos.map((todo) => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                toggleIsCompleted={(id: string) => toggleIsCompleted({ id })}
+                OnDelete={OnDelete}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

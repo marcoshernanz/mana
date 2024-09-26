@@ -18,7 +18,7 @@ export default function TodoItem({
 }: TodoItemProps) {
   return (
     <div>
-      <div className="flex w-full rounded-lg border bg-white px-6 py-4 shadow-inner">
+      <div className="flex w-full rounded-lg bg-white px-6 py-4 hover:bg-slate-50">
         <div className="flex w-full items-center gap-6">
           <Checkbox
             checked={todo.isCompleted}
