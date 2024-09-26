@@ -32,6 +32,10 @@ export default function Todos({ initialData }: WriteTodoProps) {
   const [todos, setTodos] = useState(initialData);
   const { toast } = useToast();
 
+  const OnDelete = (id: string) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
   const undoRegisterRef = useRef<UndoRegisterType>([]);
 
   const uncompletedTodos = useMemo(
@@ -116,8 +120,6 @@ export default function Todos({ initialData }: WriteTodoProps) {
         const { action, todo } = undo;
 
         if (action === "add") {
-          // TODO
-          // deleteTodo(todo.id);
         } else if (action === "toggleIsCompleted") {
           await toggleIsCompleted({ id: todo.id, isUndo: true });
         } else if (action === "delete") {
@@ -148,6 +150,7 @@ export default function Todos({ initialData }: WriteTodoProps) {
             key={todo.id}
             todo={todo}
             toggleIsCompleted={(id: string) => toggleIsCompleted({ id })}
+            OnDelete={OnDelete}
           />
         ))}
       </div>

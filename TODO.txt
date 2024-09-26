@@ -227,8 +227,8 @@ Make a good and usable todo
 ------------------------------ TODO PAGE ------------------------------
 https://calendar.google.com/calendar/u/0/r/tasks
 
-- Toast with undo button https://ui.shadcn.com/docs/components/toast
-- Menu with delete button 
+- Toast with undo button https://ui.shadcn.com/docs/components/toast   --> DONE 
+- Menu with delete button                                              --> DONE
 - Accordion with completed tasks (On a later date we will implement pagination)
 - Cleaner UI
 - Starred button
