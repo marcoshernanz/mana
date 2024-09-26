@@ -5,10 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import WriteTweet from "./WriteTweet";
 import TweetReply from "./TweetReply";
 import { Button } from "@/components/ui/Button";
-import selectTweetReplies from "@/server-actions/twitter/selectTweetReplies";
-import likeTweet from "@/server-actions/twitter/likeTweet";
-import getIsTweetLiked from "@/server-actions/twitter/getIsTweetLiked";
-import getTweetNumLikes from "@/server-actions/twitter/getTweetNumLikes";
 import Link from "next/link";
 
 export type TweetType = {
@@ -44,19 +40,43 @@ export default function Tweet({
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchIsLiked = useCallback(async () => {
-    const initialIsLiked = await getIsTweetLiked(tweet.id);
-    setIsLiked(initialIsLiked);
+    const response = await fetch("/api/twitter/getTweetIsLiked", {
+      method: "POST",
+      body: JSON.stringify({
+        tweetId: tweet.id,
+      }),
+    });
+
+    if (response.ok) {
+      const initialIsLiked = await response.json();
+      setIsLiked(initialIsLiked);
+    }
   }, [tweet.id]);
 
   const fetchNumLikes = useCallback(async () => {
-    const initialNumLikes = await getTweetNumLikes(tweet.id);
-    setNumLikes(initialNumLikes);
+    const response = await fetch("/api/twitter/getTweetNumLikes", {
+      method: "POST",
+      body: JSON.stringify({
+        tweetId: tweet.id,
+      }),
+    });
+
+    if (response.ok) {
+      const initialNumLikes = await response.json();
+      setNumLikes(initialNumLikes);
+    }
   }, [tweet.id]);
 
   const fetchTweetReplies = useCallback(async () => {
-    const replies = await selectTweetReplies(tweet.id);
+    const response = await fetch("/api/twitter/selectTweetReplies", {
+      method: "POST",
+      body: JSON.stringify({ id: tweet.id }),
+    });
 
-    setTweetReplies(replies);
+    if (response.ok) {
+      const replies = await response.json();
+      setTweetReplies(replies);
+    }
   }, [tweet.id]);
 
   const toggleExpand = async (tweetId: string) => {
@@ -80,7 +100,11 @@ export default function Tweet({
   const handleLike = async () => {
     setIsLiked((prev) => !prev);
     setNumLikes((prev) => (isLiked ? prev - 1 : prev + 1));
-    await likeTweet({ tweetId: tweet.id, like: !isLiked });
+    // await likeTweet({ tweetId: tweet.id, like: !isLiked });
+    await fetch("/api/twitter/likeTweet", {
+      method: "PATCH",
+      body: JSON.stringify({ tweetId: tweet.id, like: !isLiked }),
+    });
   };
 
   useEffect(() => {

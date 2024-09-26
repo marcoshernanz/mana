@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import insertBlogs from "@/server-actions/blogs/insertBlogs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { BlogPostType } from "./page";
@@ -41,14 +40,15 @@ export default function WriteBlogPost({ pageNumber, setBlogs }: WriteBlogPost) {
     setSelectedTags([]);
     setNewTagInput("");
 
-    const blog = await insertBlogs({
-      title: newBlog.title,
-      content: newBlog.content,
-      tags: newBlog.tags,
-      pageNumber: newBlog.pageNumber,
+    const response = await fetch("/api/blogs/insertBlogs", {
+      method: "POST",
+      body: JSON.stringify(newBlog),
     });
 
-    setBlogs((prevBlogs) => [blog, ...prevBlogs]);
+    if (response.ok) {
+      const blog = await response.json();
+      setBlogs((prevBlogs) => [blog, ...prevBlogs]);
+    }
   };
 
   return (

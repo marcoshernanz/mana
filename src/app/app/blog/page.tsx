@@ -3,11 +3,9 @@
 import { use, useCallback, useEffect, useRef, useState } from "react";
 import WriteBlogPost from "./WriteBlogPost";
 import BlogPost from "./BlogPost";
-import updateBlog from "@/database/queries/blog/updateBlog";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import SideBar from "../SideBar";
-import selectBlockBlogs from "@/server-actions/blogs/selectBlockBlogs";
 
 const numBlogsPerBlock = 20;
 
@@ -29,49 +27,46 @@ export default function BlogPage() {
   const [blogPosts, setBlogPosts] = useState<BlogPostType[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  // const [isLoadingData, setIsLoadingData] = useState(true);
   const [isLoadingBlogs, setIsLoadingBlogs] = useState(true);
   const [isFirstTimeLoadingBlogs, setIsFirstTimeLoadingBlogs] = useState(true);
   const numBlocksRef = useRef(0);
 
   const unreadBlogPosts = blogPosts.filter((blogPost) => !blogPost.isRead);
 
-  // const fetchBlogs = async () => {
-  //   const blogs = await selectAllBlogs();
-  //   setBlogPosts(blogs);
-  // };
-
   const fetchBlogs = useCallback(async () => {
-    const newBlogBlock = await selectBlockBlogs({
-      numBlogsPerBlock,
-      blockNumber: numBlocksRef.current,
-      orderBy: "date",
-      descending: true,
+    const response = await fetch("/api/blogs/selectBlockBlogs", {
+      method: "POST",
+      body: JSON.stringify({
+        numBlogsPerBlock,
+        blockNumber: numBlocksRef.current,
+        orderBy: "date",
+        descending: true,
+      }),
     });
 
-    setBlogPosts((currBlogs) => {
-      const filteredBlogs = currBlogs.filter(
-        (currBlog) =>
-          !newBlogBlock.some((newBlogs) => newBlogs.id === currBlog.id),
-      );
-      return [...filteredBlogs, ...newBlogBlock];
-    });
+    if (response.ok) {
+      const newBlogBlock = await response.json();
+      setBlogPosts((currBlogs) => {
+        const filteredBlogs = currBlogs.filter(
+          (currBlog) =>
+            !newBlogBlock.some(
+              (newBlogs: BlogPostType) => newBlogs.id === currBlog.id,
+            ),
+        );
+        return [...filteredBlogs, ...newBlogBlock];
+      });
+    }
   }, []);
 
   const editBlogPostIsRead = async (id: string, isRead: boolean) => {
     setBlogPosts((currBlogs) =>
       currBlogs.map((blog) => (blog.id === id ? { ...blog, isRead } : blog)),
     );
-    await updateBlog(id, { isRead });
+    await fetch("/api/blogs/updateBlogs", {
+      method: "PATCH",
+      body: JSON.stringify({ id, blog: { isRead } }),
+    });
   };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     setIsLoadingData(true);
-  //     await fetchBlogs();
-  //     setIsLoadingData(false);
-  //   })();
-  // }, []);
 
   useEffect(() => {
     const handleClick = () => {

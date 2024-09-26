@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Tweet, { TweetType } from "./Tweet";
 import WriteTweet from "./WriteTweet";
-import updateTweet from "@/database/queries/forum/updateTweet";
+// import updateTweet from "@/database/queries/forum/updateTweet";
 import { LoaderCircleIcon } from "lucide-react";
 
 type NewTweetBlockType = {
@@ -28,20 +28,21 @@ export default function TwitterPage() {
 
   const parentTweet = tweets.filter((tweet) => tweet.parentTweetId === null);
 
-  // const tweetsWithReplies = parentTweet.map((parentTweet) => {
-  //   const replies = tweets.filter(
-  //     (tweet) => tweet.parentTweetId === parentTweet.id,
-  //   );
-  //   return replies;
-  // });
-
   const editTweetIsLiked = async (
     id: string,
     isLiked: boolean,
     fetchTweetReplies: () => Promise<void>,
   ) => {
-    await updateTweet(id, { isLiked });
-    await fetchTweets();
+    const response = await fetch("/api/twitter/updateTweets", {
+      method: "PATCH",
+      body: JSON.stringify({
+        id,
+        isLiked,
+      }),
+    });
+    if (response.ok) {
+      await fetchTweets();
+    }
     fetchTweetReplies();
   };
 
@@ -59,7 +60,6 @@ export default function TwitterPage() {
   };
 
   const fetchTweets = useCallback(async () => {
-    console.log("AAA");
     const response = await fetch("/api/twitter/selectBlockTweets", {
       method: "POST",
       body: JSON.stringify({
@@ -71,7 +71,6 @@ export default function TwitterPage() {
     });
 
     if (response.ok) {
-      ("EEE");
       const newTweetBlock = await response.json();
       setTweets((currTweets) => {
         const filteredTweets = currTweets.filter(
