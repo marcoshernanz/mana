@@ -5,7 +5,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EllipsisVerticalIcon, Trash2Icon } from "lucide-react";
+import {
+  CornerDownRightIcon,
+  EllipsisVerticalIcon,
+  Trash2Icon,
+} from "lucide-react";
+import AddTodo from "./AddTodo";
+import { useState } from "react";
 
 interface MenuProps {
   id: string;
@@ -13,6 +19,8 @@ interface MenuProps {
 }
 
 export default function Menu({ id, OnDelete }: MenuProps) {
+  const [isReplying, setIsReplying] = useState(false);
+
   const handleDelete = async () => {
     const response = await fetch("/api/todo/deleteTodo", {
       method: "DELETE",
@@ -23,6 +31,11 @@ export default function Menu({ id, OnDelete }: MenuProps) {
       OnDelete(id);
     }
   };
+
+  const addSubTask = () => {
+    setIsReplying((prev) => !prev);
+  };
+
   return (
     <div className="z-200 relative flex">
       <DropdownMenu>
@@ -38,6 +51,16 @@ export default function Menu({ id, OnDelete }: MenuProps) {
               onClick={handleDelete}
             >
               Delete
+            </Button>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="gap-3 pl-2">
+            <CornerDownRightIcon className="h-5 w-5 text-slate-600" />
+            <Button
+              className="p-1 text-slate-600"
+              variant={"ghost"}
+              onClick={addSubTask}
+            >
+              Add Subtask
             </Button>
           </DropdownMenuItem>
           <DropdownMenuItem className="pl-2 text-slate-600">

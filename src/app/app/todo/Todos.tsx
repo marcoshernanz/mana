@@ -162,13 +162,22 @@ export default function Todos({ initialData }: WriteTodoProps) {
         ))}
       </div>
       <div className="mb-9 flex w-full flex-col gap-4">
-        <div className="flex items-center gap-4 pt-10">
-          <Button variant="ghost" onClick={toggleExpand}>
-            {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+        <div className="flex items-center gap-2 pt-10">
+          <Button
+            variant="ghost"
+            onClick={toggleExpand}
+            className="rounded-full"
+          >
+            {expanded ? (
+              <ChevronDownIcon className="h-6 w-6 text-slate-700" />
+            ) : (
+              <ChevronRightIcon className="h-6 w-6 text-slate-700" />
+            )}
           </Button>
-          <span>Completed ({CompletedTodos.length})</span>
+          <span className="text-sm font-medium text-slate-600">
+            Completed ({CompletedTodos.length})
+          </span>
         </div>
-
         {expanded && (
           <div className="flex w-full flex-col gap-3">
             {CompletedTodos.map((todo) => (

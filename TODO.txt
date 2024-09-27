@@ -231,7 +231,7 @@ https://calendar.google.com/calendar/u/0/r/tasks
 - Menu with delete button                                              --> DONE
 - Accordion with completed tasks (On a later date we will implement pagination) --> DONE
 - Cleaner UI                                                           --> DONE
-- Starred button
+- Starred button                                                       --> DONE?
 
 
 

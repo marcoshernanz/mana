@@ -1,7 +1,7 @@
 import getSession from "@/server-actions/auth/getSession";
 import { db } from "@/database/db";
 import { todosTable } from "@/database/schemas/todos";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import Todos from "./Todos";
 
 export default async function TodoPage() {
@@ -15,9 +15,7 @@ export default async function TodoPage() {
   const todos = await db
     .select()
     .from(todosTable)
-    .where(
-      and(eq(todosTable.userId, userId), eq(todosTable.isCompleted, false)),
-    );
+    .where(eq(todosTable.userId, userId));
 
   return (
     <div className="flex">
