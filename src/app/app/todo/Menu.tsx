@@ -16,11 +16,10 @@ import { useState } from "react";
 interface MenuProps {
   id: string;
   OnDelete: (id: string) => void;
+  handleReply?: (reply: boolean) => void;
 }
 
-export default function Menu({ id, OnDelete }: MenuProps) {
-  const [isReplying, setIsReplying] = useState(false);
-
+export default function Menu({ id, OnDelete, handleReply }: MenuProps) {
   const handleDelete = async () => {
     const response = await fetch("/api/todo/deleteTodo", {
       method: "DELETE",
@@ -33,7 +32,7 @@ export default function Menu({ id, OnDelete }: MenuProps) {
   };
 
   const addSubTask = () => {
-    setIsReplying((prev) => !prev);
+    handleReply && handleReply(true);
   };
 
   return (
@@ -53,16 +52,19 @@ export default function Menu({ id, OnDelete }: MenuProps) {
               Delete
             </Button>
           </DropdownMenuItem>
-          <DropdownMenuItem className="gap-3 pl-2">
-            <CornerDownRightIcon className="h-5 w-5 text-slate-600" />
-            <Button
-              className="p-1 text-slate-600"
-              variant={"ghost"}
-              onClick={addSubTask}
-            >
-              Add Subtask
-            </Button>
-          </DropdownMenuItem>
+          {handleReply ? (
+            <DropdownMenuItem className="gap-3 pl-2">
+              <CornerDownRightIcon className="h-5 w-5 text-slate-600" />
+              <Button
+                className="p-1 text-slate-600"
+                variant={"ghost"}
+                onClick={addSubTask}
+              >
+                Add Subtask
+              </Button>
+            </DropdownMenuItem>
+          ) : null}
+
           <DropdownMenuItem className="pl-2 text-slate-600">
             More
           </DropdownMenuItem>

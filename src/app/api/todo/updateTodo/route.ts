@@ -1,7 +1,7 @@
 import { db } from "@/database/db";
 import { todosTable } from "@/database/schemas/todos";
 import getSession from "@/server-actions/auth/getSession";
-import { and, eq } from "drizzle-orm";
+import { and, eq, or } from "drizzle-orm";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function PATCH(request: Request) {
@@ -34,8 +34,13 @@ export async function PATCH(request: Request) {
 
     await db
       .update(todosTable)
-      .set({ text, isCompleted })
-      .where(and(eq(todosTable.id, id), eq(todosTable.userId, userId)));
+      .set({ isCompleted })
+      .where(
+        and(
+          eq(todosTable.userId, userId),
+          or(eq(todosTable.id, id), eq(todosTable.parentTodoId, id)),
+        ),
+      );
 
     return Response.json({ message: "Todo updated" }, { status: 200 });
   } catch (error) {

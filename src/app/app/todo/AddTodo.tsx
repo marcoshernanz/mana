@@ -7,19 +7,28 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 
 interface AddTodoProps {
-  addTodo: (text: string) => void;
+  addTodo: (text: string, parentTodoId: string | null) => void;
+  parentTodoId: string | null;
+  handleReply?: (reply: boolean) => void;
 }
 
-export default function AddTodo({ addTodo }: AddTodoProps) {
+export default function AddTodo({
+  addTodo,
+  parentTodoId,
+  handleReply,
+}: AddTodoProps) {
   const [text, setText] = useState<string>("");
 
   const handleAddTodo = (text: string) => {
-    addTodo(text);
+    addTodo && addTodo(text, parentTodoId);
+    if (parentTodoId) {
+      handleReply && handleReply(false);
+    }
     setText("");
   };
 
   return (
-    <div className="flex gap-2 pt-10">
+    <div className="flex gap-2 pt-6">
       <Input
         placeholder="Enter your task"
         value={text}

@@ -33,10 +33,23 @@ export default function Todos({ initialData }: WriteTodoProps) {
 
   const undoRegisterRef = useRef<UndoRegisterType>([]);
 
-  const uncompletedTodos = useMemo(
+  const uncompletedParentTodos = useMemo(
     () =>
       todos
-        .filter((todo) => !todo.isCompleted)
+        .filter((todo) => !todo.isCompleted && todo.parentTodoId === null)
+        .sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        ),
+    [todos],
+  );
+
+  const replyTodos = useMemo(
+    () => (parentTodoId: string | null) =>
+      todos
+        .filter(
+          (todo) => !todo.isCompleted && todo.parentTodoId === parentTodoId,
+        )
         .sort(
           (a, b) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
@@ -55,10 +68,10 @@ export default function Todos({ initialData }: WriteTodoProps) {
     [todos],
   );
 
-  const addTodo = async (text: string) => {
+  const addTodo = async (text: string, parentTodoId: string | null) => {
     const response = await fetch("/api/todo/insertTodo", {
       method: "POST",
-      body: JSON.stringify({ text }),
+      body: JSON.stringify({ text, parentTodoId }),
     });
 
     if (response.ok) {
@@ -84,9 +97,16 @@ export default function Todos({ initialData }: WriteTodoProps) {
       });
 
       if (response.ok) {
+        // setTodos((prev) =>
+        //   prev.map((todo) =>
+        //     todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo,
+        //   ),
+        // );
         setTodos((prev) =>
           prev.map((todo) =>
-            todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo,
+            todo.id === id || todo.parentTodoId === id
+              ? { ...todo, isCompleted: !todo.isCompleted }
+              : todo,
           ),
         );
       } else {
@@ -149,15 +169,17 @@ export default function Todos({ initialData }: WriteTodoProps) {
     <div className="flex w-full flex-col rounded-xl border border-slate-200 bg-white px-6 pt-6 hover:shadow-md">
       <span>My Tasks</span>
       <div className="flex max-w-lg flex-col pt-8">
-        <AddTodo addTodo={addTodo} />
+        <AddTodo addTodo={addTodo} parentTodoId={null} />
       </div>
       <div className="mt-10 flex w-full flex-col gap-3">
-        {uncompletedTodos.map((todo) => (
+        {uncompletedParentTodos.map((todo) => (
           <TodoItem
             key={todo.id}
             todo={todo}
             toggleIsCompleted={(id: string) => toggleIsCompleted({ id })}
             OnDelete={OnDelete}
+            addSubTask={addTodo}
+            replyTodos={replyTodos}
           />
         ))}
       </div>
@@ -186,6 +208,8 @@ export default function Todos({ initialData }: WriteTodoProps) {
                 todo={todo}
                 toggleIsCompleted={(id: string) => toggleIsCompleted({ id })}
                 OnDelete={OnDelete}
+                addSubTask={addTodo}
+                replyTodos={replyTodos}
               />
             ))}
           </div>

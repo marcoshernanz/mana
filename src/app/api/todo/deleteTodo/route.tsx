@@ -12,6 +12,7 @@ export async function DELETE(request: Request) {
     }
 
     await db.delete(todosTable).where(eq(todosTable.id, response.id));
+    await db.delete(todosTable).where(eq(todosTable.parentTodoId, response.id));
 
     return new Response("", { status: 200 });
   } catch (error) {

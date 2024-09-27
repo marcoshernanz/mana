@@ -12,6 +12,7 @@ export const todosTable = pgTable("todos", {
   userId: text("user_id")
     .notNull()
     .references(() => usersTable.id),
+  parentTodoId: text("parentTodoId"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
