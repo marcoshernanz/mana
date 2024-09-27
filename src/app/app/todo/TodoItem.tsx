@@ -24,10 +24,26 @@ export default function TodoItem({
   addSubTask,
   replyTodos,
 }: TodoItemProps) {
-  const [stared, setStared] = useState(false);
+  const [stared, setStared] = useState(todo.isStared);
   const [replying, setReplying] = useState(isReplying);
 
+  const update = async (
+    id: string,
+    isCompleted?: boolean,
+    isStared?: boolean,
+  ) => {
+    await fetch("/api/todo/updateTodo", {
+      method: "PATCH",
+      body: JSON.stringify({
+        id,
+        isCompleted,
+        isStared,
+      }),
+    });
+  };
+
   const handleStar = () => {
+    update(todo.id, undefined, !stared);
     setStared((prev) => !prev);
   };
 
@@ -51,7 +67,7 @@ export default function TodoItem({
                 <div>{todo.text}</div>
               )}
             </div>
-            {replyTodos(todo.id) ? (
+            {replyTodos(todo.id).length > 0 ? (
               <div className="mt-6 flex flex-col rounded-md border border-slate-100">
                 {replyTodos(todo.id).map((todos) => (
                   <SubTodos
@@ -59,6 +75,7 @@ export default function TodoItem({
                     todo={todos}
                     toggleIsCompleted={toggleIsCompleted}
                     OnDelete={OnDelete}
+                    handleStar={update}
                   />
                 ))}
               </div>
@@ -66,7 +83,7 @@ export default function TodoItem({
           </div>
           <div className="flex items-start justify-end gap-2">
             <Menu id={todo.id} OnDelete={OnDelete} handleReply={handleReply} />
-            <button onClick={handleStar}>
+            <button onClick={() => handleStar()}>
               {stared ? (
                 <StarIcon className="h-5 w-5 fill-yellow-300 text-yellow-400" />
               ) : (

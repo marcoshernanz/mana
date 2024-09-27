@@ -93,15 +93,10 @@ export default function Todos({ initialData }: WriteTodoProps) {
 
       const response = await fetch("/api/todo/updateTodo", {
         method: "PATCH",
-        body: JSON.stringify({ id, isCompleted: !todo.isCompleted }),
+        body: JSON.stringify({ id, isCompleted: !todo.isCompleted, undefined }),
       });
 
       if (response.ok) {
-        // setTodos((prev) =>
-        //   prev.map((todo) =>
-        //     todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo,
-        //   ),
-        // );
         setTodos((prev) =>
           prev.map((todo) =>
             todo.id === id || todo.parentTodoId === id
@@ -109,8 +104,6 @@ export default function Todos({ initialData }: WriteTodoProps) {
               : todo,
           ),
         );
-      } else {
-        // TODO
       }
 
       if (isUndo === false) {

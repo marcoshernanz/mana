@@ -8,7 +8,7 @@ export const todosTable = pgTable("todos", {
     .$defaultFn(() => crypto.randomUUID()),
   text: text("text").notNull(),
   isCompleted: boolean("is_completed").notNull().default(false),
-  // tags: text("tags").array().notNull(),
+  isStared: boolean("is_stared").notNull().default(false),
   userId: text("user_id")
     .notNull()
     .references(() => usersTable.id),

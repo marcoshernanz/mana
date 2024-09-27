@@ -10,6 +10,7 @@ interface TodoItemProps {
   todo: TodosType;
   toggleIsCompleted: (id: string) => Promise<void>;
   OnDelete: (id: string) => void;
+  handleStar: (id: string, isCompleted?: boolean, stared?: boolean) => void;
   // isReplying?: boolean;
   // addSubTask: (text: string, parentTodoId: string | null) => void;
 }
@@ -20,12 +21,14 @@ export default function SubTodos({
   OnDelete,
   // isReplying,
   // addSubTask,
+  handleStar,
 }: TodoItemProps) {
-  const [stared, setStared] = useState(false);
+  const [stared, setStared] = useState(todo.isStared);
   // const [replying, setReplying] = useState(isReplying);
 
-  const handleStar = () => {
+  const Star = () => {
     setStared((prev) => !prev);
+    handleStar(todo.id, undefined, !stared);
   };
 
   // const handleReply = (reply: boolean) => {
@@ -46,13 +49,10 @@ export default function SubTodos({
             ) : (
               <div className="text-slate-700">{todo.text}</div>
             )}
-            {/* <div>
-            <SubTodos />
-          </div> */}
           </div>
           <div className="flex items-start justify-end gap-2">
             <Menu id={todo.id} OnDelete={OnDelete} />
-            <button onClick={handleStar}>
+            <button onClick={Star}>
               {stared ? (
                 <StarIcon className="h-5 w-5 fill-yellow-300 text-yellow-400" />
               ) : (

@@ -236,7 +236,8 @@ https://calendar.google.com/calendar/u/0/r/tasks
 
 
 - Add subtasks                                                         --> DONE
-- Order by my order, date, and starred
+- Order by my order, date, and 
+- Order by starred
 - Edit tasks
 - Drag and drop to reorder
 

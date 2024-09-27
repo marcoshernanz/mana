@@ -155,6 +155,13 @@
       "when": 1727436649240,
       "tag": "0021_jazzy_lifeguard",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1727457462554,
+      "tag": "0022_shiny_hellfire_club",
+      "breakpoints": true
     }
   ]
 }

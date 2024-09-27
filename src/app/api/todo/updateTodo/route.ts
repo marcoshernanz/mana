@@ -16,13 +16,19 @@ export async function PATCH(request: Request) {
       id,
       text,
       isCompleted,
+      isStared,
     }: {
       id: string;
       text: string | undefined;
       isCompleted: boolean | undefined;
+      isStared: boolean | undefined;
     } = response;
 
-    if (text === undefined && isCompleted === undefined) {
+    if (
+      text === undefined &&
+      isCompleted === undefined &&
+      isStared === undefined
+    ) {
       return;
     }
 
@@ -32,15 +38,24 @@ export async function PATCH(request: Request) {
       throw new Error("User not found");
     }
 
-    await db
-      .update(todosTable)
-      .set({ isCompleted })
-      .where(
-        and(
-          eq(todosTable.userId, userId),
-          or(eq(todosTable.id, id), eq(todosTable.parentTodoId, id)),
-        ),
-      );
+    if (isCompleted === undefined && isStared !== undefined) {
+      await db
+        .update(todosTable)
+        .set({ isStared })
+        .where(and(eq(todosTable.userId, userId), eq(todosTable.id, id)));
+    }
+
+    if (isCompleted !== undefined && isStared === undefined) {
+      await db
+        .update(todosTable)
+        .set({ isCompleted })
+        .where(
+          and(
+            eq(todosTable.userId, userId),
+            or(eq(todosTable.id, id), eq(todosTable.parentTodoId, id)),
+          ),
+        );
+    }
 
     return Response.json({ message: "Todo updated" }, { status: 200 });
   } catch (error) {
