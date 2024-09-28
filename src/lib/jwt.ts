@@ -1,4 +1,4 @@
-import { SessionType } from "@/server-actions/auth/getSession";
+import { SessionType } from "@/lib/auth/getSession";
 import { jwtVerify, SignJWT } from "jose";
 
 const jwt = {

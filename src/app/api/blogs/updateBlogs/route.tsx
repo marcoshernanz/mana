@@ -1,6 +1,6 @@
 import { db } from "@/database/db";
 import { blogsTable } from "@/database/schemas/blogs";
-import getSession from "@/server-actions/auth/getSession";
+import getSession from "@/lib/auth/getSession";
 import { eq } from "drizzle-orm";
 import { isRedirectError } from "next/dist/client/components/redirect";
 

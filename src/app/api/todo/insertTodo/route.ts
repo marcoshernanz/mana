@@ -1,6 +1,6 @@
 import { db } from "@/database/db";
 import { todosTable } from "@/database/schemas/todos";
-import getSession from "@/server-actions/auth/getSession";
+import getSession from "@/lib/auth/getSession";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function POST(request: Request) {

@@ -2,7 +2,7 @@ import { db } from "@/database/db";
 import { todosTable } from "@/database/schemas/todos";
 import { twitterTable } from "@/database/schemas/twitter";
 import { usersTable } from "@/database/schemas/users";
-import getSession from "@/server-actions/auth/getSession";
+import getSession from "@/lib/auth/getSession";
 import { asc, desc, eq, isNotNull, isNull } from "drizzle-orm";
 import { isRedirectError } from "next/dist/client/components/redirect";
 

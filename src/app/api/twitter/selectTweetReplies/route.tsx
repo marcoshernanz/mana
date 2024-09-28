@@ -1,7 +1,7 @@
 import { db } from "@/database/db";
 import { twitterTable } from "@/database/schemas/twitter";
 import { usersTable } from "@/database/schemas/users";
-import getSession from "@/server-actions/auth/getSession";
+import getSession from "@/lib/auth/getSession";
 import { eq } from "drizzle-orm";
 import { isRedirectError } from "next/dist/client/components/redirect";
 

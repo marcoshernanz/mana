@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import PrincipalMenu from "./PrincipalMenu";
+import { cn } from "@/lib/utils";
 
 interface WriteTodoProps {
   initialData: TodosType[];
@@ -199,20 +200,15 @@ export default function Todos({ initialData }: WriteTodoProps) {
   }, [handleUndo]);
 
   return (
-    <div className="flex w-full flex-col rounded-xl border border-slate-200 bg-white px-6 pt-6 hover:shadow-md">
-      <div className="flex w-full">
-        <div>
-          <span>My Tasks</span>
-        </div>
-
-        <div className="ml-auto flex items-start justify-end">
-          <PrincipalMenu OnDeleteAll={OnDeleteAll} orderBy={orderedTodos} />
-        </div>
+    <div className="rounded-xl border bg-white px-10 py-8 shadow-sm">
+      <div className="flex w-full items-center justify-between">
+        <h1 className="text-xl">My Tasks</h1>
+        <PrincipalMenu />
       </div>
-      <div className="flex max-w-lg flex-col pt-8">
+      <div className="pt-4">
         <AddTodo addTodo={addTodo} parentTodoId={null} />
       </div>
-      <div className="mt-10 flex w-full flex-col gap-3">
+      <div className="flex flex-col gap-3 pb-6 pt-6">
         {uncompletedParentTodos.map((todo) => (
           <TodoItem
             key={todo.id}
@@ -224,38 +220,40 @@ export default function Todos({ initialData }: WriteTodoProps) {
           />
         ))}
       </div>
-      <div className="mb-9 flex w-full flex-col gap-4">
-        <div className="flex items-center gap-2 pt-10">
-          <Button
-            variant="ghost"
-            onClick={toggleExpand}
-            className="rounded-full"
-          >
-            {expanded ? (
-              <ChevronDownIcon className="h-6 w-6 text-slate-700" />
-            ) : (
-              <ChevronRightIcon className="h-6 w-6 text-slate-700" />
+
+      <div className="flex items-center gap-2 pb-2 text-slate-600">
+        <Button
+          variant="ghost"
+          onClick={toggleExpand}
+          className="flex h-10 w-10 items-center justify-center rounded-full p-0"
+        >
+          <ChevronRightIcon
+            className={cn(
+              "h-6 w-6 transition-transform duration-300",
+              expanded && "rotate-90",
             )}
-          </Button>
-          <span className="text-sm font-medium text-slate-600">
-            Completed ({CompletedTodos.length})
-          </span>
-        </div>
-        {expanded && (
-          <div className="flex w-full flex-col gap-3">
-            {CompletedTodos.map((todo) => (
-              <TodoItem
-                key={todo.id}
-                todo={todo}
-                toggleIsCompleted={(id: string) => toggleIsCompleted({ id })}
-                OnDelete={OnDelete}
-                addSubTask={addTodo}
-                replyTodos={replyTodos}
-              />
-            ))}
-          </div>
-        )}
+            strokeWidth={1.5}
+          />
+        </Button>
+        <span className="text-sm font-medium">
+          Completed ({CompletedTodos.length})
+        </span>
       </div>
+
+      {expanded && (
+        <div className="flex flex-col gap-3">
+          {CompletedTodos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              toggleIsCompleted={(id: string) => toggleIsCompleted({ id })}
+              OnDelete={OnDelete}
+              addSubTask={addTodo}
+              replyTodos={replyTodos}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

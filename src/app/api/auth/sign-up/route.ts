@@ -3,7 +3,7 @@ import { usersTable } from "@/database/schemas/users";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { cookies } from "next/headers";
-import { SessionType } from "@/server-actions/auth/getSession";
+import { SessionType } from "@/lib/auth/getSession";
 import jwt from "@/lib/jwt";
 
 export async function POST(request: Request) {

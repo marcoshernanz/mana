@@ -1,6 +1,6 @@
 import getUserByUsername from "@/database/queries/auth/getUserByUsername";
 import jwt from "@/lib/jwt";
-import { SessionType } from "@/server-actions/auth/getSession";
+import { SessionType } from "@/lib/auth/getSession";
 import bcrypt from "bcrypt";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { cookies } from "next/headers";

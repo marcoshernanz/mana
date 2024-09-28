@@ -1,7 +1,7 @@
 import { db } from "@/database/db";
 import { todosTable } from "@/database/schemas/todos";
 import { usersTable } from "@/database/schemas/users";
-import getSession from "@/server-actions/auth/getSession";
+import getSession from "@/lib/auth/getSession";
 import { asc, desc, eq, isNotNull, isNull } from "drizzle-orm";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
@@ -34,8 +34,6 @@ export async function POST(request: Request) {
       throw new Error("Descending is required");
     }
 
-    console.log("route", response.orderBy);
-
     const { orderBy, descending, subTasks = false } = response;
 
     const session = await getSession();
@@ -60,8 +58,6 @@ export async function POST(request: Request) {
       .orderBy(
         descending ? desc(todosTable[orderValue]) : asc(todosTable[orderValue]),
       );
-
-    console.log("tasks", tasks);
 
     // // const tweets = await getTweets.json();
     // const formattedTodos = tasks.map((todo: TodoResponseType) => ({
