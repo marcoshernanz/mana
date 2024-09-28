@@ -5,19 +5,36 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
+import { useTodo } from "@/contexts/TodoContext";
 
 interface AddTodoProps {
-  addTodo: (text: string, parentTodoId: string | null) => void;
   parentTodoId: string | null;
   handleAddSubTodo?: (reply: boolean) => void;
 }
 
 export default function AddTodo({
-  addTodo,
   parentTodoId,
   handleAddSubTodo,
 }: AddTodoProps) {
   const [text, setText] = useState<string>("");
+
+  const { setTodos, undoRegisterRef } = useTodo();
+
+  const addTodo = async (text: string, parentTodoId: string | null) => {
+    const response = await fetch("/api/todo/insertTodo", {
+      method: "POST",
+      body: JSON.stringify({ text, parentTodoId }),
+    });
+
+    if (response.ok) {
+      const newTodo = await response.json();
+
+      setTodos((prev) => [...prev, newTodo]);
+      undoRegisterRef.current.push(newTodo);
+    } else {
+      // TODO
+    }
+  };
 
   const handleAddTodo = (text: string) => {
     addTodo && addTodo(text, parentTodoId);

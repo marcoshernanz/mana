@@ -1,19 +1,17 @@
-import { Button } from "@/components/ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { OrderByType, useTodo } from "@/contexts/TodoContext";
 import { EllipsisVerticalIcon } from "lucide-react";
-import { useState } from "react";
 
 export default function PrincipalMenu() {
-  const [orderBy, setOrderBy] = useState("My Order");
+  const { orderBy, setOrderBy } = useTodo();
 
   return (
     <DropdownMenu>
@@ -23,7 +21,10 @@ export default function PrincipalMenu() {
       <DropdownMenuContent className="relative w-52" align="end">
         <DropdownMenuLabel>Order By</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={orderBy} onValueChange={setOrderBy}>
+        <DropdownMenuRadioGroup
+          value={orderBy}
+          onValueChange={(value) => setOrderBy(value as OrderByType)}
+        >
           <DropdownMenuRadioItem value="myOrder">
             My Order
           </DropdownMenuRadioItem>

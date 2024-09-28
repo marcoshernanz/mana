@@ -3,6 +3,7 @@ import { db } from "@/database/db";
 import { todosTable } from "@/database/schemas/todos";
 import { eq } from "drizzle-orm";
 import Todos from "./Todos";
+import { TodoProvider } from "@/contexts/TodoContext";
 
 export default async function TodoPage() {
   const session = await getSession();
@@ -18,10 +19,12 @@ export default async function TodoPage() {
     .where(eq(todosTable.userId, userId));
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="w-full max-w-4xl">
-        <Todos initialData={todos} />
+    <TodoProvider initialTodos={todos}>
+      <div className="flex h-screen items-center justify-center">
+        <div className="w-full max-w-4xl">
+          <Todos />
+        </div>
       </div>
-    </div>
+    </TodoProvider>
   );
 }

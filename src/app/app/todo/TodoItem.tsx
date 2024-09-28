@@ -1,31 +1,76 @@
-import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TodosType } from "@/database/schemas/todos";
-import { EllipsisVerticalIcon, StarIcon, Trash2Icon } from "lucide-react";
+import { StarIcon, Trash2Icon } from "lucide-react";
 import Menu from "./Menu";
 import { useState } from "react";
-import SubTodos from "./SubTodos";
 import AddTodo from "./AddTodo";
+import { useTodo } from "@/contexts/TodoContext";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 interface TodoItemProps {
   todo: TodosType;
-  toggleIsCompleted: (id: string) => Promise<void>;
-  OnDelete: (id: string) => void;
+  isSubTodo?: boolean;
   isReplying?: boolean;
-  addSubTask: (text: string, parentTodoId: string | null) => void;
-  replyTodos: (parentTodoId: string | null) => TodosType[];
 }
 
 export default function TodoItem({
   todo,
-  toggleIsCompleted,
-  OnDelete,
+  isSubTodo = false,
   isReplying,
-  addSubTask,
-  replyTodos,
 }: TodoItemProps) {
   const [stared, setStared] = useState(todo.isStared);
   const [replying, setReplying] = useState(isReplying);
+
+  const { setTodos, undoRegisterRef } = useTodo();
+
+  const { toast } = useToast();
+
+  const toggleIsCompleted = async ({
+    isUndo = false,
+  }: {
+    isUndo?: boolean;
+  } = {}) => {
+    const response = await fetch("/api/todo/updateTodo", {
+      method: "PATCH",
+      body: JSON.stringify({
+        id: todo.id,
+        isCompleted: !todo.isCompleted,
+        undefined,
+      }),
+    });
+
+    if (response.ok) {
+      setTodos((prev) =>
+        prev.map((item) =>
+          item.id === todo.id
+            ? { ...item, isCompleted: !item.isCompleted }
+            : item,
+        ),
+      );
+    }
+
+    if (isUndo === false) {
+      undoRegisterRef.current.push({ action: "toggleIsCompleted", todo });
+      toast({
+        title: "Todo updated",
+        action: (
+          <ToastAction
+            onClick={async () => {
+              undoRegisterRef.current.pop();
+              await toggleIsCompleted({ isUndo: true });
+              toast({
+                title: "Action undone",
+              });
+            }}
+            altText="Undo"
+          >
+            Undo
+          </ToastAction>
+        ),
+      });
+    }
+  };
 
   const update = async (
     id: string,
@@ -49,7 +94,7 @@ export default function TodoItem({
     });
 
     if (response.ok) {
-      OnDelete(id);
+      setTodos((prev) => prev.filter((todo) => todo.id !== id));
     }
   };
 
@@ -70,7 +115,7 @@ export default function TodoItem({
             <div className="flex w-full gap-6">
               <Checkbox
                 checked={todo.isCompleted}
-                onCheckedChange={() => toggleIsCompleted(todo.id)}
+                onCheckedChange={() => toggleIsCompleted()}
               />
               {todo.isCompleted ? (
                 <div className="line-through">{todo.text}</div>
@@ -78,19 +123,6 @@ export default function TodoItem({
                 <div>{todo.text}</div>
               )}
             </div>
-            {replyTodos(todo.id).length > 0 ? (
-              <div className="mt-6 flex flex-col rounded-md border border-slate-100">
-                {replyTodos(todo.id).map((todos) => (
-                  <SubTodos
-                    key={todos.id}
-                    todo={todos}
-                    toggleIsCompleted={toggleIsCompleted}
-                    OnDelete={OnDelete}
-                    handleStar={update}
-                  />
-                ))}
-              </div>
-            ) : null}
           </div>
           <div className="flex items-start justify-end">
             <div className="flex items-center justify-center gap-2">
@@ -103,7 +135,7 @@ export default function TodoItem({
                 </button>
               ) : (
                 <Menu
-                  OnDelete={OnDelete}
+                  isSubTodo={isSubTodo}
                   handleAddSubTodo={handleAddSubTodo}
                   handleDelete={() => handleDelete(todo.id)}
                 />
@@ -118,18 +150,19 @@ export default function TodoItem({
             </div>
           </div>
         </div>
-        <div className="max-w-xl">
-          {replying
-            ? (console.log(todo.id),
-              (
-                <AddTodo
-                  parentTodoId={todo.id}
-                  addTodo={addSubTask}
-                  handleAddSubTodo={handleAddSubTodo}
-                />
-              ))
-            : null}
-        </div>
+        {!isSubTodo && (
+          <div className="max-w-xl">
+            {replying
+              ? (console.log(todo.id),
+                (
+                  <AddTodo
+                    parentTodoId={todo.id}
+                    handleAddSubTodo={handleAddSubTodo}
+                  />
+                ))
+              : null}
+          </div>
+        )}
       </div>
     </div>
   );

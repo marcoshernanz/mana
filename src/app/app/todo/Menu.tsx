@@ -13,14 +13,14 @@ import {
 } from "lucide-react";
 
 interface MenuProps {
-  OnDelete: (id: string) => void;
+  isSubTodo?: boolean;
   handleAddSubTodo?: (reply: boolean) => void;
   className?: string;
   handleDelete?: () => void;
 }
 
 export default function Menu({
-  OnDelete,
+  isSubTodo = false,
   handleAddSubTodo,
   className,
   handleDelete,
@@ -46,7 +46,7 @@ export default function Menu({
               Delete
             </Button>
           </DropdownMenuItem>
-          {handleAddSubTodo ? (
+          {!isSubTodo ? (
             <DropdownMenuItem className="gap-3 pl-2">
               <CornerDownRightIcon className="h-5 w-5 text-slate-600" />
               <Button
