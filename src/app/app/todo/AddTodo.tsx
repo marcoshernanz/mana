@@ -9,20 +9,20 @@ import { Button } from "@/components/ui/Button";
 interface AddTodoProps {
   addTodo: (text: string, parentTodoId: string | null) => void;
   parentTodoId: string | null;
-  handleReply?: (reply: boolean) => void;
+  handleAddSubTodo?: (reply: boolean) => void;
 }
 
 export default function AddTodo({
   addTodo,
   parentTodoId,
-  handleReply,
+  handleAddSubTodo,
 }: AddTodoProps) {
   const [text, setText] = useState<string>("");
 
   const handleAddTodo = (text: string) => {
     addTodo && addTodo(text, parentTodoId);
     if (parentTodoId) {
-      handleReply && handleReply(false);
+      handleAddSubTodo && handleAddSubTodo(false);
     }
     setText("");
   };

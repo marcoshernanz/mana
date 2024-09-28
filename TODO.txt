@@ -236,14 +236,11 @@ https://calendar.google.com/calendar/u/0/r/tasks
 
 
 - Add subtasks                                                         --> DONE
-- Order by my order, date, and 
-- Order by starred
+- Order by my order, date, and Order by starred
 - Edit tasks
 - Drag and drop to reorder
-
-Weird behaviour: When i create a tweet and like it, and later delete it, i have an error in the whole screen.
 
 
 
 Observations (is ok?):
-- when i delete a task, i delete subtasks, therefore, when task is completed and i delete it, i also delete subtask 
+- when i delete a task, i delete subtasks, therefore, when task is completed and i delete it, i also delete completed subtask 

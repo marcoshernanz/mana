@@ -8,10 +8,21 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import PrincipalMenu from "./PrincipalMenu";
 
 interface WriteTodoProps {
   initialData: TodosType[];
 }
+
+type NewTodoType = {
+  createdAt: Date;
+  isStared: boolean;
+  id: string;
+  text: string;
+  isCompleted: boolean;
+  userId: string;
+  parentTodoId: string | null;
+};
 
 type UndoRegisterType = {
   action: "add" | "toggleIsCompleted" | "delete" | "updateText";
@@ -22,6 +33,35 @@ export default function Todos({ initialData }: WriteTodoProps) {
   const [todos, setTodos] = useState(initialData);
   const [expanded, setExpanded] = useState(false);
   const { toast } = useToast();
+
+  const orderedTodos = async (order: string) => {
+    console.log(order);
+    const response = await fetch("/api/todo/orderBy", {
+      method: "POST",
+      body: JSON.stringify({
+        orderBy: order,
+        descending: true,
+      }),
+    });
+
+    if (response.ok) {
+      const newTodosOrder = await response.json();
+      console.log(newTodosOrder);
+      // setTodos((currTodos) => {
+      //   const filteredTodos = currTodos.filter(
+      //     (currTodo) =>
+      //       !newTodosOrder.some(
+      //         (newTodo: NewTodoType) => newTodo.id === currTodo.id,
+      //       ),
+      //   );
+      // return [...filteredTodos, ...newTodosOrder];
+      setTodos(newTodosOrder);
+    }
+  };
+
+  const OnDeleteAll = async () => {
+    console.log("delete all");
+  };
 
   const toggleExpand = () => {
     setExpanded((prev) => !prev);
@@ -160,7 +200,15 @@ export default function Todos({ initialData }: WriteTodoProps) {
 
   return (
     <div className="flex w-full flex-col rounded-xl border border-slate-200 bg-white px-6 pt-6 hover:shadow-md">
-      <span>My Tasks</span>
+      <div className="flex w-full">
+        <div>
+          <span>My Tasks</span>
+        </div>
+
+        <div className="ml-auto flex items-start justify-end">
+          <PrincipalMenu OnDeleteAll={OnDeleteAll} orderBy={orderedTodos} />
+        </div>
+      </div>
       <div className="flex max-w-lg flex-col pt-8">
         <AddTodo addTodo={addTodo} parentTodoId={null} />
       </div>

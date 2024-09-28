@@ -5,38 +5,32 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import {
   CornerDownRightIcon,
   EllipsisVerticalIcon,
   Trash2Icon,
 } from "lucide-react";
-import AddTodo from "./AddTodo";
-import { useState } from "react";
 
 interface MenuProps {
-  id: string;
   OnDelete: (id: string) => void;
-  handleReply?: (reply: boolean) => void;
+  handleAddSubTodo?: (reply: boolean) => void;
+  className?: string;
+  handleDelete?: () => void;
 }
 
-export default function Menu({ id, OnDelete, handleReply }: MenuProps) {
-  const handleDelete = async () => {
-    const response = await fetch("/api/todo/deleteTodo", {
-      method: "DELETE",
-      body: JSON.stringify({ id }),
-    });
-
-    if (response.ok) {
-      OnDelete(id);
-    }
-  };
-
+export default function Menu({
+  OnDelete,
+  handleAddSubTodo,
+  className,
+  handleDelete,
+}: MenuProps) {
   const addSubTask = () => {
-    handleReply && handleReply(true);
+    handleAddSubTodo && handleAddSubTodo(true);
   };
 
   return (
-    <div className="z-200 relative flex">
+    <div className={cn("z-200 relative flex", className)}>
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full">
           <EllipsisVerticalIcon className="h-5 w-5 text-slate-700" />
@@ -52,7 +46,7 @@ export default function Menu({ id, OnDelete, handleReply }: MenuProps) {
               Delete
             </Button>
           </DropdownMenuItem>
-          {handleReply ? (
+          {handleAddSubTodo ? (
             <DropdownMenuItem className="gap-3 pl-2">
               <CornerDownRightIcon className="h-5 w-5 text-slate-600" />
               <Button

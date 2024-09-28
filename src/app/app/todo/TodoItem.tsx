@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TodosType } from "@/database/schemas/todos";
-import { EllipsisVerticalIcon, StarIcon } from "lucide-react";
+import { EllipsisVerticalIcon, StarIcon, Trash2Icon } from "lucide-react";
 import Menu from "./Menu";
 import { useState } from "react";
 import SubTodos from "./SubTodos";
@@ -42,12 +42,23 @@ export default function TodoItem({
     });
   };
 
+  const handleDelete = async (id: string) => {
+    const response = await fetch("/api/todo/deleteTodo", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    });
+
+    if (response.ok) {
+      OnDelete(id);
+    }
+  };
+
   const handleStar = () => {
     update(todo.id, undefined, !stared);
     setStared((prev) => !prev);
   };
 
-  const handleReply = (reply: boolean) => {
+  const handleAddSubTodo = (reply: boolean) => {
     setReplying(reply);
   };
 
@@ -81,15 +92,30 @@ export default function TodoItem({
               </div>
             ) : null}
           </div>
-          <div className="flex items-start justify-end gap-2">
-            <Menu id={todo.id} OnDelete={OnDelete} handleReply={handleReply} />
-            <button onClick={() => handleStar()}>
-              {stared ? (
-                <StarIcon className="h-5 w-5 fill-yellow-300 text-yellow-400" />
+          <div className="flex items-start justify-end">
+            <div className="flex items-center justify-center gap-2">
+              {todo.isCompleted ? (
+                <button
+                  className="p-1 text-slate-600"
+                  onClick={() => handleDelete(todo.id)}
+                >
+                  <Trash2Icon className="h-5 w-5 text-slate-600" />
+                </button>
               ) : (
-                <StarIcon className="h-5 w-5 text-slate-600" />
+                <Menu
+                  OnDelete={OnDelete}
+                  handleAddSubTodo={handleAddSubTodo}
+                  handleDelete={() => handleDelete(todo.id)}
+                />
               )}
-            </button>
+              <button onClick={() => handleStar()}>
+                {stared ? (
+                  <StarIcon className="h-5 w-5 fill-yellow-300 text-yellow-400" />
+                ) : (
+                  <StarIcon className="h-5 w-5 text-slate-600" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
         <div className="max-w-xl">
@@ -99,7 +125,7 @@ export default function TodoItem({
                 <AddTodo
                   parentTodoId={todo.id}
                   addTodo={addSubTask}
-                  handleReply={handleReply}
+                  handleAddSubTodo={handleAddSubTodo}
                 />
               ))
             : null}
