@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { TodosType } from "@/database/schemas/todos";
-import { StarIcon, Trash2Icon } from "lucide-react";
+import { CheckIcon, StarIcon, Trash2Icon } from "lucide-react";
 import Menu from "./Menu";
 import { useState } from "react";
 import AddTodo from "./AddTodo";
@@ -18,7 +18,7 @@ interface TodoItemProps {
 export default function TodoItem({
   todo,
   isSubTodo = false,
-  isReplying,
+  isReplying = false,
 }: TodoItemProps) {
   const [stared, setStared] = useState(todo.isStared);
   const [replying, setReplying] = useState(isReplying);
@@ -109,68 +109,56 @@ export default function TodoItem({
   };
 
   return (
-    <div>
+    <div className="group flex h-9 w-full items-center justify-between bg-white pl-5 pr-5 focus-within:bg-blue-50/70 hover:bg-blue-50/70">
       <div
         className={cn(
-          isSubTodo
-            ? "flex w-full flex-col rounded-lg bg-slate-50 px-6 py-4 hover:bg-slate-100/70"
-            : "flex w-full flex-col rounded-lg bg-white px-6 py-4 hover:bg-slate-50",
+          "flex h-full w-full items-center gap-2 py-1 pr-2",
+          isSubTodo && "pl-9",
         )}
       >
-        <div className="flex w-full">
-          <div className="flex w-full flex-col">
-            <div className="flex w-full gap-6">
-              <Checkbox
-                checked={todo.isCompleted}
-                onCheckedChange={() => toggleIsCompleted()}
-              />
-              {todo.isCompleted ? (
-                <div className="line-through">{todo.text}</div>
-              ) : (
-                <div>{todo.text}</div>
-              )}
-            </div>
-          </div>
-          <div className="flex items-start justify-end">
-            <div className="flex items-center justify-center gap-2">
-              {todo.isCompleted ? (
-                <button
-                  className="p-1 text-slate-600"
-                  onClick={() => handleDelete(todo.id)}
-                >
-                  <Trash2Icon className="h-5 w-5 text-slate-600" />
-                </button>
-              ) : (
-                <Menu
-                  isSubTodo={isSubTodo}
-                  handleAddSubTodo={handleAddSubTodo}
-                  handleDelete={() => handleDelete(todo.id)}
-                />
-              )}
-              <button onClick={() => handleStar()}>
-                {stared ? (
-                  <StarIcon className="h-5 w-5 fill-yellow-300 text-yellow-400" />
-                ) : (
-                  <StarIcon className="h-5 w-5 text-slate-600" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        {!isSubTodo && (
-          <div className="max-w-xl">
-            {replying
-              ? (console.log(todo.id),
-                (
-                  <AddTodo
-                    parentTodoId={todo.id}
-                    handleAddSubTodo={handleAddSubTodo}
-                  />
-                ))
-              : null}
+        <button
+          className="group/checkbox flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center rounded-full border border-blue-500 p-0.5 transition hover:bg-white"
+          onClick={() => toggleIsCompleted()}
+        >
+          <CheckIcon className="text-blue-600 opacity-0 transition-opacity group-hover/checkbox:opacity-100" />
+        </button>
+        <span className="w-full bg-transparent px-2 font-normal text-slate-700 focus:outline-none group-hover:text-slate-800">
+          {todo.text}
+        </span>
+      </div>
+
+      <div className="flex items-center gap-0.5">
+        {todo.isCompleted ? (
+          <button
+            className="rounded-full p-1 text-slate-500 transition hover:bg-blue-100 hover:text-slate-700"
+            onClick={() => handleDelete(todo.id)}
+          >
+            <Trash2Icon className="h-5 w-5 text-slate-600" />
+          </button>
+        ) : (
+          <div className="rounded-full p-1 text-slate-500 transition hover:bg-blue-100 hover:text-slate-700">
+            <Menu
+              isSubTodo={isSubTodo}
+              handleAddSubTodo={handleAddSubTodo}
+              handleDelete={() => handleDelete(todo.id)}
+            />
           </div>
         )}
+        <button
+          onClick={() => handleStar()}
+          className="rounded-full p-1 text-slate-500 transition hover:bg-blue-100 hover:text-slate-700"
+        >
+          <StarIcon
+            className={cn(
+              "h-5 w-5 text-slate-500",
+              stared && "fill-blue-500 text-blue-500",
+            )}
+          />
+        </button>
       </div>
+      {/* {replying && (
+        <AddTodo parentTodoId={todo.id} handleAddSubTodo={handleAddSubTodo} />
+      )} */}
     </div>
   );
 }

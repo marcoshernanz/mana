@@ -1,11 +1,10 @@
-// "use client";
+"use client";
 
 import { useState } from "react";
-// import { TaskType } from "./page";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { useTodo } from "@/contexts/TodoContext";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface AddTodoProps {
   parentTodoId: string | null;
@@ -20,7 +19,7 @@ export default function AddTodo({
 
   const { setTodos, undoRegisterRef } = useTodo();
 
-  const addTodo = async (text: string, parentTodoId: string | null) => {
+  const addTodo = async (parentTodoId: string | null) => {
     const response = await fetch("/api/todo/insertTodo", {
       method: "POST",
       body: JSON.stringify({ text, parentTodoId }),
@@ -36,8 +35,8 @@ export default function AddTodo({
     }
   };
 
-  const handleAddTodo = (text: string) => {
-    addTodo && addTodo(text, parentTodoId);
+  const handleAddTodo = () => {
+    addTodo(parentTodoId);
     if (parentTodoId) {
       handleAddSubTodo && handleAddSubTodo(false);
     }
@@ -45,13 +44,23 @@ export default function AddTodo({
   };
 
   return (
-    <div className="flex gap-2 pt-6">
-      <Input
-        placeholder="Enter your task"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <Button onClick={() => handleAddTodo(text)}>Add</Button>
+    <div className="group flex h-12 w-full items-center justify-between bg-white pl-5 focus-within:bg-blue-50/70 hover:bg-blue-50/70">
+      <div className="flex h-full w-full items-center gap-2 py-1 pr-2">
+        <button className="h-[1.125rem] w-[1.125rem] flex-shrink-0 rounded-full border border-blue-500 group-hover:border-blue-600"></button>
+        <input
+          type="text"
+          placeholder="Add a task"
+          className="h-full w-full bg-transparent px-2 font-normal placeholder:text-slate-600 focus:outline-none focus:placeholder:text-slate-600 group-hover:placeholder:text-slate-700 focus:group-hover:placeholder:text-slate-600"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+      </div>
+      <button
+        className="h-full bg-transparent px-8 font-semibold text-slate-700 transition hover:text-slate-800 hover:shadow-sm active:shadow-none group-focus-within:bg-blue-100 group-hover:bg-blue-100"
+        onClick={handleAddTodo}
+      >
+        Add
+      </button>
     </div>
   );
 }

@@ -41,13 +41,15 @@ export default function Todos() {
         ...todo,
         subTodos:
           todo.parentTodoId === null
-            ? undefined
-            : orderedTodos.filter(
-                (subTodo) => subTodo.parentTodoId === todo.id,
-              ),
+            ? orderedTodos.filter((subTodo) => subTodo.parentTodoId === todo.id)
+            : undefined,
       }));
 
-      return formattedTodos;
+      const parentTodos = formattedTodos.filter(
+        (todo) => todo.parentTodoId === null,
+      );
+
+      return parentTodos;
     },
     [todos],
   );
@@ -81,20 +83,17 @@ export default function Todos() {
   // }, [handleUndo]);
 
   return (
-    <div className="rounded-xl border bg-white px-10 py-8 shadow-sm">
-      <div className="flex w-full items-center justify-between">
-        <h1 className="text-xl">My Tasks</h1>
+    <div className="rounded-xl border bg-white py-4 shadow-sm">
+      <div className="flex w-full items-center justify-between px-5 pb-5">
+        <h1 className="text-xl font-medium">My Tasks</h1>
         <PrincipalMenu />
       </div>
-      <div className="pt-4">
-        <AddTodo parentTodoId={null} />
-      </div>
-      <div className="flex flex-col gap-3 pb-6 pt-6">
+      <AddTodo parentTodoId={null} />
+      <div className="flex flex-col pt-2">
         {getTodos({ completed: false, orderBy }).map((todo) => (
           <Fragment key={todo.id}>
             <TodoItem todo={todo} />
             {todo.subTodos?.map((subTodo) => (
-              // i cannot use the same component because it has different characteristics
               <TodoItem key={subTodo.id} todo={subTodo} isSubTodo={true} />
             ))}
           </Fragment>
