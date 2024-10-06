@@ -7,6 +7,7 @@ import AddTodo from "./AddTodo";
 import { useTodo } from "@/contexts/TodoContext";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { cn } from "@/lib/utils";
 
 interface TodoItemProps {
   todo: TodosType;
@@ -109,7 +110,13 @@ export default function TodoItem({
 
   return (
     <div>
-      <div className="flex w-full flex-col rounded-lg bg-white px-6 py-4 hover:bg-slate-50">
+      <div
+        className={cn(
+          isSubTodo
+            ? "flex w-full flex-col rounded-lg bg-slate-50 px-6 py-4 hover:bg-slate-100/70"
+            : "flex w-full flex-col rounded-lg bg-white px-6 py-4 hover:bg-slate-50",
+        )}
+      >
         <div className="flex w-full">
           <div className="flex w-full flex-col">
             <div className="flex w-full gap-6">

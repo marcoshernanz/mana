@@ -94,6 +94,7 @@ export default function Todos() {
           <Fragment key={todo.id}>
             <TodoItem todo={todo} />
             {todo.subTodos?.map((subTodo) => (
+              // i cannot use the same component because it has different characteristics
               <TodoItem key={subTodo.id} todo={subTodo} isSubTodo={true} />
             ))}
           </Fragment>
