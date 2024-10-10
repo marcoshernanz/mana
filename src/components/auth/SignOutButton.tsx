@@ -1,6 +1,6 @@
 "use client";
 
-import signOut from "@/server-actions/auth/signOut";
+import signOut from "@/lib/auth/signOut";
 import { Button } from "../ui/Button";
 
 export default function SignOutButton() {
@@ -10,7 +10,8 @@ export default function SignOutButton() {
 
   return (
     <Button
-      className="rounded-md bg-red-500 px-4 py-2 text-white"
+      variant="ghost"
+      className="rounded-md px-4 py-2 text-slate-800"
       onClick={handleSignOut}
     >
       Sign Out

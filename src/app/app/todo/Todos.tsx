@@ -40,6 +40,7 @@ export default function Todos() {
 
       const formattedTodos = orderedTodos.map((todo) => ({
         ...todo,
+        // account: todo.users?.username as string,
         subTodos:
           todo.parentTodoId === null
             ? orderedTodos.filter(

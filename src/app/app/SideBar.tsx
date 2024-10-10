@@ -18,6 +18,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import SignOutButton from "@/components/auth/SignOutButton";
+import Link from "next/link";
 
 const sideBarItems = [
   {
@@ -79,11 +81,16 @@ export default function SideBar() {
           <DropdownMenuSeparator />
           <DropdownMenuItem className="flex gap-2">
             <UserIcon className="h-5 w-5 text-slate-800" />
-            <button>Profile</button>
+            {/* <Link
+              href={`/app/twitter/${tweet.account}`}
+              className="max-w-6xl break-words pb-3 pl-6 pr-6 text-sm text-slate-600 dark:text-slate-300"
+            >
+              {tweet.author}
+            </Link> */}
           </DropdownMenuItem>
           <DropdownMenuItem>
             <LogOutIcon className="h-5 w-5 text-slate-800" />
-            <button>Log out</button>
+            <SignOutButton />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
