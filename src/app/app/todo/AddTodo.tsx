@@ -50,7 +50,7 @@ export default function AddTodo({
         <input
           type="text"
           placeholder="Add a task"
-          className="h-full w-full bg-transparent px-2 font-normal placeholder:text-slate-600 focus:outline-none focus:placeholder:text-slate-600 group-hover:placeholder:text-slate-700 focus:group-hover:placeholder:text-slate-600"
+          className="h-full w-full bg-transparent px-2 font-normal placeholder:text-sky-800/60 focus:outline-none focus:placeholder:text-slate-400 group-hover:placeholder:text-slate-600 focus:group-hover:placeholder:text-slate-500"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />

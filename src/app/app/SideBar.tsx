@@ -1,8 +1,23 @@
 "use client";
 
-import { BirdIcon, BookIcon, HomeIcon, ListCheckIcon } from "lucide-react";
+import {
+  BirdIcon,
+  BookIcon,
+  HomeIcon,
+  ListCheckIcon,
+  LogOutIcon,
+  UserIcon,
+} from "lucide-react";
 import SideBarItem, { SideBarItemProps } from "./SideBarItem";
 import { useEffect, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const sideBarItems = [
   {
@@ -57,7 +72,21 @@ export default function SideBar() {
           />
         ))}
       </div>
-      <button>User button</button>
+      <DropdownMenu>
+        <DropdownMenuTrigger>Account</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem className="flex gap-2">
+            <UserIcon className="h-5 w-5 text-slate-800" />
+            <button>Profile</button>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <LogOutIcon className="h-5 w-5 text-slate-800" />
+            <button>Log out</button>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

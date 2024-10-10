@@ -106,59 +106,69 @@ export default function TodoItem({
 
   const handleAddSubTodo = (reply: boolean) => {
     setReplying(reply);
+    // isReplying = true;
   };
 
   return (
-    <div className="group flex h-9 w-full items-center justify-between bg-white pl-5 pr-5 focus-within:bg-blue-50/70 hover:bg-blue-50/70">
-      <div
-        className={cn(
-          "flex h-full w-full items-center gap-2 py-1 pr-2",
-          isSubTodo && "pl-9",
-        )}
-      >
-        <button
-          className="group/checkbox flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center rounded-full border border-blue-500 p-0.5 transition hover:bg-white"
-          onClick={() => toggleIsCompleted()}
+    <div className="flex w-full flex-col">
+      <div className="group flex h-9 w-full items-center justify-between pl-5 pr-5 focus-within:bg-blue-50/70 hover:bg-blue-50/70">
+        <div
+          className={cn(
+            "flex h-full w-full items-center gap-2 py-1 pr-2",
+            isSubTodo && "pl-9",
+          )}
         >
-          <CheckIcon className="text-blue-600 opacity-0 transition-opacity group-hover/checkbox:opacity-100" />
-        </button>
-        <span className="w-full bg-transparent px-2 font-normal text-slate-700 focus:outline-none group-hover:text-slate-800">
-          {todo.text}
-        </span>
-      </div>
+          {!todo.isCompleted ? (
+            <button
+              className="group/checkbox flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center rounded-full border border-blue-500 p-0.5 transition hover:bg-white"
+              onClick={() => toggleIsCompleted()}
+            >
+              <CheckIcon className="text-blue-600 opacity-0 transition-opacity group-hover/checkbox:opacity-100" />
+            </button>
+          ) : (
+            <CheckIcon className="group/checkbox flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center rounded-full border border-blue-500 p-0.5 text-blue-600 transition hover:bg-white" />
+          )}
 
-      <div className="flex items-center gap-0.5">
-        {todo.isCompleted ? (
+          <span className="w-full bg-transparent px-2 font-normal text-slate-700 focus:outline-none group-hover:text-slate-800">
+            {todo.text}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-0.5">
+          {todo.isCompleted ? (
+            <button
+              className="rounded-full p-1 text-slate-500 transition hover:bg-blue-100 hover:text-slate-700"
+              onClick={() => handleDelete(todo.id)}
+            >
+              <Trash2Icon className="h-5 w-5 text-slate-600" />
+            </button>
+          ) : (
+            <div className="rounded-full p-1 text-slate-500 transition hover:bg-blue-100 hover:text-slate-700">
+              <Menu
+                isSubTodo={isSubTodo}
+                handleAddSubTodo={handleAddSubTodo}
+                handleDelete={() => handleDelete(todo.id)}
+              />
+            </div>
+          )}
           <button
+            onClick={() => handleStar()}
             className="rounded-full p-1 text-slate-500 transition hover:bg-blue-100 hover:text-slate-700"
-            onClick={() => handleDelete(todo.id)}
           >
-            <Trash2Icon className="h-5 w-5 text-slate-600" />
-          </button>
-        ) : (
-          <div className="rounded-full p-1 text-slate-500 transition hover:bg-blue-100 hover:text-slate-700">
-            <Menu
-              isSubTodo={isSubTodo}
-              handleAddSubTodo={handleAddSubTodo}
-              handleDelete={() => handleDelete(todo.id)}
+            <StarIcon
+              className={cn(
+                "h-5 w-5 text-slate-500",
+                stared && "fill-blue-500 text-blue-500",
+              )}
             />
-          </div>
-        )}
-        <button
-          onClick={() => handleStar()}
-          className="rounded-full p-1 text-slate-500 transition hover:bg-blue-100 hover:text-slate-700"
-        >
-          <StarIcon
-            className={cn(
-              "h-5 w-5 text-slate-500",
-              stared && "fill-blue-500 text-blue-500",
-            )}
-          />
-        </button>
+          </button>
+        </div>
       </div>
-      {/* {replying && (
-        <AddTodo parentTodoId={todo.id} handleAddSubTodo={handleAddSubTodo} />
-      )} */}
+      <div className="pl-5">
+        {replying && (
+          <AddTodo parentTodoId={todo.id} handleAddSubTodo={handleAddSubTodo} />
+        )}
+      </div>
     </div>
   );
 }

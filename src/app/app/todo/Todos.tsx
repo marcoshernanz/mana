@@ -22,6 +22,7 @@ export default function Todos() {
       const filteredTodos = todos.filter(
         (todo) => todo.isCompleted === completed,
       );
+      console.log("filtered todos: ", filteredTodos);
 
       const orderedTodos = filteredTodos.sort((a, b) => {
         if (orderBy === "myOrder") {
@@ -41,9 +42,15 @@ export default function Todos() {
         ...todo,
         subTodos:
           todo.parentTodoId === null
-            ? orderedTodos.filter((subTodo) => subTodo.parentTodoId === todo.id)
+            ? orderedTodos.filter(
+                (subTodo) =>
+                  subTodo.parentTodoId === todo.id &&
+                  subTodo.isCompleted === todo.isCompleted,
+              )
             : undefined,
       }));
+
+      console.log("formatted todos: ", formattedTodos);
 
       const parentTodos = formattedTodos.filter(
         (todo) => todo.parentTodoId === null,
@@ -120,10 +127,18 @@ export default function Todos() {
       </div>
 
       {areCompletedTodosExpanded && (
-        <div className="flex flex-col gap-3">
-          {getTodos({ completed: true, orderBy }).map((todo) => (
-            <TodoItem key={todo.id} todo={todo} />
-          ))}
+        <div className="flex flex-col">
+          <>
+            {console.log(getTodos({ completed: true, orderBy }))}
+            {getTodos({ completed: true, orderBy }).map((todo) => (
+              <>
+                <TodoItem key={todo.id} todo={todo} />
+                {todo.subTodos?.map((subTodo) => (
+                  <TodoItem key={subTodo.id} todo={subTodo} isSubTodo={true} />
+                ))}
+              </>
+            ))}
+          </>
         </div>
       )}
     </div>
