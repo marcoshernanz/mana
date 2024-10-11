@@ -5,14 +5,25 @@ import { createContext, useContext, useRef, useState } from "react";
 
 export type OrderByType = "myOrder" | "date" | "starred";
 
+export type formattedTodosType = {
+  id: string;
+  parentTodoId: string | null;
+  text: string;
+  isStared: boolean;
+  account: string;
+  isCompleted: boolean;
+  createdAt: Date;
+  userId: string;
+};
+
 type UndoRegisterType = {
   action: "add" | "toggleIsCompleted" | "delete" | "updateText";
   todo: TodosType;
 }[];
 
 const TodoContext = createContext<null | {
-  todos: TodosType[];
-  setTodos: React.Dispatch<React.SetStateAction<TodosType[]>>;
+  todos: formattedTodosType[];
+  setTodos: React.Dispatch<React.SetStateAction<formattedTodosType[]>>;
   orderBy: OrderByType;
   setOrderBy: React.Dispatch<React.SetStateAction<OrderByType>>;
   areCompletedTodosExpanded: boolean;
@@ -22,11 +33,11 @@ const TodoContext = createContext<null | {
 
 interface TodosProviderProps {
   children: React.ReactNode;
-  initialTodos?: TodosType[];
+  initialTodos?: formattedTodosType[];
 }
 
 export function TodoProvider({ children, initialTodos }: TodosProviderProps) {
-  const [todos, setTodos] = useState<TodosType[]>(initialTodos || []);
+  const [todos, setTodos] = useState<formattedTodosType[]>(initialTodos || []);
   const [orderBy, setOrderBy] = useState<OrderByType>("myOrder");
   const [areCompletedTodosExpanded, setAreCompletedTodosExpanded] =
     useState(false);

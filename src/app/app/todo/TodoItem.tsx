@@ -4,13 +4,13 @@ import { CheckIcon, StarIcon, Trash2Icon } from "lucide-react";
 import Menu from "./Menu";
 import { useState } from "react";
 import AddTodo from "./AddTodo";
-import { useTodo } from "@/contexts/TodoContext";
+import { formattedTodosType, useTodo } from "@/contexts/TodoContext";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 
 interface TodoItemProps {
-  todo: TodosType;
+  todo: formattedTodosType;
   isSubTodo?: boolean;
   isReplying?: boolean;
 }

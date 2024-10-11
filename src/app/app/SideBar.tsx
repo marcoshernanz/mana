@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import SignOutButton from "@/components/auth/SignOutButton";
 import Link from "next/link";
+import { useTodo } from "@/contexts/TodoContext";
 
 const sideBarItems = [
   {
@@ -44,7 +45,11 @@ const sideBarItems = [
   },
 ] satisfies SideBarItemProps[];
 
-export default function SideBar() {
+interface SideBarProps {
+  account?: string;
+}
+
+export default function SideBar(account: SideBarProps) {
   const [clickedIndex, setClickedIndex] = useState<number>(0);
 
   const handleClick = (index: number) => {
@@ -81,12 +86,17 @@ export default function SideBar() {
           <DropdownMenuSeparator />
           <DropdownMenuItem className="flex gap-2">
             <UserIcon className="h-5 w-5 text-slate-800" />
-            {/* <Link
-              href={`/app/twitter/${tweet.account}`}
-              className="max-w-6xl break-words pb-3 pl-6 pr-6 text-sm text-slate-600 dark:text-slate-300"
-            >
-              {tweet.author}
-            </Link> */}
+            {/* {account !== undefined ? (
+              <Link
+                href={`/app/twitter/${account}`}
+                className="max-w-6xl break-words pb-3 pl-6 pr-6 text-sm text-slate-600 dark:text-slate-300"
+              >
+                Account
+              </Link>
+            ) : (
+              <span>Account</span>
+            )} */}
+            Account
           </DropdownMenuItem>
           <DropdownMenuItem>
             <LogOutIcon className="h-5 w-5 text-slate-800" />

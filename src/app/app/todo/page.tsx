@@ -46,7 +46,7 @@ export default async function TodoPage() {
 
   const formattedTodos = todos.map((todo: TodoType) => ({
     id: todo.todos.id,
-    parentTweetId: todo.todos.parentTodoId,
+    parentTodoId: todo.todos.parentTodoId,
     text: todo.todos.text,
     isStared: todo.todos.isStared,
     account: todo.users?.username as string,
