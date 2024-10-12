@@ -6,6 +6,8 @@ import {
   HomeIcon,
   ListCheckIcon,
   LogOutIcon,
+  MoonIcon,
+  SunIcon,
   UserIcon,
 } from "lucide-react";
 import SideBarItem, { SideBarItemProps } from "./SideBarItem";
@@ -21,6 +23,7 @@ import {
 import SignOutButton from "@/components/auth/SignOutButton";
 import Link from "next/link";
 import { useTodo } from "@/contexts/TodoContext";
+import Theme from "./Theme";
 
 const sideBarItems = [
   {
@@ -45,6 +48,17 @@ const sideBarItems = [
   },
 ] satisfies SideBarItemProps[];
 
+const dropDownMenuItems = [
+  {
+    Icon: MoonIcon,
+    text: "Dark Mode",
+  },
+  {
+    Icon: SunIcon,
+    text: "Light Mode",
+  },
+];
+
 interface SideBarProps {
   account?: string;
 }
@@ -68,7 +82,7 @@ export default function SideBar(account: SideBarProps) {
   }, [clickedIndex]);
 
   return (
-    <div className="fixed left-0 right-0 z-30 flex h-screen w-44 flex-col justify-between border-r bg-white px-1 pb-3 pt-2 shadow-lg">
+    <div className="fixed left-0 right-0 z-30 flex h-screen w-44 flex-col justify-between border-r px-1 pb-3 pt-2 shadow-lg dark:border-slate-700 dark:bg-slate-800">
       <div className="flex flex-col gap-1">
         {sideBarItems.map((item, index) => (
           <SideBarItem
@@ -84,7 +98,7 @@ export default function SideBar(account: SideBarProps) {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="flex gap-2">
+          <DropdownMenuItem className="flex gap-2 text-slate-950 transition duration-200 hover:font-medium hover:text-black dark:text-slate-50">
             <UserIcon className="h-5 w-5 text-slate-800" />
             {/* {account !== undefined ? (
               <Link
@@ -102,6 +116,18 @@ export default function SideBar(account: SideBarProps) {
             <LogOutIcon className="h-5 w-5 text-slate-800" />
             <SignOutButton />
           </DropdownMenuItem>
+          <DropdownMenuLabel>Mode</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {/* {dropDownMenuItems.map((item, index) => (
+            <DropdownMenuItem
+              key={index}
+              className="flex gap-2 text-slate-950 transition duration-200 hover:font-medium hover:text-black"
+            >
+              <item.Icon className="h-5 w-5 text-slate-800" />
+              {item?.text}
+            </DropdownMenuItem>
+          ))} */}
+          <Theme />
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -15,7 +15,7 @@ export default function PrincipalMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex h-9 w-9 items-center justify-center rounded-full text-slate-800 transition hover:bg-slate-100 hover:text-slate-950 hover:shadow-sm active:shadow-none">
+      <DropdownMenuTrigger className="flex h-9 w-9 items-center justify-center rounded-full text-slate-800 transition hover:bg-slate-100 hover:text-slate-950 hover:shadow-sm active:shadow-none dark:text-slate-200 dark:hover:bg-slate-700">
         <EllipsisVerticalIcon className="h-5 w-5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="relative w-52" align="end">

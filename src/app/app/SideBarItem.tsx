@@ -25,7 +25,7 @@ export default function SideBarItem({
   return (
     <Link href={href}>
       <button
-        className={`flex w-full items-center justify-start gap-2.5 rounded-md px-2 py-2.5 pl-6 text-slate-600 transition duration-150 hover:bg-slate-100 hover:text-slate-950 hover:shadow-sm ${isClicked ? "bg-slate-200 text-slate-950 shadow-md" : "hover:bg-slate-100 hover:text-slate-950 hover:shadow-sm"}`}
+        className={`flex w-full items-center justify-start gap-2.5 rounded-md bg-slate-50 px-2 py-2.5 pl-6 text-slate-600 transition duration-150 hover:bg-slate-100 hover:text-slate-950 hover:shadow-sm dark:bg-slate-600 ${isClicked ? "bg-slate-200 text-slate-950 shadow-md dark:bg-slate-400 dark:text-white" : "hover:bg-slate-100 hover:text-slate-950 hover:shadow-sm dark:text-slate-50 dark:hover:bg-slate-500/80"}`}
         onClick={onClick}
       >
         <Icon />

@@ -91,9 +91,11 @@ export default function Todos() {
   // }, [handleUndo]);
 
   return (
-    <div className="rounded-xl border bg-white py-4 shadow-sm">
+    <div className="rounded-xl border bg-white py-4 shadow-sm dark:bg-slate-800">
       <div className="flex w-full items-center justify-between px-5 pb-5">
-        <h1 className="text-xl font-medium">My Tasks</h1>
+        <h1 className="text-xl font-medium text-white dark:text-slate-50">
+          My Tasks
+        </h1>
         <PrincipalMenu />
       </div>
       <AddTodo parentTodoId={null} />

@@ -111,7 +111,7 @@ export default function TodoItem({
 
   return (
     <div className="flex w-full flex-col">
-      <div className="group flex h-9 w-full items-center justify-between pl-5 pr-5 focus-within:bg-blue-50/70 hover:bg-blue-50/70">
+      <div className="group flex h-9 w-full items-center justify-between pl-5 pr-5 focus-within:bg-blue-50/70 hover:bg-blue-50/70 dark:focus-within:bg-blue-800/70 dark:hover:bg-blue-700/70">
         <div
           className={cn(
             "flex h-full w-full items-center gap-2 py-1 pr-2",
@@ -120,13 +120,13 @@ export default function TodoItem({
         >
           {!todo.isCompleted ? (
             <button
-              className="group/checkbox flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center rounded-full border border-blue-500 p-0.5 transition hover:bg-white"
+              className="group/checkbox flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center rounded-full border border-blue-500 p-0.5 transition hover:bg-white dark:hover:bg-slate-600"
               onClick={() => toggleIsCompleted()}
             >
               <CheckIcon className="text-blue-600 opacity-0 transition-opacity group-hover/checkbox:opacity-100" />
             </button>
           ) : (
-            <CheckIcon className="group/checkbox flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center rounded-full border border-blue-500 p-0.5 text-blue-600 transition hover:bg-white" />
+            <CheckIcon className="group/checkbox flex h-[1.125rem] w-[1.125rem] flex-shrink-0 items-center justify-center rounded-full border border-blue-500 p-0.5 text-blue-600 transition hover:bg-white dark:hover:bg-slate-300" />
           )}
 
           <span className="w-full bg-transparent px-2 font-normal text-slate-700 focus:outline-none group-hover:text-slate-800">
