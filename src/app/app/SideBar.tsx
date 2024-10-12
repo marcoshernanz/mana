@@ -19,8 +19,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SignOutButton from "@/components/auth/SignOutButton";
-import Link from "next/link";
-import { useTodo } from "@/contexts/TodoContext";
 
 const sideBarItems = [
   {
