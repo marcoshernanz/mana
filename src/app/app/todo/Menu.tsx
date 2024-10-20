@@ -12,6 +12,7 @@ import {
   PencilIcon,
   Trash2Icon,
 } from "lucide-react";
+import { useEffect } from "react";
 
 interface MenuProps {
   isSubTodo?: boolean;
@@ -20,8 +21,6 @@ interface MenuProps {
 
 export default function Menu({ isSubTodo = false, id }: MenuProps) {
   const { setReplyingToTodoId } = useTodo();
-
-  // TODO: handle delete
 
   return (
     <div className="z-200 relative flex">
@@ -35,21 +34,13 @@ export default function Menu({ isSubTodo = false, id }: MenuProps) {
         >
           <DropdownMenuItem className="gap-3 pl-2">
             <PencilIcon className="h-5 w-5 text-slate-600" />
-            <Button
-              className="p-1 text-slate-600"
-              variant={"ghost"}
-              // onClick={}
-            >
+            <Button className="p-1 text-slate-600" variant={"ghost"}>
               Edit
             </Button>
           </DropdownMenuItem>
           <DropdownMenuItem className="gap-3 pl-2">
             <Trash2Icon className="h-5 w-5 text-slate-600" />
-            <Button
-              className="p-1 text-slate-600"
-              variant={"ghost"}
-              // onClick={handleDelete}
-            >
+            <Button className="p-1 text-slate-600" variant={"ghost"}>
               Delete
             </Button>
           </DropdownMenuItem>

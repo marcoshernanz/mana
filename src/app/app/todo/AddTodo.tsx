@@ -14,8 +14,9 @@ export default function AddTodo({ parentTodoId }: AddTodoProps) {
   const [isPending, startTransition] = useTransition();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
-  const { setTodos } = useTodo();
+  const { setTodos, setReplyingToTodoId, isUpdatingReplyingToRef } = useTodo();
 
   const handleAddTodo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,16 +47,32 @@ export default function AddTodo({ parentTodoId }: AddTodoProps) {
   };
 
   useEffect(() => {
+    if (!parentTodoId) return;
+
     const timeoutId = setTimeout(() => inputRef.current?.focus());
 
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [parentTodoId]);
 
   useEffect(() => {
-    if (!parentTodoId) return;
+    const handleClick = (event: MouseEvent) => {
+      if (
+        parentTodoId === null ||
+        isUpdatingReplyingToRef.current ||
+        document.activeElement !== inputRef.current
+      ) {
+        return;
+      }
 
-    setInterval(() => console.log(document.activeElement), 100);
-  }, [parentTodoId]);
+      if (!formRef.current?.contains(event.target as Node)) {
+        setReplyingToTodoId(null);
+      }
+    };
+
+    window.addEventListener("pointerdown", handleClick);
+
+    return () => window.removeEventListener("pointerdown", handleClick);
+  }, [isUpdatingReplyingToRef, parentTodoId, setReplyingToTodoId]);
 
   return (
     <form
@@ -64,6 +81,7 @@ export default function AddTodo({ parentTodoId }: AddTodoProps) {
         "group flex h-12 w-full items-center justify-between bg-white pl-5 focus-within:bg-blue-50/70 hover:bg-blue-50/70",
         parentTodoId && "pl-14",
       )}
+      ref={formRef}
     >
       <div className="flex h-full w-full items-center gap-2 py-1 pr-2">
         <button
@@ -73,7 +91,7 @@ export default function AddTodo({ parentTodoId }: AddTodoProps) {
         <input
           type="text"
           placeholder={parentTodoId === null ? "Add a task" : "Add a subtask"}
-          autoFocus
+          // autoFocus
           ref={inputRef}
           className="h-full w-full bg-transparent px-2 font-normal placeholder:text-blue-500 focus:outline-none focus:placeholder:text-slate-600 group-hover:placeholder:text-slate-600 focus:group-hover:placeholder:text-slate-500"
           value={text}

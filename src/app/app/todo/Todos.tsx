@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 import PrincipalMenu from "./PrincipalMenu";
 import { cn } from "@/lib/utils";
 import { OrderByType, useTodo } from "@/contexts/TodoContext";
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 
 export default function Todos() {
   const {
@@ -23,7 +23,6 @@ export default function Todos() {
       const filteredTodos = todos.filter(
         (todo) => todo.isCompleted === completed,
       );
-      console.log("filtered todos: ", filteredTodos);
 
       const orderedTodos = filteredTodos.sort((a, b) => {
         if (orderBy === "myOrder") {
@@ -51,8 +50,6 @@ export default function Todos() {
               )
             : undefined,
       }));
-
-      console.log("formatted todos: ", formattedTodos);
 
       const parentTodos = formattedTodos.filter(
         (todo) => todo.parentTodoId === null,
@@ -94,9 +91,7 @@ export default function Todos() {
   return (
     <div className="rounded-xl border bg-white py-4 shadow-sm dark:bg-slate-800">
       <div className="flex w-full items-center justify-between px-5 pb-5">
-        <h1 className="text-xl font-medium text-white dark:text-slate-50">
-          My Tasks
-        </h1>
+        <h1 className="text-xl font-medium dark:text-slate-50">My Tasks</h1>
         <PrincipalMenu />
       </div>
       <AddTodo parentTodoId={null} />
@@ -133,17 +128,14 @@ export default function Todos() {
 
       {areCompletedTodosExpanded && (
         <div className="flex flex-col">
-          <>
-            {console.log(getTodos({ completed: true, orderBy }))}
-            {getTodos({ completed: true, orderBy }).map((todo) => (
-              <>
-                <TodoItem key={todo.id} todo={todo} />
-                {todo.subTodos?.map((subTodo) => (
-                  <TodoItem key={subTodo.id} todo={subTodo} isSubTodo={true} />
-                ))}
-              </>
-            ))}
-          </>
+          {getTodos({ completed: true, orderBy }).map((todo) => (
+            <>
+              <TodoItem key={todo.id} todo={todo} />
+              {todo.subTodos?.map((subTodo) => (
+                <TodoItem key={subTodo.id} todo={subTodo} isSubTodo={true} />
+              ))}
+            </>
+          ))}
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { TodosType } from "@/database/schemas/todos";
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 export type OrderByType = "myOrder" | "date" | "starred";
 
@@ -24,6 +24,7 @@ const TodoContext = createContext<null | {
   setReplyingToTodoId: React.Dispatch<React.SetStateAction<string | null>>;
 
   undoRegisterRef: React.MutableRefObject<UndoRegisterType>;
+  isUpdatingReplyingToRef: React.MutableRefObject<boolean>;
 }>(null);
 
 interface TodosProviderProps {
@@ -39,6 +40,17 @@ export function TodoProvider({ children, initialTodos }: TodosProviderProps) {
   const [replyingToTodoId, setReplyingToTodoId] = useState<string | null>(null);
 
   const undoRegisterRef = useRef<UndoRegisterType>([]);
+  const isUpdatingReplyingToRef = useRef(false);
+
+  useEffect(() => {
+    isUpdatingReplyingToRef.current = true;
+
+    const timeout = setTimeout(() => {
+      isUpdatingReplyingToRef.current = false;
+    }, 200);
+
+    return () => clearTimeout(timeout);
+  }, [replyingToTodoId]);
 
   return (
     <TodoContext.Provider
@@ -56,6 +68,7 @@ export function TodoProvider({ children, initialTodos }: TodosProviderProps) {
         setReplyingToTodoId,
 
         undoRegisterRef,
+        isUpdatingReplyingToRef,
       }}
     >
       {children}
