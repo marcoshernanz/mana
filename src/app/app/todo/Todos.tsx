@@ -110,7 +110,7 @@ export default function Todos() {
         ))}
       </div>
 
-      <div className="flex items-center gap-2 pb-2 text-slate-600">
+      <div className="flex items-center gap-2 pb-2 text-slate-600 dark:text-slate-500">
         <Button
           variant="ghost"
           onClick={() => setAreCompletedTodosExpanded((prev) => !prev)}

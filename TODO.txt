@@ -243,4 +243,12 @@ https://calendar.google.com/calendar/u/0/r/tasks
 
 
 Observations (is ok?):
-- when i delete a task, i delete subtasks, therefore, when task is completed and i delete it, i also delete completed subtask 
+- when i delete a task, i delete subtasks, therefore, when task is completed and i delete it, i also delete completed subtask
+
+
+fix focus:
+- once i send todo needs to turn off 
+- when i click something in the item's div, it does not focus 
+- when i click menu and then out of the div, it focuses 
+
+fix problems:

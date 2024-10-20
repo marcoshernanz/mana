@@ -34,7 +34,7 @@ export default function Menu({
     <div className={cn("z-200 relative flex", className)}>
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full">
-          <EllipsisVerticalIcon className="h-5 w-5 text-slate-700" />
+          <EllipsisVerticalIcon className="h-5 w-5 text-slate-700 dark:text-slate-400" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mx-3 flex w-full max-w-4xl flex-col items-stretch px-1 py-3">
           <DropdownMenuItem className="gap-3 pl-2">
