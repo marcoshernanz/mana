@@ -5,42 +5,39 @@ import { createContext, useContext, useRef, useState } from "react";
 
 export type OrderByType = "myOrder" | "date" | "starred";
 
-export type formattedTodosType = {
-  id: string;
-  parentTodoId: string | null;
-  text: string;
-  isStared: boolean;
-  account: string;
-  isCompleted: boolean;
-  createdAt: Date;
-  userId: string;
-};
-
 type UndoRegisterType = {
   action: "add" | "toggleIsCompleted" | "delete" | "updateText";
   todo: TodosType;
 }[];
 
 const TodoContext = createContext<null | {
-  todos: formattedTodosType[];
-  setTodos: React.Dispatch<React.SetStateAction<formattedTodosType[]>>;
+  todos: TodosType[];
+  setTodos: React.Dispatch<React.SetStateAction<TodosType[]>>;
+
   orderBy: OrderByType;
   setOrderBy: React.Dispatch<React.SetStateAction<OrderByType>>;
+
   areCompletedTodosExpanded: boolean;
   setAreCompletedTodosExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+
+  replyingToTodoId: string | null;
+  setReplyingToTodoId: React.Dispatch<React.SetStateAction<string | null>>;
+
   undoRegisterRef: React.MutableRefObject<UndoRegisterType>;
 }>(null);
 
 interface TodosProviderProps {
   children: React.ReactNode;
-  initialTodos?: formattedTodosType[];
+  initialTodos?: TodosType[];
 }
 
 export function TodoProvider({ children, initialTodos }: TodosProviderProps) {
-  const [todos, setTodos] = useState<formattedTodosType[]>(initialTodos || []);
+  const [todos, setTodos] = useState<TodosType[]>(initialTodos || []);
   const [orderBy, setOrderBy] = useState<OrderByType>("myOrder");
   const [areCompletedTodosExpanded, setAreCompletedTodosExpanded] =
     useState(false);
+  const [replyingToTodoId, setReplyingToTodoId] = useState<string | null>(null);
+
   const undoRegisterRef = useRef<UndoRegisterType>([]);
 
   return (
@@ -48,10 +45,16 @@ export function TodoProvider({ children, initialTodos }: TodosProviderProps) {
       value={{
         todos,
         setTodos,
+
         orderBy,
         setOrderBy,
+
         areCompletedTodosExpanded,
         setAreCompletedTodosExpanded,
+
+        replyingToTodoId,
+        setReplyingToTodoId,
+
         undoRegisterRef,
       }}
     >

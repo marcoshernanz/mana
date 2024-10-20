@@ -7,6 +7,8 @@ export async function POST(request: Request) {
   try {
     const response = await request.json();
 
+    console.log(response);
+
     if (!response.text) {
       throw new Error("Text is required");
     } else if (response.parentTodoId === undefined) {

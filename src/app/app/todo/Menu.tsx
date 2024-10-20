@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
+import { useTodo } from "@/contexts/TodoContext";
 import {
   CornerDownRightIcon,
   EllipsisVerticalIcon,
@@ -15,28 +15,24 @@ import {
 
 interface MenuProps {
   isSubTodo?: boolean;
-  handleAddSubTodo?: (reply: boolean) => void;
-  className?: string;
-  handleDelete?: () => void;
+  id: string;
 }
 
-export default function Menu({
-  isSubTodo = false,
-  handleAddSubTodo,
-  className,
-  handleDelete,
-}: MenuProps) {
-  const addSubTask = () => {
-    handleAddSubTodo && handleAddSubTodo(true);
-  };
+export default function Menu({ isSubTodo = false, id }: MenuProps) {
+  const { setReplyingToTodoId } = useTodo();
+
+  // TODO: handle delete
 
   return (
-    <div className={cn("z-200 relative flex", className)}>
+    <div className="z-200 relative flex">
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full">
           <EllipsisVerticalIcon className="h-5 w-5 text-slate-700 dark:text-slate-400" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="mx-3 flex w-full max-w-4xl flex-col items-stretch px-1 py-3">
+        <DropdownMenuContent
+          onCloseAutoFocus={(event) => event.preventDefault()}
+          className="mx-3 flex w-full max-w-4xl flex-col items-stretch px-1 py-3"
+        >
           <DropdownMenuItem className="gap-3 pl-2">
             <PencilIcon className="h-5 w-5 text-slate-600" />
             <Button
@@ -52,7 +48,7 @@ export default function Menu({
             <Button
               className="p-1 text-slate-600"
               variant={"ghost"}
-              onClick={handleDelete}
+              // onClick={handleDelete}
             >
               Delete
             </Button>
@@ -63,7 +59,7 @@ export default function Menu({
               <Button
                 className="p-1 text-slate-600"
                 variant={"ghost"}
-                onClick={addSubTask}
+                onClick={() => setReplyingToTodoId(id)}
               >
                 Add Subtask
               </Button>

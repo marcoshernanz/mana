@@ -21,9 +21,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SignOutButton from "@/components/auth/SignOutButton";
-import Link from "next/link";
-import { useTodo } from "@/contexts/TodoContext";
-import Theme from "./Theme";
 
 const sideBarItems = [
   {
@@ -127,7 +124,6 @@ export default function SideBar(account: SideBarProps) {
               {item?.text}
             </DropdownMenuItem>
           ))} */}
-          <Theme />
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

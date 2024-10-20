@@ -15,6 +15,7 @@ export default function Todos() {
     orderBy,
     areCompletedTodosExpanded,
     setAreCompletedTodosExpanded,
+    replyingToTodoId,
   } = useTodo();
 
   const getTodos = useCallback(
@@ -103,6 +104,7 @@ export default function Todos() {
         {getTodos({ completed: false, orderBy }).map((todo) => (
           <Fragment key={todo.id}>
             <TodoItem todo={todo} />
+            {todo.id === replyingToTodoId && <AddTodo parentTodoId={todo.id} />}
             {todo.subTodos?.map((subTodo) => (
               <TodoItem key={subTodo.id} todo={subTodo} isSubTodo={true} />
             ))}
