@@ -33,11 +33,6 @@ export default async function TodoPage() {
     return;
   }
 
-  // const todos = await db
-  //   .select()
-  //   .from(todosTable)
-  //   .where(eq(todosTable.userId, userId));
-
   const todos = await db
     .select()
     .from(todosTable)

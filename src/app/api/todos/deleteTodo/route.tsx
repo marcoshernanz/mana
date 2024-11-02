@@ -6,8 +6,8 @@ import { isRedirectError } from "next/dist/client/components/redirect";
 export async function DELETE(request: Request) {
   try {
     const response = await request.json();
-
     if (!response.id) {
+      console.log("BBB");
       throw new Error("Id is required");
     }
 

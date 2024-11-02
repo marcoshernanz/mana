@@ -37,6 +37,7 @@ export default function AddTodo({ parentTodoId }: AddTodoProps) {
           const newTodo = await response.json();
           setTodos((prev) => [...prev, newTodo]);
           setText("");
+          setReplyingToTodoId(null);
         } else {
           console.error("Failed to add todo");
         }

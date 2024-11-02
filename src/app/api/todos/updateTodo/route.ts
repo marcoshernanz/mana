@@ -24,6 +24,8 @@ export async function PATCH(request: Request) {
       isStared: boolean | undefined;
     } = response;
 
+    console.log("textInUpdate", text);
+
     if (
       text === undefined &&
       isCompleted === undefined &&
@@ -38,14 +40,22 @@ export async function PATCH(request: Request) {
       throw new Error("User not found");
     }
 
-    if (isCompleted === undefined && isStared !== undefined) {
+    if (
+      isCompleted === undefined &&
+      isStared !== undefined &&
+      text === undefined
+    ) {
       await db
         .update(todosTable)
         .set({ isStared })
         .where(and(eq(todosTable.userId, userId), eq(todosTable.id, id)));
     }
 
-    if (isCompleted !== undefined && isStared === undefined) {
+    if (
+      isCompleted !== undefined &&
+      isStared === undefined &&
+      text === undefined
+    ) {
       await db
         .update(todosTable)
         .set({ isCompleted })
@@ -55,6 +65,17 @@ export async function PATCH(request: Request) {
             or(eq(todosTable.id, id), eq(todosTable.parentTodoId, id)),
           ),
         );
+    }
+
+    if (
+      text !== undefined &&
+      isCompleted === undefined &&
+      isStared === undefined
+    ) {
+      await db
+        .update(todosTable)
+        .set({ text })
+        .where(and(eq(todosTable.userId, userId), eq(todosTable.id, id)));
     }
 
     return Response.json({ message: "Todo updated" }, { status: 200 });

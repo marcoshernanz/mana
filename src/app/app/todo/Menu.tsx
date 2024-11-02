@@ -17,9 +17,16 @@ import { useEffect } from "react";
 interface MenuProps {
   isSubTodo?: boolean;
   id: string;
+  deleteTodo?: (id: string) => Promise<void>;
+  editTodo?: (id: string) => void;
 }
 
-export default function Menu({ isSubTodo = false, id }: MenuProps) {
+export default function Menu({
+  isSubTodo = false,
+  id,
+  deleteTodo,
+  editTodo,
+}: MenuProps) {
   const { setReplyingToTodoId } = useTodo();
 
   return (
@@ -34,13 +41,21 @@ export default function Menu({ isSubTodo = false, id }: MenuProps) {
         >
           <DropdownMenuItem className="gap-3 pl-2">
             <PencilIcon className="h-5 w-5 text-slate-600" />
-            <Button className="p-1 text-slate-600" variant={"ghost"}>
+            <Button
+              className="p-1 text-slate-600"
+              variant={"ghost"}
+              onClick={() => editTodo?.(id)}
+            >
               Edit
             </Button>
           </DropdownMenuItem>
           <DropdownMenuItem className="gap-3 pl-2">
             <Trash2Icon className="h-5 w-5 text-slate-600" />
-            <Button className="p-1 text-slate-600" variant={"ghost"}>
+            <Button
+              className="p-1 text-slate-600"
+              variant={"ghost"}
+              onClick={() => deleteTodo?.(id)}
+            >
               Delete
             </Button>
           </DropdownMenuItem>
