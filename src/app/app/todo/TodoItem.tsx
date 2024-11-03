@@ -102,7 +102,7 @@ export default function TodoItem({
   };
 
   const handleStar = () => {
-    update(todo.id, undefined, !stared);
+    update(todo.id, undefined, undefined, !stared);
     setStared((prev) => !prev);
   };
 
